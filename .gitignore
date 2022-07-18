@@ -42,12 +42,12 @@
 
 bin/
 BMS_Data/
-*/cmd/
-BMS/prm/
+cmd/
+prm/
 
-/BMS/Sources/datapage.c
-/BMS/Sources/derivative.h
-/BMS/Sources/Start12.c
+datapage.c
+derivative.h
+Start12.c
 !/BMS/Sources/main.c
 
 /BMS/C_Layout.hwl
