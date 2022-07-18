@@ -6,6 +6,7 @@
 extern CAN_MsgType CAN_Msg1Type;
 extern CAN_MsgType CAN_Msg2Type;
 extern CAN_MsgType CAN_Msg3Type;
+extern CAN_MsgType CAN_PreStateOut_TestType;
 
 extern CAN_ConfigType CAN_HwCfgType;
 

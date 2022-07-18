@@ -263,10 +263,12 @@ void CAN1_SendDemo(void)
 	}
 }
 
+extern int begin;
 void CAN1_GetToSend(void)									  //读出接受到的数据再发送出�
 {
   	if (CAN1_GetMsg(&CAN1_GetBufType) == 1)
   	{
+  		begin = 0;
       	if(CAN1_SendMsg(&CAN1_GetBufType) == 1)
       	{
       	}
@@ -283,12 +285,13 @@ void CAN_Delay10ms(unsigned int i)								  //延时
         }
     }
 }
-
+extern  int begin ;
 //CAN接收触发中断函数
 #pragma CODE_SEG __NEAR_SEG NON_BANKED
 void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 {
     CAN1_GetToSend();
+  //  Node_Poll();
 }
 #pragma CODE_SEG DEFAULT
 
@@ -298,7 +301,7 @@ void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 void interrupt VectorNumber_Vpit0 PIT0(void)	//中断服务函数
 {
     PITTF_PTF0 = 1;
-    CAN1_SendDemo();							//PIT0中断
+    //CAN1_SendDemo();							//PIT0中断
     //CAN1_GetToSend();
 }
 

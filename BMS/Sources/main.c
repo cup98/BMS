@@ -4,12 +4,14 @@
 #include "ECT.h"
 #include "PIT.h"
 #include "PLL.h"
+#include "Node.h"
 
 #define MODE_ONE      PORTC_PC4
 #define MODE_ONE_DIR  DDRC_DDRC4
 #define MODE_TWO      PORTC_PC5
 #define MODE_TWO_DIR  DDRC_DDRC5
 
+int begin = 0;
 void main(void)
 {
     DisableInterrupts;
@@ -21,10 +23,16 @@ void main(void)
     ECT_Init();
     CAN_Init();
     PIT_Init();
+
     EnableInterrupts;
 
     for(;;)
     {
         _FEED_COP();
+    while (begin == 0)
+    {
+      Node_Poll();
+      begin = 1;
+    }
     }
 }

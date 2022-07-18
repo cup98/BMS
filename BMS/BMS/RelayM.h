@@ -12,27 +12,15 @@ typedef enum _RelayM_Object_Type
 
 typedef struct _RelayM_Ctrl_Type		    //构建继电器控制结构体
 {
-	int Master_State;					//总正控制
-	int Precharge_State;				//预充控制
+	int Master;					//总正控制
+	int Precharge;				//预充控制
 } RelayM_Ctrl_Type;
 
 typedef struct _RelayM_Switch_Type			//构建开关切换结构体
 {
-	int Master_State;					//总正切换
-	int Precharge_State;				//预充切换
+	int Master;					//总正切换
+	int Precharge;				//预充切换
 } RelayM_Switch_Type;
-
-RelayM_Ctrl_Type ReM_Ct =					//初始控制继电器
-{
-	0,
-	0,
-};
-
-RelayM_Switch_Type ReM_Sw =				//初始切换开关
-{
-	0,
-	0,
-};
 
 //继电器模块初始化函数
 extern void RelayM_Init();

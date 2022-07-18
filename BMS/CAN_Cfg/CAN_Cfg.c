@@ -33,6 +33,16 @@ CAN_MsgType CAN_Msg3Type =
 	0,
 };
 
+CAN_MsgType CAN_PreStateOut_TestType =
+{
+	0x6F,
+	0,
+	0,
+	{8,8,8,8,8,8,8,8},
+	8,
+	0,
+};
+
 CAN_ConfigType CAN_HwCfgType =			//è®¾ç½®æ³¢ç‰¹çŽ‡
 {
 	CAN_BPS_125K,
