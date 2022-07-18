@@ -45,8 +45,8 @@ BMS_Data/
 */cmd/
 BMS/prm/
 
-!/BMS/Sources/main.c
 /BMS/Sources
+!/BMS/Sources/main.c
 
 /BMS/C_Layout.hwl
 Default.mem
