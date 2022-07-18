@@ -45,7 +45,9 @@ BMS_Data/
 */cmd/
 BMS/prm/
 
-/BMS/Sources/
+/BMS/Sources/datapage.c
+/BMS/Sources/derivative.h
+/BMS/Sources/Start12.c
 !/BMS/Sources/main.c
 
 /BMS/C_Layout.hwl
