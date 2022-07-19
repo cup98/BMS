@@ -1,5 +1,5 @@
 #include "PrechargeM.h"
-#include "PreCfg.h"
+#include "Pre_Cfg.h"
 #include "CAN_Cfg.h"
 #include "RelayM.h"
 #include "Hv.h"
@@ -56,8 +56,8 @@ void PrechargeM_Change(void)		//继电器切换
 
 int PrechargeM_IsFail(void)			//超时判断函数
 {									//判断自启动预充至此刻的时间是否超过3秒
-	if (PreCfg_Clock() <= 3)					//PIT定时器16位通道1每次计数步长为0.3s
-	{	
+	if (Pre_Cfg_Clock() <= 3)					//PIT定时器16位通道1每次计数步长为0.3s
+	{
 	  //CAN_PreStateOut_TestType.Data[1] = 0x0F;
   	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
 	  //CAN_Delay10ms(10);

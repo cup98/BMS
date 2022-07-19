@@ -43,6 +43,8 @@ typedef struct _CAN_ConfigType					//选择CAN波特率
 	unsigned char sp;
 } CAN_ConfigType;
 
+extern CAN_MsgType CAN1_GetBufType;
+
 void CAN_Init(void);
 void CAN1_Init(CAN_ConfigType *CAN_Cfg);
 int CAN1_SendMsg(CAN_MsgType *CAN_Msg);
