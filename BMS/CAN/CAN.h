@@ -48,9 +48,7 @@ extern CAN_MsgType CAN1_GetBufType;
 void CAN_Init(void);
 void CAN1_Init(CAN_ConfigType *CAN_Cfg);
 int CAN1_SendMsg(CAN_MsgType *CAN_Msg);
-void CAN1_SendDemo(void);
 int CAN1_GetMsg(CAN_MsgType *CAN_Msg);
-void CAN1_GetToSend(void);
 void CAN_Delay10ms(unsigned int i);
 
 #endif

@@ -1,12 +1,11 @@
 #include "CAN.h"
 #include "CAN_Cfg.h"
 
-int CAN_Time = 0;
 CAN_MsgType CAN1_GetBufType;		//声明CAN1接收缓存
 
 void CAN_Init(void)											//CAN初始�
 {
-	CAN1_Init(&CAN_HwCfgType);
+	CAN1_Init(&CAN_CfgHwType);
 }
 
 //CAN1初始化以及配置CLK
@@ -232,47 +231,6 @@ int CAN1_GetMsg(CAN_MsgType *CAN_Msg)
 
     Reflag = 1;
   	return Reflag;
-}
-
-//CAN1切换发�数�
-void CAN1_SendDemo(void)
-{
-	CAN_Time++;
-
-  	if (CAN_Time == 1)
-  	{
-  	  	if(CAN1_SendMsg(&CAN_Msg1Type) == 1)
-  	  	{
-  	  	}
-  	}
-  	else if (CAN_Time == 2)
-  	{
-  	  	if(CAN1_SendMsg(&CAN_Msg2Type) == 1)
-  	  	{
-  	  	}
-  	}
- 	else if (CAN_Time == 3)
-  	{
-    	if(CAN1_SendMsg(&CAN_Msg3Type) == 1)
-    	{
-    	}
-    	CAN_Time = 0;
-  	}
-	else
-	{
-	}
-}
-
-extern int begin;
-void CAN1_GetToSend(void)									  //读出接受到的数据再发送出�
-{
-  	if (CAN1_GetMsg(&CAN1_GetBufType) == 1)
-  	{
-  		begin = 0;
-      	if(CAN1_SendMsg(&CAN1_GetBufType) == 1)
-      	{
-      	}
-  	}
 }
 
 void CAN_Delay10ms(unsigned int i)								  //延时

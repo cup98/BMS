@@ -15,5 +15,4 @@ typedef struct _Pre_Cfg_GetHvVoltageType         //构建电压值结构体
 } Pre_Cfg_GetHvVoltageType;
 
 extern Pre_Cfg_GetHvVoltageType Per_Cfg_GetVoltageType;
-                                 
 #endif

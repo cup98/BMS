@@ -2,6 +2,7 @@
 #include "Pre_Cfg.h"
 #include "CAN_Cfg.h"
 
+
 void Hv_Init(void)								//高压模块初始化
 {
 

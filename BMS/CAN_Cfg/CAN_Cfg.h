@@ -3,11 +3,13 @@
 
 #include "CAN.h"
 
-extern CAN_MsgType CAN_Msg1Type;
-extern CAN_MsgType CAN_Msg2Type;
-extern CAN_MsgType CAN_Msg3Type;
-extern CAN_MsgType CAN_PreStateOut_TestType;
+extern CAN_MsgType CAN_CfgMsg1Type;
+extern CAN_MsgType CAN_CfgMsg2Type;
+extern CAN_MsgType CAN_CfgMsg3Type;
+extern CAN_MsgType CAN_CfgPreStateOut_TestType;
+extern CAN_ConfigType CAN_CfgHwType;
 
-extern CAN_ConfigType CAN_HwCfgType;
+void CAN1_GetToSend(void);
+void CAN1_SendDemo(void);
 
 #endif
