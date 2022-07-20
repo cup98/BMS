@@ -13,6 +13,6 @@ extern int Pre_Cfg_Fault(void);							//配置错误函数
 extern int Pre_Cfg_Clock(void);							//配置预充等待时间函数
 extern int Per_Cfg_GetVoltage(Hv_Voltage_Type object);	//获取目标电压(目标名称：BAT/V1)
 
-extern Node_StateType Pre_Cfg_NodeStateType[3][4];
+extern Node_StateType Pre_Cfg_NodeStateType[];
 
 #endif

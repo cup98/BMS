@@ -36,26 +36,30 @@ void PrechargeM_Change(void)		//继电器切换函数
 
 int PrechargeM_IsFail(void)			//超时判断函数
 {									//判断自启动预充至此刻的时间是否超过3秒
+	int ref;
 	if (Pre_Cfg_Clock() <= 3)
 	{
-		return 0;
+		ref = 0;
 	}
 	else
 	{
-		return 1;
+		ref = 1;
 	}
+	return ref;
 }
 
 int PrechargeM_IsFinish(void)		//预充完成判断函数
 {
+	int ref;
 	if (Hv_Get(V1) * 100 >= Hv_Get(BAT) * 95)	//判断V1电压是否大于BAT电压的95%
 	{
-		return 1;
+		ref = 1;
 	}
 	else
 	{
-		return 0;
+		ref = 0;
 	}
+	return ref;
 }
 
 
