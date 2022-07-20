@@ -249,7 +249,6 @@ extern  int begin ;
 void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 {
     CAN1_GetToSend();
-  //  Node_Poll();
 }
 #pragma CODE_SEG DEFAULT
 

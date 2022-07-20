@@ -3,39 +3,36 @@
 #include "PrechargeM.h"
 #include "CAN_Cfg.h"
 
-Node_NumType Init_Node = Node0;									//è®¾ç½®èŠ‚ç‚¹æ ‡å¿—ä½åˆå§‹ä¸º1
+Node_NumType Init_Node = Node0;		//³õÊ¼»¯½Úµã×´Ì¬
 
-void Node_Init(void)								//Nodeæ¨¡å—åˆå§‹åŒ–
+void Node_Init(void)				//Node³õÊ¼»¯º¯Êı
 {
-
 }
 
-void No_Act(void)									//Nodeæ¨¡å—æ‰§è¡Œç©ºå‡½æ•°
+void No_Act(void)					//Node¿Õº¯Êı
 {
-
 }
 
-void Node_Poll(void)
+void Node_Poll(void)            	//Node½ÚµãÅĞ¶Ïº¯Êı
 {
 	int i,Run_Num;
-
-    for (Run_Num = 1 ;Pre_Cfg_NodeStateTransition_TableType[Init_Node][Run_Num].Node_Num
-    	 == Pre_Cfg_NodeStateTransition_TableType[Init_Node][0].Node_Num ;Run_Num++)
+    for (Run_Num = 0 ;Pre_Cfg_NodeStateType[Init_Node-1][Run_Num].Current_Node ==
+    				  Pre_Cfg_NodeStateType[Init_Node-1][0].Current_Node ;Run_Num++)    		//¶ÁÈ¡µ±Ç°½ÚµãµÄ·ÖÖ§Êı£¬ÒÔ±ã´«Èë½Úµã×´Ì¬ÅĞ¶Ïº¯Êı
     {
     }
-    CAN_CfgPreStateOut_TestType.Data[6] = Run_Num;
-	for (i = 0; i < Run_Num; i++)
+    CAN_CfgPreStateOut_TestType.Data[6] = (unsigned char)(unsigned int)Run_Num;     			//½«½Úµã·ÖÖ§Êı´æ·Åµ½CANÊı¾İ¶Î6
+	for (i = 0; i < Run_Num; i++)                                                  				//×ö·ÖÖ§ÄÚÑ­»·£¬Ñ°ÕÒ¶ÔÓ¦µÄ¶¯×÷º¯Êı
 	{
-		if (Pre_Cfg_NodeStateTransition_TableType[Init_Node][i].Condition() ==
-			Pre_Cfg_NodeStateTransition_TableType[Init_Node][i].Branch_Condition)
+		if (Pre_Cfg_NodeStateType[Init_Node-1][i].Condition() ==
+			Pre_Cfg_NodeStateType[Init_Node-1][i].Branch_Condition)                    			//Ñ°ÕÒ±¾´Î·ÖÖ§Çé¿öÓĞÎŞ·ûºÏ
 		{
-		  	CAN_CfgPreStateOut_TestType.Data[0] = Init_Node;
+		  	CAN_CfgPreStateOut_TestType.Data[0] = (unsigned char)(unsigned int)(Init_Node-1); 	//½«±¾´ÎÖ´ĞĞ½Úµã´æÔÚCANÊı¾İ¶Î0
 
-			Pre_Cfg_NodeStateTransition_TableType[Init_Node][i].Action();
-			Init_Node = Pre_Cfg_NodeStateTransition_TableType[Init_Node][i].Next_Node_Num;
+			Pre_Cfg_NodeStateType[Init_Node-1][i].Action();                                    	//Ö´ĞĞ±¾´Î¶¯×÷
+			Init_Node = Pre_Cfg_NodeStateType[Init_Node-1][i].Next_Node;              			//½«ÏÂ´ÎÖ´ĞĞµÄ½ÚµãºÅ¶ÁÈ¡³öÀ´
 
-		  	CAN_CfgPreStateOut_TestType.Data[1] = Init_Node;
-	    	CAN1_SendMsg(&CAN_CfgPreStateOut_TestType);
+		  	CAN_CfgPreStateOut_TestType.Data[1] = (unsigned char)(unsigned int)(Init_Node-1);   //½«ÏÂ´ÎÖ´ĞĞ½Úµã´æÔÚCANÊı¾İ¶Î1
+	    	if (CAN1_SendMsg(&CAN_CfgPreStateOut_TestType));                                    //ÓÃCAN½«±¾´Î×´Ì¬Çé¿ö·¢ËÍ³öÀ´
 			break;
 		}
 	}

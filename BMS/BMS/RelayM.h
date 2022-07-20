@@ -4,31 +4,26 @@
 #include "hidef.h"
 #include "derivative.h"
 
-typedef enum _RelayM_Object_Type
+typedef enum _RelayM_Object_Type   		//¹¹½¨¼ÌµçÆ÷¿ØÖÆÄ¿±ê
 {
 	MASTER,
 	PRECHANG,
 } RelayM_Object_Type;
 
-typedef struct _RelayM_Ctrl_Type		    //æ„å»ºç»§ç”µå™¨æ§åˆ¶ç»“æ„ä½“
+typedef struct _RelayM_CtrlType			//¼ÌµçÆ÷Ä¿±ê×´Ì¬
 {
-	int Master;					//æ€»æ­£æ§åˆ¶
-	int Precharge;				//é¢„å……æ§åˆ¶
-} RelayM_Ctrl_Type;
+	int Master;							//×ÜÕı¼ÌµçÆ÷
+	int Precharge;						//Ô¤³ä¼ÌµçÆ÷
+} RelayM_CtrlType;
 
-typedef struct _RelayM_Switch_Type			//æ„å»ºå¼€å…³åˆ‡æ¢ç»“æ„ä½“
+typedef struct _RelayM_SwitchType		//¿ª¹ØÄ¿±ê×´Ì¬
 {
-	int Master;					//æ€»æ­£åˆ‡æ¢
-	int Precharge;				//é¢„å……åˆ‡æ¢
-} RelayM_Switch_Type;
+	int Master;							//×ÜÕı¿ª¹Ø
+	int Precharge;						//Ô¤³ä¿ª¹Ø
+} RelayM_SwitchType;
 
-//ç»§ç”µå™¨æ¨¡å—åˆå§‹åŒ–å‡½æ•°
-extern void RelayM_Init();
-
-//æ§åˆ¶ç»§ç”µå™¨å¼€å…³å‡½æ•°
-extern void RelayM_Control(RelayM_Object_Type object ,int state);		//æ§åˆ¶æ€»æ­£å’Œé¢„å……ç»§ç”µå™¨çš„å¼€å…³
-
-//åˆ‡æ¢å¼€å…³å‡½æ•°
-extern void RelayM_Change(RelayM_Object_Type object ,int state);		//æ§åˆ¶æ€»æ­£å’Œé¢„å……å¼€å…³çš„åˆ‡æ¢
+extern void RelayM_Init();											//¼ÌµçÆ÷Ä£¿éÓÉ³õÊ¼»¯º¯Êı
+extern void RelayM_Control(RelayM_Object_Type object ,int state);	//¿ØÖÆ¼ÌµçÆ÷¿ª¹Øº¯Êı,¿ØÖÆ¼ÌµçÆ÷¿ª¹Øº¯Êı(¿ØÖÆÄ¿±ê,×´Ì¬)
+extern void RelayM_Change(RelayM_Object_Type object ,int state);	////ÇĞ»»¿ª¹Øº¯Êı,ÇĞ»»¿ª¹Øº¯Êı(¿ØÖÆÄ¿±ê,×´Ì¬)
 
 #endif

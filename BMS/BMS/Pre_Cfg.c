@@ -1,38 +1,41 @@
 #include "Pre_Cfg.h"
-#include "CAN_Cfg.h"
-#include "CAN.h"
-#include "Hv.h"
 
-int Pre_Cfg_Fault(void)
+int Pre_Cfg_Fault(void)                           //ÅäÖÃ´íÎóº¯Êý:0ÎÞ´í,1ÓÐ´í
 {
-	return CAN1_GetBufType.Data[0];										//ä¸¾ä¾‹æ•…éšœä¸ºæ— :0
+	return CAN1_GetBufType.Data[0];									//Í¨¹ý·µ»Ø½ÓÊÕµÄCANÊý×Ö¶Î0
 }
 
-int Pre_Cfg_Clock(void)
+int Pre_Cfg_Clock(void)                           //ÅäÖÃÔ¤³äµÈ´ýÊ±¼äº¯Êý:µ¥Î»Ãë£¬Ð¡ÓÚ3Ãë
 {
-	return CAN1_GetBufType.Data[1];
+	return CAN1_GetBufType.Data[1];                 //Í¨¹ý·µ»Ø½ÓÊÕµÄCANÊý×Ö¶Î1
 }
 
-Pre_Cfg_GetHvVoltageType Per_Cfg_GetVoltageType =					//ä¸¾ä¾‹ç”µåŽ‹å€¼
+int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//»ñÈ¡Ä¿±êµçÑ¹
 {
-	100,							//BATç”µåŽ‹ä¸º90.0V
-	100,							//V1ç”µåŽ‹ä¸º91.0V
-};
+  int ref = 0;
+  if (object == BAT)
+  {
+    ref = CAN1_GetBufType.Data[2];
+  }
+  else
+  {
+    ref = 100;
+  }
+  return ref;
+}
 
-Node_StateType Pre_Cfg_NodeStateTransition_TableType[3][4] =
+Node_StateType Pre_Cfg_NodeStateType[3][4] =      //½Úµã×´Ì¬×ª»»±í
 {
  	{
  		{Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
  		{Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
  	},
-
  	{
  		{Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
  		{Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
  		{Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
  		{Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
  	},
-
  	{
  		{Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
  		{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },

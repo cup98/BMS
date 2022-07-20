@@ -4,29 +4,26 @@
 #include "hidef.h"
 #include "derivative.h"
 
-typedef enum _Node_NumType
+typedef enum _Node_Num_Type      //ÁĞ¾Ù½ÚµãÊıÁ¿Ãû³Æ
 {
-    Node0,
-    Node1,
-    Node2
+    Node0 = 1,                  //ÅĞ¶Ï¹ÊÕÏ½Úµã
+    Node1 = 2,                  //Ô¤³äÍê³ÉÅĞ¶Ï½Úµã
+    Node2 = 3,                  //·Åµç¹ÊÕÏÅĞ¶Ï½Úµã
 } Node_NumType;
 
-typedef struct _Node_StateType        //é¢„å……ç”µèŠ‚ç‚¹ç»“æ„
+
+typedef struct _Node_StateType  //¹¹½¨½Úµã×´Ì¬»ú½á¹¹Ìå
 {
-    Node_NumType Node_Num;                          //å½“å‰èŠ‚ç‚¹å·
-    int (*Condition)(void);                //æ¡ä»¶
-    int Branch_Condition;                  //åˆ†æ”¯æ¡ä»¶
-    void (*Action)(void);                  //æ‰§è¡ŒåŠ¨ä½œ
-    Node_NumType Next_Node_Num;                     //ä¸‹ä¸ªèŠ‚ç‚¹å·
+    Node_NumType Current_Node;  //µ±Ç°½Úµã
+    int (*Condition)(void);     //Ìõ¼ş
+    int Branch_Condition;       //·ÖÖ§Ìõ¼ş
+    void (*Action)(void);       //¶¯×÷
+    Node_NumType Next_Node;     //ÏÂÒ»½Úµã
 } Node_StateType;
 
 
-
-//èŠ‚ç‚¹æµç¨‹æ§åˆ¶æ¨¡å—åˆå§‹åŒ–å‡½æ•°
-extern void Node_Init(void);
-//Nodeæ¨¡å—æ‰§è¡Œå‡½æ•°
-extern void Node_Poll(void);
-//ç©ºå‡½æ•°
-extern void No_Act(void);
+extern void Node_Init(void);    //Node³õÊ¼»¯º¯Êı
+extern void Node_Poll(void);    //Node½ÚµãÅĞ¶Ïº¯Êı
+extern void No_Act(void);       //Node¿Õº¯Êı
 
 #endif

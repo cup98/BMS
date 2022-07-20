@@ -1,20 +1,20 @@
-#include "Hv.h"
 #include "Pre_Cfg.h"
 #include "CAN_Cfg.h"
 
-
-void Hv_Init(void)								//é«˜å‹æ¨¡å—åˆå§‹åŒ–
+void Hv_Init(void)						//¸ßÑ¹¹ÜÀíÄ£¿éÓÉ³õÊ¼»¯º¯Êı
 {
-
 }
-int Hv_Get(Hv_Voltage_Type object)				//è·å–ç”µå‹å€¼
+
+int Hv_Get(Hv_Voltage_Type object)		//»ñÈ¡µçÑ¹º¯Êı
 {
-	if(object == BAT)					//è¿”å›BATç”µå‹å€¼
+	int ref = 0;
+	if(object == BAT)					//Ñ¡ÖĞBat
 	{
-		return Per_Cfg_GetVoltageType.BAT;			//è¿”å›è·å–çš„BATç”µå‹å€¼
+		ref = Per_Cfg_GetVoltage(BAT);	//·µ»ØBATµçÑ¹
 	}
-	else										//1:V1ç”µå‹å€¼
+	else								//Ñ¡ÖĞV1
 	{
-		return Per_Cfg_GetVoltageType.V1;			//è¿”å›è·å–çš„V1ç”µå‹å€¼
+		ref = Per_Cfg_GetVoltage(V1);	//·µ»ØV1µçÑ¹
 	}
+	return ref;
 }

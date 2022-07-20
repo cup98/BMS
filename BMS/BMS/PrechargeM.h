@@ -4,14 +4,12 @@
 #include "hidef.h"
 #include "derivative.h"
 
-extern void Time_Flag();
-extern void PrechargeM_Init();			//åˆå§‹åŒ–å‡½æ•°
-extern void PrechargeM_StartPre();		//å¯åŠ¨é¢„å……å‡½æ•°,é—­åˆé¢„å……å¼€å…³
-extern void PrechargeM_StopPre();		//åœæ­¢é¢„å……å‡½æ•°,æ–­å¼€é¢„å……å¼€å…³
-extern void PrechargeM_StartMaster();	//é—­åˆæ€»æ­£å‡½æ•°
-extern void PrechargeM_StopMaster();	//æ–­å¼€æ€»æ­£å‡½æ•°
-extern void PrechargeM_Change();		//ç»§ç”µå™¨åˆ‡æ¢å‡½æ•°,é—­åˆç»¼åˆæ€»æ­£,æ–­å¼€é¢„å……
-extern int PrechargeM_IsFinish();		//é¢„å……å®Œæˆåˆ¤æ–­å‡½æ•°,åˆ¤æ–­V1ç”µå‹æ˜¯å¦å¤§äºBATç”µå‹çš„95%
-extern int PrechargeM_IsFail();			//è¶…æ—¶åˆ¤æ–­å‡½æ•°,åˆ¤æ–­è‡ªå¯åŠ¨é¢„å……è‡³æ­¤åˆ»çš„æ—¶é—´æ˜¯å¦è¶…è¿‡3ç§’
-
+extern void PrechargeM_Init();			//³õÊ¼»¯º¯Êı
+extern void PrechargeM_StartPre();		//Æô¶¯Ô¤³äº¯Êı,±ÕºÏÔ¤³ä¿ª¹Ø
+extern void PrechargeM_StopPre();		//Í£Ö¹Ô¤³äº¯Êı,¶Î¿ªÔ¤³ä¿ª¹Ø
+extern void PrechargeM_StartMaster();	//±ÕºÏ×ÜÕıº¯Êı
+extern void PrechargeM_StopMaster();	//¶Ï¿ª×ÜÕıº¯Êı
+extern void PrechargeM_Change();		//¼ÌµçÆ÷ÇĞ»»º¯Êı,±ÕºÏ×ÜÕı£¬¶Ï¿ªÔ¤³ä
+extern int PrechargeM_IsFinish();		//Ô¤³äÍê³ÉÅĞ¶Ïº¯Êı,ÅĞ¶ÏV1µçÑ¹ÊÇ·ñ´óÓÚBATµçÑ¹µÄ95%
+extern int PrechargeM_IsFail();			//³¬Ê±ÅĞ¶Ïº¯Êı,ÅĞ¶Ï×ÔÆô¶¯Ô¤³äÖÁ´Ë¿ÌµÄÊ±¼äÊÇ·ñ³¬¹ı3Ãë
 #endif

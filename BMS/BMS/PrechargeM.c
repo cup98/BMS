@@ -4,63 +4,40 @@
 #include "RelayM.h"
 #include "Hv.h"
 
-void PrechargeM_Init(void)			//é¢„å……ç”µæ¨¡å—åˆå§‹åŒ–
+void PrechargeM_Init(void)			//Ô¤³ä³õÊ¼»¯º¯Êı
 {
 }
 
-void PrechargeM_TimeFlag(void)				//æ—¶é—´è®¡æ•°æ ‡å¿—ä½
+void PrechargeM_StartPre(void)		//±ÕºÏÔ¤³ä¿ª¹Ø
 {
-	//i++;
+	RelayM_Control(PRECHANG ,1);
 }
 
-void PrechargeM_StartPre(void)		//å¯åŠ¨é¢„å……
+void PrechargeM_StopPre(void)		//¶Ï¿ªÔ¤³ä¿ª¹Ø
 {
-	RelayM_Control(PRECHANG ,1);			//é—­åˆé¢„å……ç»§ç”µå™¨
-	//CAN_CfgPreStateOut_TestType.Data[1] = 0x0A;
-	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
-	//CAN_Delay10ms(10);
-}									//å¼€å§‹è®¡æ•°ï¼Œæ­¥é•¿:0.3s
-
-void PrechargeM_StopPre(void)		//æ–­å¼€é¢„å……
-{
-	RelayM_Control(PRECHANG ,0);			//æ–­å¼€é¢„å……ç»§ç”µå™¨
-	//CAN_CfgPreStateOut_TestType.Data[1] = 0x0B;
-	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
-	//CAN_Delay10ms(10);
+	RelayM_Control(PRECHANG ,0);
 }
 
-void PrechargeM_StartMaster(void)	//å¼€å§‹å……ç”µ
+void PrechargeM_StartMaster(void)	//±ÕºÏ×ÜÕıº¯Êı
 {
-	RelayM_Control(MASTER ,1);			//é—­åˆæ€»æ­£ç»§ç”µå™¨
-	//CAN_CfgPreStateOut_TestType.Data[1] = 0x0C;
-	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
-	//CAN_Delay10ms(10);
+	RelayM_Control(MASTER ,1);
 }
 
-void PrechargeM_StopMaster(void)	//åœæ­¢æ€»æ­£å……ç”µ
+void PrechargeM_StopMaster(void)	//¶Ï¿ª×ÜÕıº¯Êı
 {
-	RelayM_Control(MASTER ,0);			//æ–­å¼€æ€»æ­£ç»§ç”µå™¨
-	//CAN_CfgPreStateOut_TestType.Data[1] = 0x0D;
-	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
-	//CAN_Delay10ms(10);
+	RelayM_Control(MASTER ,0);
 }
 
-void PrechargeM_Change(void)		//ç»§ç”µå™¨åˆ‡æ¢
+void PrechargeM_Change(void)		//¼ÌµçÆ÷ÇĞ»»º¯Êı
 {
-	PrechargeM_StartMaster();			//é—­åˆæ€»æ­£
-	PrechargeM_StopPre();			//æ–­å¼€é¢„å……
-	//CAN_CfgPreStateOut_TestType.Data[1] = 0x0E;
-	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
-	//CAN_Delay10ms(10);
+	PrechargeM_StartMaster();		//±ÕºÏ×ÜÕı
+	PrechargeM_StopPre();			//¶Ï¿ªÔ¤³ä
 }
 
-int PrechargeM_IsFail(void)			//è¶…æ—¶åˆ¤æ–­å‡½æ•°
-{									//åˆ¤æ–­è‡ªå¯åŠ¨é¢„å……è‡³æ­¤åˆ»çš„æ—¶é—´æ˜¯å¦è¶…è¿‡3ç§’
-	if (Pre_Cfg_Clock() <= 3)					//PITå®šæ—¶å™¨16ä½é€šé“1æ¯æ¬¡è®¡æ•°æ­¥é•¿ä¸º0.3s
+int PrechargeM_IsFail(void)			//³¬Ê±ÅĞ¶Ïº¯Êı
+{									//ÅĞ¶Ï×ÔÆô¶¯Ô¤³äÖÁ´Ë¿ÌµÄÊ±¼äÊÇ·ñ³¬¹ı3Ãë
+	if (Pre_Cfg_Clock() <= 3)
 	{
-	  //CAN_CfgPreStateOut_TestType.Data[1] = 0x0F;
-  	//CAN1_SendMsg(&CAN_PreStateOut_TestType);
-	  //CAN_Delay10ms(10);
 		return 0;
 	}
 	else
@@ -69,13 +46,10 @@ int PrechargeM_IsFail(void)			//è¶…æ—¶åˆ¤æ–­å‡½æ•°
 	}
 }
 
-int PrechargeM_IsFinish(void)		//é¢„å……å®Œæˆåˆ¤æ–­å‡½æ•°
+int PrechargeM_IsFinish(void)		//Ô¤³äÍê³ÉÅĞ¶Ïº¯Êı
 {
-	if (Hv_Get(V1) * 100 >= Hv_Get(BAT) * 95)				//åˆ¤æ–­V1ç”µå‹æ˜¯å¦å¤§äºBATç”µå‹çš„95%
+	if (Hv_Get(V1) * 100 >= Hv_Get(BAT) * 95)	//ÅĞ¶ÏV1µçÑ¹ÊÇ·ñ´óÓÚBATµçÑ¹µÄ95%
 	{
-		//CAN_CfgPreStateOut_TestType.Data[1] = 0xAA;
-	  //CAN1_SendMsg(&CAN_PreStateOut_TestType);
-  	//CAN_Delay10ms(10);
 		return 1;
 	}
 	else

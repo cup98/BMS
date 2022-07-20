@@ -4,15 +4,13 @@
 #include "hidef.h"
 #include "derivative.h"
 
-typedef enum _Hv_Voltage_Type
+typedef enum _Hv_Voltage_Type 				//»ñÈ¡µçÑ¹Ä¿±ê
 {
 	BAT,
-	V1
+	V1,
 } Hv_Voltage_Type;
 
-//é«˜å‹ç®¡ç†æ¨¡å—åˆå§‹åŒ–å‡½æ•°
-extern void Hv_Init();
-//è·å–ç”µå‹å‡½æ•°
-extern int Hv_Get(Hv_Voltage_Type object);		//è·å–å½“å‰BATæˆ–V1ç”µå‹
+extern void Hv_Init(); 						//¸ßÑ¹¹ÜÀíÄ£¿éÓÉ³õÊ¼»¯º¯Êı
+extern int Hv_Get(Hv_Voltage_Type object);	//»ñÈ¡µçÑ¹º¯Êı
 
 #endif
