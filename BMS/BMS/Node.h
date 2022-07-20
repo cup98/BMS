@@ -4,21 +4,21 @@
 #include "hidef.h"
 #include "derivative.h"
 
-typedef enum _PreNodeNum_Type
+typedef enum _Node_NumType
 {
-    Node0 = 1,
+    Node0,
     Node1,
     Node2
-} PreNodeNum_Type;
+} Node_NumType;
 
-typedef struct _PreNode_Struct_Type        //预充电节点结构
+typedef struct _Node_StateType        //预充电节点结构
 {
-    PreNodeNum_Type Node_Num;                          //当前节点号
+    Node_NumType Node_Num;                          //当前节点号
     int (*Condition)(void);                //条件
     int Branch_Condition;                  //分支条件
     void (*Action)(void);                  //执行动作
-    int Next_Node_Num;                     //下个节点号
-} PreNode_Struct_Type;
+    Node_NumType Next_Node_Num;                     //下个节点号
+} Node_StateType;
 
 
 
