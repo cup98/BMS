@@ -4,7 +4,6 @@
 #include "CAN_Cfg.h"
 
 Node_Num_Type Init_Node = Node0;	//初始化节点状态
-int node_start = 0;
 
 void Node_Init(void)				//Node初始化函数
 {

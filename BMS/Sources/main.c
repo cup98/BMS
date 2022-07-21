@@ -5,34 +5,43 @@
 #include "PIT.h"
 #include "PLL.h"
 #include "Node.h"
+#include "Hv.h"
+#include "Node.h"
+#include "PrechargeM.h"
+#include "RelayM.h"
 
-#define MODE_ONE      PORTC_PC4
-#define MODE_ONE_DIR  DDRC_DDRC4
-#define MODE_TWO      PORTC_PC5
-#define MODE_TWO_DIR  DDRC_DDRC5
+#define PIN_PC4       PORTC_PC4
+#define PIN_PC4_DDRC  DDRC_DDRC4
+#define PIN_PC5       PORTC_PC5
+#define PIN_PC5_DDRC  DDRC_DDRC5
 
-int begin = 0;
+int begin = 0;//启动节点开始位
+
 void main(void)
 {
     DisableInterrupts;
-    MODE_ONE = 1;
-    MODE_ONE_DIR = 1;
-    MODE_TWO = 0;
-    MODE_TWO_DIR = 1;
+    PIN_PC4 = 1;
+    PIN_PC4_DDRC = 1;
+    PIN_PC5 = 0;
+    PIN_PC5_DDRC = 1;
+
     PLL_Init();
     ECT_Init();
     CAN_Init();
     PIT_Init();
-
+    Hv_Init();
+    Node_Init();
+    PrechargeM_Init();
+    RelayM_Init();
     EnableInterrupts;
 
     for(;;)
     {
         _FEED_COP();
-    while (begin == 0)
-    {
-      Node_Poll();
-      begin = 1;
-    }
+        while (begin == 0)
+        {
+            Node_Poll();
+            begin = 1;
+        }
     }
 }

@@ -12,16 +12,16 @@ int Pre_Cfg_Clock(void)                           //ÅäÖÃÔ¤³äµÈ´ıÊ±¼äº¯Êı:µ¥Î»Ãë£
 
 int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//»ñÈ¡Ä¿±êµçÑ¹
 {
-  int ref = 0;
+  int rebuf = 0;
   if (object == BAT)
   {
-    ref = CAN1_GetBufType.Data[2];
+    rebuf = CAN1_GetBufType.Data[2];
   }
   else
   {
-    ref = 100;
+    rebuf = 100;
   }
-  return ref;
+  return rebuf;
 }
 
 Node_StateType Pre_Cfg_NodeStateType[] =         //½Úµã×´Ì¬×ª»»±í

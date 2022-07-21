@@ -6,7 +6,5 @@
 
 void PIT_Init(void);
 void PIT0_Init(void);
-void PIT1_Init(void);
-
 
 #endif

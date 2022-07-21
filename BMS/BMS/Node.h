@@ -21,7 +21,7 @@ typedef struct _Node_StateType  //构建节点状态机结构体
 } Node_StateType;
 
 extern void Node_Init(void);    //Node初始化函数
-extern void Node_Poll(void);    //Node节点判断函数
 extern void No_Act(void);       //Node空函数
+extern void Node_Poll(void);    //Node节点判断函数
 
 #endif

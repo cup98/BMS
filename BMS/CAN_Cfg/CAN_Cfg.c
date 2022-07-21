@@ -6,8 +6,7 @@
 
 int CAN_Time = 0;
 
-extern int begin;
-void CAN1_GetToSend(void)									  //璇诲嚭鎺ュ彈鍒扮殑鏁版嵁鍐嶅彂閫佸嚭鏉
+void CAN1_GetToSend(void)									//璇诲嚭鎺ュ彈鍒扮殑鏁版嵁鍐嶅彂閫佸嚭鏉
 {
   	if (CAN1_GetMsg(&CAN1_GetBufType) == 1)
   	{
