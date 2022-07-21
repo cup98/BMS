@@ -12,7 +12,7 @@ void CAN1_GetToSend(void)									  //璇诲嚭鎺ュ彈鍒扮殑鏁版嵁鍐嶅
   	if (CAN1_GetMsg(&CAN1_GetBufType) == 1)
   	{
   		begin = 0;
-      	if(CAN1_SendMsg(&CAN1_GetBufType) == 1)
+      	if (CAN1_SendMsg(&CAN1_GetBufType) == 1)
       	{
       	}
   	}
@@ -24,19 +24,19 @@ void CAN1_SendDemo(void)
 
   	if (CAN_Time == 1)
   	{
-  	  	if(CAN1_SendMsg(&CAN_CfgMsg1Type) == 1)
+  	  	if (CAN1_SendMsg(&CAN_CfgMsg1Type) == 1)
   	  	{
   	  	}
   	}
   	else if (CAN_Time == 2)
   	{
-  	  	if(CAN1_SendMsg(&CAN_CfgMsg2Type) == 1)
+  	  	if (CAN1_SendMsg(&CAN_CfgMsg2Type) == 1)
   	  	{
   	  	}
   	}
  	else if (CAN_Time == 3)
   	{
-    	if(CAN1_SendMsg(&CAN_CfgMsg3Type) == 1)
+    	if (CAN1_SendMsg(&CAN_CfgMsg3Type) == 1)
     	{
     	}
     	CAN_Time = 0;

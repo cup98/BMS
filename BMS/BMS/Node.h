@@ -6,9 +6,9 @@
 
 typedef enum _Node_Num_Type     //列举节点数量名称
 {
-    Node0,                  //判断故障节点
-    Node1,                  //预充完成判断节点
-    Node2,                  //放电故障判断节点
+    Node0,                      //判断故障节点
+    Node1,                      //预充完成判断节点
+    Node2,                      //放电故障判断节点
 } Node_Num_Type;
 
 typedef struct _Node_StateType  //构建节点状态机结构体

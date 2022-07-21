@@ -11,7 +11,7 @@ void PLL_Init(void)
 	PLLCTL_PLLON = 1;					//开PLL
 	_asm(nop);
 	_asm(nop);              			//等待连两个机器周期
-	while(CRGFLG_LOCK == 0 )	//等待PLL配置稳定&& i < 5
+	while(CRGFLG_LOCK == 0 )			//等待PLL配置稳定 && i < 5
 	{
 		//i++;
 	}

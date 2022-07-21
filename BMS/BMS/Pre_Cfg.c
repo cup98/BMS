@@ -24,25 +24,7 @@ int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//获取目标电压
   return ref;
 }
 
-/*Node_StateType Pre_Cfg_NodeStateType[3][4] =      //节点状态转换表
-{
- 	{
- 		{Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
- 		{Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
- 	},
- 	{
- 		{Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
- 		{Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
- 		{Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
- 		{Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
- 	},
- 	{
- 		{Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
- 		{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
- 	}
-};*/
-
-Node_StateType Pre_Cfg_NodeStateType[] =      //节点状态转换表
+Node_StateType Pre_Cfg_NodeStateType[] =         //节点状态转换表
 {
  		{Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
  		{Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
@@ -54,5 +36,4 @@ Node_StateType Pre_Cfg_NodeStateType[] =      //节点状态转换表
  		{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
 };
 
-
-
+const unsigned char Node_Num = sizeof(Pre_Cfg_NodeStateType)/sizeof(Pre_Cfg_NodeStateType[0]);//获取节点状态数量
