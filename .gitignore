@@ -45,8 +45,6 @@ BMS_Data/
 cmd/
 prm/
 
-datapage.c
-derivative.h
 Start12.c
 !/BMS/Sources/main.c
 
