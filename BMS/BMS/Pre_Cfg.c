@@ -51,7 +51,7 @@ Node_StateType Pre_Cfg_NodeStateType[] =      //节点状态转换表
  		{Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
  		{Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
  		{Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
- 		{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 }
+ 		{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
 };
 
 
