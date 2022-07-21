@@ -43,7 +43,6 @@
 bin/
 BMS_Data/
 cmd/
-prm/
 
 Start12.c
 !/BMS/Sources/main.c
