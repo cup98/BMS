@@ -43,10 +43,6 @@
 BMS_Data/
 cmd/
 
-Start12.c
-!/BMS/Sources/main.c
-
 /BMS/C_Layout.hwl
 Default.mem
-TBDML.ini
 
