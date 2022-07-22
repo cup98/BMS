@@ -12,28 +12,69 @@ int Pre_Cfg_Clock(void)                           //ÅäÖÃÔ¤³äµÈ´ýÊ±¼äº¯Êý:µ¥Î»Ãë£
 
 int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//»ñÈ¡Ä¿±êµçÑ¹
 {
-  int rebuf = 0;
-  if (object == BAT)
-  {
-    rebuf = CAN1_GetBufType.Data[2];
-  }
-  else
-  {
-    rebuf = 100;
-  }
-  return rebuf;
+    int rebuf = 0;
+    if (object == BAT)
+    {
+        rebuf = CAN1_GetBufType.Data[2];
+    }
+    else
+    {
+        rebuf = 100;
+    }
+    return rebuf;
 }
 
 Node_StateType Pre_Cfg_NodeStateType[] =         //½Úµã×´Ì¬×ª»»±í
 {
- 		{Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
- 		{Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
- 		{Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
- 		{Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
- 		{Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
- 		{Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
- 		{Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
- 		{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
+ 	{Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
+ 	{Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
+ 	{Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
+ 	{Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
+ 	{Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
+ 	{Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
+ 	{Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
+ 	{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
 };
+
+const Node_StateType Node_PreStateStart[] =
+{
+    {Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
+    {Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
+}
+
+const Node_StateType Node_PreStateCheck[] =
+{
+    {Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
+    {Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
+    {Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
+}
+
+const Node_StateType Node_PreStateFinish[] =
+{
+    {Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
+}
+
+const Node_StateType Node_PreStateFault[] =
+{
+    {Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
+    {Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
+}
+
+typedef struct _Node_StateCfgType {
+  uint8 num;
+  Node_StateType *state;
+} Node_StateCfgType;
+
+const Node_StateCfgType Node_StateCfg[] = {
+    {2, Node_PreStateStart},
+    {3, Node_PreStateCheck},
+    {1, Node_PreStateFinish},
+    {2, Node_PreStateFault},
+};
+
+typedef struct _NodeStateInfoType {
+  uint8 state;
+  Node_StateCfgType *state;
+} Node_StateInfoType;
 
 const unsigned char Node_Num = sizeof(Pre_Cfg_NodeStateType)/sizeof(Pre_Cfg_NodeStateType[0]);//»ñÈ¡½Úµã×´Ì¬ÊýÁ¿
