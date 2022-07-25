@@ -15,7 +15,7 @@
 #define PIN_PC5       PORTC_PC5
 #define PIN_PC5_DDRC  DDRC_DDRC5
 
-int begin = 0;//启动节点开始位
+//int begin = 0;//启动节点开始位
 
 void main(void)
 {
@@ -38,10 +38,10 @@ void main(void)
     for(;;)
     {
         _FEED_COP();
-        while (begin == 0)
-        {
-            Node_Poll();
-            begin = 1;
-        }
+       // while (begin == 0)
+       // {
+       //     Node_Poll();
+       //     begin = 1;
+       // }
     }
 }

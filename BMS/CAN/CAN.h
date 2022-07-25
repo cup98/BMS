@@ -8,12 +8,12 @@
 
 typedef struct _CAN_MsgType				//构造CAN通信报文结构
 {
-	unsigned long ID;					//仲裁帧id
+	unsigned long id;					//仲裁帧id
 	int IDE;							//IDE:0标准帧,1扩展帧
 	int RTR;							//RTR:0数据帧,1远程帧
-	unsigned char Data[CAN_MSG_MAXLEN];	//数据位
-	unsigned char Len;					//数据长度
-	unsigned char Prty;
+	unsigned char data[CAN_MSG_MAXLEN];	//数据位
+	unsigned char len;					//数据长度
+	unsigned char prty;
 } CAN_MsgType;
 
 typedef enum _CAN_Channel_CfgType		//CAN波特率选择
@@ -39,16 +39,16 @@ typedef enum _CAN_BpsCfgType			//CAN波特率选择
 
 typedef struct _CAN_ConfigType			//CAN模式配置
 {
-	CAN_BpsCfgType Bps;
+	CAN_BpsCfgType bps;
 	unsigned char sp;
 } CAN_ConfigType;
 
-extern CAN_MsgType CAN1_GetBufType;
 extern void CAN_Init(void);						//CAN初始化
-extern void CAN1_Init(CAN_ConfigType *CAN_Cfg);	//CAN1初始化(CAN模式配置结构体)
-extern int CAN1_SendMsg(CAN_MsgType *CAN_Msg);	//CAN发送报文函数(CAN报文数据结构体)
-extern int CAN1_GetMsg(CAN_MsgType *CAN_Msg);	//CAN接受报文函数(CAN报文数据结构体)
+extern void CAN1_Init(CAN_ConfigType *can_cfg);	//CAN1初始化(CAN模式配置结构体)
+extern int CAN1_SendMsg(CAN_MsgType *can_msg);	//CAN发送报文函数(CAN报文数据结构体)
+extern int CAN1_GetMsg(CAN_MsgType *can_msg);	//CAN接受报文函数(CAN报文数据结构体)
 extern void CAN_Delay10ms(unsigned int i);
+
 
 #endif
 

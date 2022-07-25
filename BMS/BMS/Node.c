@@ -2,24 +2,45 @@
 #include "Pre_Cfg.h"
 #include "PrechargeM.h"
 #include "CAN_Cfg.h"
+#include "Node_Cfg.h"
 
-Node_Num_Type Init_Node = Node0;	//初始化节点状态
+Node_Num_Type node_init = NODE0;
+//Node_StateInfoType state_init.node = node_init; //初始化节点状态
 
 void Node_Init(void)				//Node初始化函数
 {
 }
 
-void No_Act(void)					//Node空函数
+void Node_NoAct(void)					//Node空函数
 {
 }
 
 void Node_Poll(void)            	//Node节点判断函数
 {
-	unsigned char i = 0;
-  	CAN_CfgPreStateOut_TestType.Data[7] = Node_Num;												 //获取节点状态数量
-	for (i = 0; i < Node_Num; i++)                                                  			 //做分支内循环，寻找对应的动作函数
+	unsigned char i = 0,branch = 0;
+  	//CAN_CfgPreStateOut_TestType.Data[7] = Node_Num;												 //获取节点状态数量
+	//state_init->state = Node_StateCfg[node_init];
+	node_state_info.node = node_init;
+	node_state_info.state = &(node_state_cfg[node_init]);
+ 	branch = node_state_info.state->num;
+
+	CAN_GetToMsg_data(7 ,branch);
+	CAN_GetToMsg_data(0 ,node_init);
+	//Node_StateCfg[Init_Node].state
+	for (i = 0; i < branch; i++)                                                  			 //做分支内循环，寻找对应的动作函数
 	{
-		CAN_CfgPreStateOut_TestType.Data[6] = i;
+		if (node_state_info.state->state[i].branch_condition() == 
+			node_state_info.state->state[i].condition)
+		{
+			node_state_info.state->state[i].action();
+			node_init = node_state_info.state->state[i].next_node;
+
+			CAN_GetToMsg_data(1 ,node_init);
+
+			break; 
+		}
+
+		/*CAN_CfgPreStateOut_TestType.Data[6] = i;
 		if ((Pre_Cfg_NodeStateType[i].Current_Node == Init_Node) &&								 //判断当前节点是否与进入节点相同
 		    (Pre_Cfg_NodeStateType[i].Condition()  == Pre_Cfg_NodeStateType[i].Branch_Condition))//判断条件与进入分支条件是否相同
 		{
@@ -33,7 +54,7 @@ void Node_Poll(void)            	//Node节点判断函数
 	    	{
 	    	}
 	    	break;
-		}
+		}*/
 	}
 }
 

@@ -1,13 +1,16 @@
 #include "Pre_Cfg.h"
+#include "CAN_Cfg.h"
 
 int Pre_Cfg_Fault(void)                           //配置错误函数:0无错,1有错
 {
-	return CAN1_GetBufType.Data[0];									//通过返回接收的CAN数字段0
+	//return 0;
+	return receive_buf.data[0];									//通过返回接收的CAN数字段0
 }
 
 int Pre_Cfg_Clock(void)                           //配置预充等待时间函数:单位秒，小于3秒
 {
-	return CAN1_GetBufType.Data[1];                 //通过返回接收的CAN数字段1
+	//return 2;
+	return receive_buf.data[1];                 //通过返回接收的CAN数字段1
 }
 
 int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//获取目标电压
@@ -15,66 +18,36 @@ int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//获取目标电压
     int rebuf = 0;
     if (object == BAT)
     {
-        rebuf = CAN1_GetBufType.Data[2];
+        //rebuf = 50;
+        rebuf = receive_buf.data[2];
+    }
+    else if (object == V1)
+    {
+        rebuf = 100;
+    }
+    else if (object == V2)
+    {
+        rebuf = 120;
+    }
+    else if (object == V3)
+    {
+        rebuf = 140;
     }
     else
     {
-        rebuf = 100;
     }
     return rebuf;
 }
 
-Node_StateType Pre_Cfg_NodeStateType[] =         //节点状态转换表
+Pre_Cfg_IsFailType pre_cfg_max_time =
 {
- 	{Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
- 	{Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
- 	{Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
- 	{Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
- 	{Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
- 	{Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
- 	{Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
- 	{Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
+    3,
 };
 
-const Node_StateType Node_PreStateStart[] =
+Pre_Cfg_IsFinishType pre_cfg_voltage_stats =
 {
-    {Node0 ,Pre_Cfg_Fault ,1 ,No_Act ,Node0 },
-    {Node0 ,Pre_Cfg_Fault ,0 ,PrechargeM_StartPre ,Node1 },
-}
-
-const Node_StateType Node_PreStateCheck[] =
-{
-    {Node1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,Node0 },
-    {Node1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,Node0 },
-    {Node1 ,PrechargeM_IsFinish ,0 ,No_Act ,Node1 },
-}
-
-const Node_StateType Node_PreStateFinish[] =
-{
-    {Node1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,Node2 },
-}
-
-const Node_StateType Node_PreStateFault[] =
-{
-    {Node2 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopMaster ,Node0 },
-    {Node2 ,Pre_Cfg_Fault ,0 ,No_Act ,Node2 },
-}
-
-typedef struct _Node_StateCfgType {
-  uint8 num;
-  Node_StateType *state;
-} Node_StateCfgType;
-
-const Node_StateCfgType Node_StateCfg[] = {
-    {2, Node_PreStateStart},
-    {3, Node_PreStateCheck},
-    {1, Node_PreStateFinish},
-    {2, Node_PreStateFault},
+    V1,
+    95,
 };
 
-typedef struct _NodeStateInfoType {
-  uint8 state;
-  Node_StateCfgType *state;
-} Node_StateInfoType;
 
-const unsigned char Node_Num = sizeof(Pre_Cfg_NodeStateType)/sizeof(Pre_Cfg_NodeStateType[0]);//获取节点状态数量
