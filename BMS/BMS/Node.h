@@ -30,13 +30,13 @@ typedef struct _Node_StateType  //构建节点状态机结构体
 typedef struct _Node_StateCfgType
 {
   unsigned char num;
-  Node_StateType *state;
+  const Node_StateType* state;
 } Node_StateCfgType;
 
 typedef struct _Node_StateInfoType
 {
   Node_Num_Type node;
-  Node_StateCfgType *state;
+  const Node_StateCfgType* state;
 } Node_StateInfoType;
 
 typedef struct _Node_BackStateInfoType  //构建节点状态机结构体

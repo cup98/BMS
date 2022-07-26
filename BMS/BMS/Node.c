@@ -15,7 +15,7 @@ void Node_NoAct(void)					//Node空函数
 
 void Node_Poll(void)            	//Node节点判断函数
 {
-	unsigned char i = 0,branch = 0;
+	unsigned char i = 0 ,branch = 0;
 
 	Node_StateInfo.node = NodeInit;
 	Node_StateInfo.state = &(Node_StateCfg[NodeInit]);
@@ -33,7 +33,6 @@ void Node_Poll(void)            	//Node节点判断函数
 			NodeInit = Node_StateInfo.state->state[i].next_node;//将下次执行的节点号读取出来
 
 			Node_BackStateInfo.next_node = NodeInit;
-
 			break;
 		}
 	}

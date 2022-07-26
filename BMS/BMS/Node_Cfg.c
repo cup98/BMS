@@ -12,8 +12,8 @@ const Node_StateType Node_Pre_StateFinish[] =
 {
     {NODE1 ,Pre_Cfg_Fault ,1 ,PrechargeM_StopPre ,NODE0 },
     {NODE1 ,PrechargeM_IsFail ,1 ,PrechargeM_StopPre ,NODE0 },
-    {NODE1 ,PrechargeM_IsFinish,0 ,Node_NoAct ,NODE1 },
-    {NODE1 ,PrechargeM_IsFinish,1 ,PrechargeM_Change ,NODE2 },
+    {NODE1 ,PrechargeM_IsFinish ,0 ,Node_NoAct ,NODE1 },
+    {NODE1 ,PrechargeM_IsFinish ,1 ,PrechargeM_Change ,NODE2 },
 };
 
 const Node_StateType Node_Pre_StateFault[] =
