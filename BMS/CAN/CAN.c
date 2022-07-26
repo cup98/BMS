@@ -1,16 +1,15 @@
 #include "CAN.h"
 #include "CAN_Cfg.h"
 
-int wait_time = 100;				//ϵͳ�ȴ�ʱ��
-
 void CAN_Init(void)											//CAN初始�
 {
-	CAN1_Init(&can_hwcfg);
+	CAN1_Init(&CAN_HwCfg);
 }
 
 void CAN1_Init(CAN_ConfigType *can_cfg)						//CAN1初始化以及配置CLK
 {
-	int wait_1 = 0,wait_2 = 0,wait_3 = 0;
+	int wait_time = 100;									//ϵͳ�ȴ�ʱ��
+	int wait_1 = 0 ,wait_2 = 0 ,wait_3 = 0;
 	if (CAN1CTL0_INITRQ == 0) 								//查询是否进入初始化状�
 	{
 		CAN1CTL0_INITRQ = 1;								//进入初始化状�
@@ -101,7 +100,7 @@ void CAN1_Init(CAN_ConfigType *can_cfg)						//CAN1初始化以及配置CLK
 															//CAN1发�
 int CAN1_SendMsg(CAN_MsgType *can_msg)
 {
-	unsigned char send_buf, sp ,rebuf;						//设置发�缓冲区、发送数据位�
+	unsigned char send_buf,	sp ,rebuf;						//设置发�缓冲区、发送数据位�
 	if (can_msg->len > CAN_MSG_MAXLEN)						//�查数据长�
 	{
 		rebuf = 0;
@@ -117,12 +116,12 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
 	} while (!(send_buf));									//寻找空闲的缓冲器														//��չ֡ID����
 	if (can_msg->IDE)
 	{
-  		CAN1TXIDR0 =  (unsigned char)(can_msg->id >> 21);
-  		CAN1TXIDR1 =  (unsigned char)(can_msg->id >> 13) & 0xE0;
+  		CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 21);
+  		CAN1TXIDR1 =  (unsigned char)(can_msg->ID >> 13) & 0xE0;
   		CAN1TXIDR1 |= 0x18;
-  		CAN1TXIDR1 |= (unsigned char)(can_msg->id >> 15) & 0x07;
-  		CAN1TXIDR2 =  (unsigned char)(can_msg->id >> 7);
-  		CAN1TXIDR3 =  (unsigned char)(can_msg->id << 1);
+  		CAN1TXIDR1 |= (unsigned char)(can_msg->ID >> 15) & 0x07;
+  		CAN1TXIDR2 =  (unsigned char)(can_msg->ID >> 7);
+  		CAN1TXIDR3 =  (unsigned char)(can_msg->ID << 1);
   		if (can_msg->RTR)									//判断IDE�0标准�,1远程�
 		{
 			CAN1TXIDR3 |= 0x01;
@@ -134,8 +133,8 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
 	}
 	else
 	{														//��׼֡ID����
-  		CAN1TXIDR0 =  (unsigned char)(can_msg->id >> 3);
-  		CAN1TXIDR1 =  (unsigned char)(can_msg->id << 5);
+  		CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 3);
+  		CAN1TXIDR1 =  (unsigned char)(can_msg->ID << 5);
   		CAN1TXIDR1 &= 0xF7;
   		if (can_msg->RTR)									//判断IDE�0标准�,1远程�
 		{
@@ -166,11 +165,11 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)						//CAN1接收
   	}
   	if ((CAN1RXIDR1 & 0x08) == 0x08)                        //判断是否为标准帧
   	{
-        can_msg->id = ((unsigned long)(CAN1RXIDR0 & 0xff)) << 21;
-  	    can_msg->id = can_msg->id | (((unsigned long)(CAN1RXIDR1 & 0xe0)) << 13);
-	    can_msg->id = can_msg->id | (((unsigned long)(CAN1RXIDR1 & 0x07)) << 15);
-	    can_msg->id = can_msg->id | (((unsigned long)(CAN1RXIDR2 & 0xff)) << 7);
-	    can_msg->id = can_msg->id | (((unsigned long)(CAN1RXIDR3 & 0xfe)) >> 1);
+        can_msg->ID = ((unsigned long)(CAN1RXIDR0 & 0xff)) << 21;
+  	    can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0xe0)) << 13);
+	    can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0x07)) << 15);
+	    can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR2 & 0xff)) << 7);
+	    can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR3 & 0xfe)) >> 1);
         can_msg->IDE = 1;
         if (CAN1RXIDR3 & 0x01)                         		//判断是否为远程帧
   		{
@@ -183,7 +182,7 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)						//CAN1接收
   	}
   	else
   	{
-  	  	can_msg->id  = (unsigned long)(CAN1RXIDR0 << 3) | 	//读出接收帧ID�8�
+  	  	can_msg->ID  = (unsigned long)(CAN1RXIDR0 << 3) | 	//读出接收帧ID�8�
             	  	   (unsigned long)(CAN1RXIDR1 >> 5) ; 	//并且与上读出接收帧ID�3�
         can_msg->IDE = 0;
         if (CAN1RXIDR1 & 0x10)                         		//判断是否为远程帧

@@ -1,6 +1,5 @@
 #include "PrechargeM.h"
 #include "Pre_Cfg.h"
-#include "CAN_Cfg.h"
 #include "RelayM.h"
 #include "Hv.h"
 
@@ -38,7 +37,7 @@ void PrechargeM_Change(void)		//继电器切换函数
 int PrechargeM_IsFail()			//超时判断函数
 {									//判断自启动预充至此刻的时间是否超过3秒
 	int rebuf;
-	if (Pre_Cfg_Clock() <= pre_cfg_max_time.second)
+	if (Pre_Cfg_Clock() <= Pre_Cfg_MaxTime.second)
 	{
 		rebuf = 0;
 	}
@@ -52,8 +51,8 @@ int PrechargeM_IsFail()			//超时判断函数
 int PrechargeM_IsFinish()		//预充完成判断函数
 {
 	int rebuf;
-	if (Hv_Get(pre_cfg_voltage_stats.object) * 100 >=
-		Hv_Get(BAT) * (pre_cfg_voltage_stats.percent))	//判断V1电压是否大于BAT电压的95%
+	if (Hv_Get(Pre_Cfg_VoltageStats.object) * 100 >=
+		Hv_Get(BAT) * (Pre_Cfg_VoltageStats.percent))	//判断V1电压是否大于BAT电压的95%
 	{
 		rebuf = 1;
 	}

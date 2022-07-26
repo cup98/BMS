@@ -8,7 +8,7 @@
 
 typedef struct _CAN_MsgType				//构造CAN通信报文结构
 {
-	unsigned long id;					//仲裁帧id
+	unsigned long ID;					//仲裁帧id
 	int IDE;							//IDE:0标准帧,1扩展帧
 	int RTR;							//RTR:0数据帧,1远程帧
 	unsigned char data[CAN_MSG_MAXLEN];	//数据位

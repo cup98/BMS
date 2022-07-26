@@ -1,13 +1,12 @@
 #include "RelayM.h"
-#include "CAN_Cfg.h"
 
-RelayM_CtrlType ReM_Ctl =									//³õÊ¼»¯¼ÌµçÆ÷×´Ì¬
+RelayM_CtrlType RelayM_Ctrl =									//³õÊ¼»¯¼ÌµçÆ÷×´Ì¬
 {
 	0,
 	0,
 };
 
-RelayM_SwitchType ReM_Swi =									//³õÊ¼»¯¿ª¹Ø×´Ì¬
+RelayM_SwitchType RelayM_Switch =									//³õÊ¼»¯¿ª¹Ø×´Ì¬
 {
 	0,
 	0,
@@ -21,11 +20,11 @@ void RelayM_Control(RelayM_Object_Type object ,int state)	//¿ØÖÆ¼ÌµçÆ÷¿ª¹Øº¯Êý(¿
 {
 	if(object == MASTER)
 	{
-		ReM_Ctl.Master = state;
+		RelayM_Ctrl.Master = state;
 	}
 	else
 	{
-		ReM_Ctl.Precharge = state;
+		RelayM_Switch.Precharge = state;
 	}
 }
 
@@ -33,10 +32,10 @@ void RelayM_Change(RelayM_Object_Type object ,int state)	//ÇÐ»»¿ª¹Øº¯Êý(¿ØÖÆÄ¿±ê
 {
 	if(object == MASTER)
 	{
-		ReM_Swi.Master  = state;
+		RelayM_Ctrl.Master  = state;
 	}
 	else
 	{
-		ReM_Swi.Precharge = state;
+		RelayM_Switch.Precharge = state;
 	}
 }

@@ -1,18 +1,16 @@
 #include "CAN_Cfg.h"
-#include "CAN.h"
+#include "Pre_Cfg.h"
+#include "Node.h"
 
-#include "hidef.h"
-#include "derivative.h"
+int CAN_Time = 0;
 
-int can_time = 0;
-
-CAN_ConfigType can_hwcfg =			//è®¾ç½®æ³¢ç‰¹çŽ‡
+CAN_ConfigType CAN_HwCfg =			//è®¾ç½®æ³¢ç‰¹çŽ‡
 {
 	CAN_BPS_125K,
 	1,
 };
 
-CAN_MsgType msg1 =					//è®¾ç½®CANæ ‡å‡†å¸§
+CAN_MsgType Msg1 =					//è®¾ç½®CANæ ‡å‡†å¸§
 {
 	0x01F,
 	0,
@@ -22,7 +20,7 @@ CAN_MsgType msg1 =					//è®¾ç½®CANæ ‡å‡†å¸§
 	0,
 };
 
-CAN_MsgType msg2 =
+CAN_MsgType Msg2 =
 {
 	0x1FFFFFFF,
 	1,
@@ -32,7 +30,7 @@ CAN_MsgType msg2 =
 	0,
 };
 
-CAN_MsgType msg3 =
+CAN_MsgType Msg3 =
 {
 	0x03,
 	0,
@@ -42,9 +40,9 @@ CAN_MsgType msg3 =
 	0,
 };
 
-CAN_MsgType receive_buf =
+CAN_MsgType CAN_Cfg_ReceiveBuf =
 {
-	0xFF,
+	0x5FF,
 	0,
 	0,
 	{0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00},
@@ -53,7 +51,7 @@ CAN_MsgType receive_buf =
 };
 
 
-CAN_MsgType back_data_buf =
+CAN_MsgType CAN_Cfg_BackDataBuf =
 {
 	0x111,
 	0,
@@ -63,69 +61,60 @@ CAN_MsgType back_data_buf =
 	0,
 };
 
-void CAN1_GetToSend(void)									//璇诲嚭鎺ュ彈鍒扮殑鏁版嵁鍐嶅彂閫佸嚭鏉
-{
-  	if (CAN1_GetMsg(&receive_buf) == 1)
-  	{
-  	//	begin = 0;
-      	if (CAN1_SendMsg(&receive_buf) == 1)
-      	{
-      	}
-  	}
-}
-
 void CAN1_SendDemo(void)
 {
-	can_time++;
-  	if (can_time == 1)
+	CAN_Time++;
+  	if (CAN_Time == 1)
   	{
-  	  	if (CAN1_SendMsg(&msg1) == 1)
+  	  	if (CAN1_SendMsg(&Msg1) == 1)
   	  	{
   	  	}
   	}
-  	else if (can_time == 2)
+  	else if (CAN_Time == 2)
   	{
-  	  	if (CAN1_SendMsg(&msg2) == 1)
+  	  	if (CAN1_SendMsg(&Msg2) == 1)
   	  	{
   	  	}
   	}
- 	else if (can_time == 3)
+ 	else if (CAN_Time == 3)
   	{
-    	if (CAN1_SendMsg(&msg3) == 1)
+    	if (CAN1_SendMsg(&Msg3) == 1)
     	{
     	}
-    	can_time = 0;
+    	CAN_Time = 0;
   	}
 	else
 	{
 	}
 }
 
-void CAN_GetToMsg_data(int byte_num ,unsigned char data)
+void CAN_Get_PreCfg(void)									//璇诲嚭鎺ュ彈鍒扮殑鏁版嵁鍐嶅彂閫佸嚭鏉
 {
-	back_data_buf.data[byte_num] = data;
-	CAN1_SendMsg(&back_data_buf);
+  	if (CAN1_GetMsg(&CAN_Cfg_ReceiveBuf) == 1)
+  	{
+      	Pre_Cfg_WriteCfg(FAULT ,CAN_Cfg_ReceiveBuf.data[0]);
+      	Pre_Cfg_WriteCfg(CLOCK ,CAN_Cfg_ReceiveBuf.data[1]);
+      	Pre_Cfg_WriteCfg(PRE_VOLTAGE ,CAN_Cfg_ReceiveBuf.data[2]);
+      	if (CAN1_SendMsg(&CAN_Cfg_ReceiveBuf) == 1)
+      	{
+      	}
+  	}
 }
 
-/*void CAN_GetToMsg_data(CAN_MsgType receive_buf ,int byte_num ,unsigned char data)
+void CAN_Send_PreNodeState(void)
 {
-	receive_buf.data[byte_num] = data;
-}*/
-
-/*CAN_MsgType CAN_CfgPreStateOut_Test =
-{
-	0x6F,
-	0,
-	0,
-	{0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},
-	8,
-	0,
-};*/
+	CAN_Cfg_BackDataBuf.data[0] = (unsigned char)Node_BackNodeState(CURRENT_NODE);
+	CAN_Cfg_BackDataBuf.data[1] = (unsigned char)Node_BackNodeState(NEXT_NODE);
+	CAN_Cfg_BackDataBuf.data[7] = (unsigned char)Node_BackNodeState(BRANCH_NUM);
+  if (CAN1_SendMsg(&CAN_Cfg_BackDataBuf) == 1)
+ 	{
+  }
+}
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED						//CAN鎺ユ敹瑙﹀彂涓柇鍑芥暟
 void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 {
-    CAN1_GetToSend();
+    CAN_Get_PreCfg();
 }
 #pragma CODE_SEG DEFAULT
 
@@ -134,10 +123,7 @@ void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 void interrupt VectorNumber_Vpit0 PIT0(void)				//涓柇鏈嶅姟鍑芥暟
 {
     PITTF_PTF0 = 1;
-    //CAN1_SendDemo();										//PIT0涓柇
-    //CAN1_GetToSend();
-    
-    
+    CAN_Send_PreNodeState();
     Node_Poll();
 }
 #pragma CODE_SEG DEFAULT
