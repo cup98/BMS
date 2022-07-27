@@ -49,7 +49,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata                          105     R     0xC051     0xC0B9   ROM_C000
 NON_BANKED                        65     R     0xC0BA     0xC0FA   ROM_C000
 .copy                             49     R     0xC0FB     0xC12B   ROM_C000
-.text                           1360     R   0xFE8000   0xFE854F   PAGE_FE
+.text                           1363     R   0xFE8000   0xFE8552   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .data                             45   R/W     0x2100     0x212C   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -797,7 +797,7 @@ NON_BANKED                        65     R     0xC0BA     0xC0FA   ROM_C000
 .vectSeg740_vect                   2     R     0xFFFE     0xFFFF   .vectSeg740
 
 Summary of section sizes per section type:
-READ_ONLY (R):         682 (dec:     1666)
+READ_ONLY (R):         685 (dec:     1669)
 READ_WRITE (R/W):      144 (dec:      324)
 NO_INIT (N/I):         383 (dec:      899)
 
@@ -1599,29 +1599,29 @@ MODULE:                 -- PrechargeM.c.o --
 MODULE:                 -- RelayM.c.o --
 - PROCEDURES:
      RelayM_Init                             FE819C       1       1       2   .text       
-     RelayM_Control                          FE819D      13      19       8   .text       
+     RelayM_Control                          FE819D      16      22       8   .text       
 - VARIABLES:
      RelayM_Ctrl                               212F       4       4       1   .bss        
      RelayM_Switch                             2133       4       4       1   .bss        
 MODULE:                 -- CAN.c.o --
 - PROCEDURES:
-     CAN_Init                                FE81B0       8       8       2   .text       
-     CAN1_Init                               FE81B8      E9     233       3   .text       
-     CAN1_SendMsg                            FE82A1      C9     201       6   .text       
-     CAN1_GetMsg                             FE836A      CE     206       4   .text       
+     CAN_Init                                FE81B3       8       8       2   .text       
+     CAN1_Init                               FE81BB      E9     233       3   .text       
+     CAN1_SendMsg                            FE82A4      C9     201       6   .text       
+     CAN1_GetMsg                             FE836D      CE     206       4   .text       
 - VARIABLES:
 MODULE:                 -- ECT.c.o --
 - PROCEDURES:
-     ECT_Init                                FE8438      24      36       2   .text       
+     ECT_Init                                FE843B      24      36       2   .text       
 - VARIABLES:
 MODULE:                 -- PIT.c.o --
 - PROCEDURES:
-     PIT_Init                                FE845C       5       5       2   .text       
-     PIT0_Init                               FE8461      1F      31       2   .text       
+     PIT_Init                                FE845F       5       5       2   .text       
+     PIT0_Init                               FE8464      1F      31       2   .text       
 - VARIABLES:
 MODULE:                 -- PLL.c.o --
 - PROCEDURES:
-     PLL_Init                                FE8480      1D      29       2   .text       
+     PLL_Init                                FE8483      1D      29       2   .text       
 - VARIABLES:
 MODULE:                 -- Node_Cfg.c.o --
 - PROCEDURES:
@@ -1632,10 +1632,10 @@ MODULE:                 -- Node_Cfg.c.o --
      Node_StateCfg                             C0B1       9       9       1   .rodata     
 MODULE:                 -- Pre_Cfg.c.o --
 - PROCEDURES:
-     Pre_Cfg_WriteCfg                        FE849D      24      36       6   .text       
-     Pre_Cfg_Fault                           FE84C1       5       5      10   .text       
-     Pre_Cfg_Clock                           FE84C6       5       5       2   .text       
-     Per_Cfg_GetVoltage                      FE84CB      2B      43       2   .text       
+     Pre_Cfg_WriteCfg                        FE84A0      24      36       6   .text       
+     Pre_Cfg_Fault                           FE84C4       5       5      10   .text       
+     Pre_Cfg_Clock                           FE84C9       5       5       2   .text       
+     Per_Cfg_GetVoltage                      FE84CE      2B      43       2   .text       
 - VARIABLES:
      Pre_Cfg_MaxTime                           2100       2       2       1   .data       
      Pre_Cfg_VoltageStats                      2102       4       4       2   .data       
@@ -1646,8 +1646,8 @@ MODULE:                 -- CAN_Cfg.c.o --
      CAN_HwCfg                                 2106       3       3       1   .data       
 MODULE:                 -- CAN_App.c.o --
 - PROCEDURES:
-     CAN_Get_PreCfg                          FE84F6      35      53       2   .text       
-     CAN_Send_NodeState                      FE852B      25      37       2   .text       
+     CAN_Get_PreCfg                          FE84F9      35      53       2   .text       
+     CAN_Send_NodeState                      FE852E      25      37       2   .text       
      CAN_receive                               C0E9       5       5       1   NON_BANKED  
      PIT0                                      C0EE       D      13       1   NON_BANKED  
 - VARIABLES:
@@ -1667,7 +1667,7 @@ MODULE STATISTIC
   Hv.c.o                                       0     46      0
   Node.c.o                                    12    146      0
   PrechargeM.c.o                               0    122      0
-  RelayM.c.o                                   8     20      0
+  RelayM.c.o                                   8     23      0
   CAN.c.o                                      0    648      0
   ECT.c.o                                      0     36      0
   PIT.c.o                                      0     36      0
@@ -3963,21 +3963,21 @@ OBJECT LIST SORTED BY ADDRESS
      PrechargeM_IsFail                       FE8154      18      24       2   .text       
      PrechargeM_IsFinish                     FE816C      30      48       4   .text       
      RelayM_Init                             FE819C       1       1       2   .text       
-     RelayM_Control                          FE819D      13      19       8   .text       
-     CAN_Init                                FE81B0       8       8       2   .text       
-     CAN1_Init                               FE81B8      E9     233       3   .text       
-     CAN1_SendMsg                            FE82A1      C9     201       6   .text       
-     CAN1_GetMsg                             FE836A      CE     206       4   .text       
-     ECT_Init                                FE8438      24      36       2   .text       
-     PIT_Init                                FE845C       5       5       2   .text       
-     PIT0_Init                               FE8461      1F      31       2   .text       
-     PLL_Init                                FE8480      1D      29       2   .text       
-     Pre_Cfg_WriteCfg                        FE849D      24      36       6   .text       
-     Pre_Cfg_Fault                           FE84C1       5       5      10   .text       
-     Pre_Cfg_Clock                           FE84C6       5       5       2   .text       
-     Per_Cfg_GetVoltage                      FE84CB      2B      43       2   .text       
-     CAN_Get_PreCfg                          FE84F6      35      53       2   .text       
-     CAN_Send_NodeState                      FE852B      25      37       2   .text       
+     RelayM_Control                          FE819D      16      22       8   .text       
+     CAN_Init                                FE81B3       8       8       2   .text       
+     CAN1_Init                               FE81BB      E9     233       3   .text       
+     CAN1_SendMsg                            FE82A4      C9     201       6   .text       
+     CAN1_GetMsg                             FE836D      CE     206       4   .text       
+     ECT_Init                                FE843B      24      36       2   .text       
+     PIT_Init                                FE845F       5       5       2   .text       
+     PIT0_Init                               FE8464      1F      31       2   .text       
+     PLL_Init                                FE8483      1D      29       2   .text       
+     Pre_Cfg_WriteCfg                        FE84A0      24      36       6   .text       
+     Pre_Cfg_Fault                           FE84C4       5       5      10   .text       
+     Pre_Cfg_Clock                           FE84C9       5       5       2   .text       
+     Per_Cfg_GetVoltage                      FE84CE      2B      43       2   .text       
+     CAN_Get_PreCfg                          FE84F9      35      53       2   .text       
+     CAN_Send_NodeState                      FE852E      25      37       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -4000,7 +4000,7 @@ NOT USED VARIABLES
 rtshc12.c.o (ansixbf.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 CAN_App.c.o:
-  Msg1 Msg2 Msg3 CAN_Time 
+  CAN_DemoMsg1 CAN_DemoMsg2 CAN_DemoMsg3 CAN_Time.1 
 
 *********************************************************************************************
 COPYDOWN SECTION
@@ -4232,5 +4232,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 9
-Total size of all blocks to be downloaded: 1666
+Total size of all blocks to be downloaded: 1669
 

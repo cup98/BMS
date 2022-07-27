@@ -4,15 +4,15 @@
 #include "hidef.h"
 #include "derivative.h"
 
-typedef enum _Hv_Voltage_Type 				//获取电压目标
+typedef enum _Hv_Voltage_Type               //获取电压目标
 {
-	BAT,
-	V1,
-	V2,
-	V3,
+    HV_BAT,
+    HV_V1,
+    HV_V2,
+    HV_V3,
 } Hv_Voltage_Type;
 
-extern void Hv_Init(void); 					//高压管理模块由初始化函数
-extern int Hv_Get(Hv_Voltage_Type object);	//获取电压函数
+extern void Hv_Init(void);                  //高压管理模块由初始化函数
+extern int Hv_Get(Hv_Voltage_Type object);  //获取电压函数
 
 #endif

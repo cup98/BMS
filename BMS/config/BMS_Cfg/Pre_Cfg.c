@@ -9,21 +9,21 @@ Pre_Cfg_IsFailType Pre_Cfg_MaxTime =
 
 Pre_Cfg_IsFinishType Pre_Cfg_VoltageStats =
 {
-    V1,
+    HV_V1,
     95,
 };
 
 void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data)
 {
-    if (state == FAULT)
+    if (state == PRE_CFG_FAULT)
     {
         Pre_CfgState.fault = data;
     }
-    else if (state == CLOCK)
+    else if (state == PRE_CFG_CLOCK)
     {
         Pre_CfgState.clock = data;
     }
-    else if (state == PRE_VOLTAGE)
+    else if (state == PRE_CFG_VOLTAGE)
     {
         Pre_CfgState.pre_voltage = data;
     }
@@ -45,19 +45,19 @@ int Pre_Cfg_Clock(void)                           //≈‰÷√‘§≥‰µ»¥˝ ±º‰∫Ø ˝:µ•Œª√Î£
 int Per_Cfg_GetVoltage(Hv_Voltage_Type object)      //ªÒ»°ƒø±ÍµÁ—π
 {
     int rebuf = 0;
-    if (object == BAT)
+    if (object == HV_BAT)
     {
         rebuf = Pre_CfgState.pre_voltage;
     }
-    else if (object == V1)
+    else if (object == HV_V1)
     {
         rebuf = 100;
     }
-    else if (object == V2)
+    else if (object == HV_V2)
     {
         rebuf = 120;
     }
-    else if (object == V3)
+    else if (object == HV_V3)
     {
         rebuf = 140;
     }
