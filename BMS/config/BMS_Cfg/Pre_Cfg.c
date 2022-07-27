@@ -1,5 +1,18 @@
 #include "Pre_Cfg.h"
 
+Pre_CfgStateType Pre_CfgState;
+
+Pre_Cfg_IsFailType Pre_Cfg_MaxTime =
+{
+    3,
+};
+
+Pre_Cfg_IsFinishType Pre_Cfg_VoltageStats =
+{
+    V1,
+    95,
+};
+
 void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data)
 {
     if (state == FAULT)
@@ -21,22 +34,19 @@ void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data)
 
 int Pre_Cfg_Fault(void)                           //配置错误函数:0无错,1有错
 {
-	//return 0;
-	return Pre_CfgState.fault;									//通过返回接收的CAN数字段0
+    return Pre_CfgState.fault;                                  //通过返回接收的CAN数字段0
 }
 
 int Pre_Cfg_Clock(void)                           //配置预充等待时间函数:单位秒，小于3秒
 {
-	//return 2;
-	return Pre_CfgState.clock;                 //通过返回接收的CAN数字段1
+    return Pre_CfgState.clock;                 //通过返回接收的CAN数字段1
 }
 
-int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//获取目标电压
+int Per_Cfg_GetVoltage(Hv_Voltage_Type object)      //获取目标电压
 {
     int rebuf = 0;
     if (object == BAT)
     {
-        //rebuf = 50;
         rebuf = Pre_CfgState.pre_voltage;
     }
     else if (object == V1)
@@ -56,16 +66,3 @@ int Per_Cfg_GetVoltage(Hv_Voltage_Type object)		//获取目标电压
     }
     return rebuf;
 }
-
-Pre_Cfg_IsFailType Pre_Cfg_MaxTime =
-{
-    3,
-};
-
-Pre_Cfg_IsFinishType Pre_Cfg_VoltageStats =
-{
-    V1,
-    95,
-};
-
-Pre_CfgStateType Pre_CfgState;

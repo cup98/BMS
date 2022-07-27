@@ -30,12 +30,12 @@ typedef struct _Pre_Cfg_IsFinishType  //构建节点状态机结构体
     int percent;
 } Pre_Cfg_IsFinishType;
 
+extern Pre_CfgStateType Pre_CfgState;
+extern Pre_Cfg_IsFailType Pre_Cfg_MaxTime;
+extern Pre_Cfg_IsFinishType Pre_Cfg_VoltageStats;
 extern void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data);
 extern int Pre_Cfg_Fault(void);							//配置错误函数:0无错,1有错
 extern int Pre_Cfg_Clock(void);							//配置预充等待时间函数:单位秒，小于3秒
 extern int Per_Cfg_GetVoltage(Hv_Voltage_Type object);	//获取目标电压(目标BAT/V1)
-extern Pre_Cfg_IsFailType Pre_Cfg_MaxTime;
-extern Pre_Cfg_IsFinishType Pre_Cfg_VoltageStats;
-extern Pre_CfgStateType Pre_CfgState;
 
 #endif

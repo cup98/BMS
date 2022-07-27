@@ -1,5 +1,6 @@
 #include "Node_Cfg.h"
-
+#include "Pre_Cfg.h"
+#include "PrechargeM.h"
 
 //节点状态转换表
 const Node_StateType Node_Pre_StateStart[] =

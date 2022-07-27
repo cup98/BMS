@@ -2,7 +2,7 @@
 #include "Node_Cfg.h"
 
 static Node_Num_Type NodeInit = NODE0;//初始化节点状态
-Node_BackStateInfoType Node_BackStateInfo;
+Node_ElementBackType Node_ElementBack;
 Node_StateInfoType Node_StateInfo;
 
 void Node_Init(void)				//Node初始化函数
@@ -21,8 +21,8 @@ void Node_Poll(void)            	//Node节点判断函数
 	Node_StateInfo.state = &(Node_StateCfg[NodeInit]);
  	branch = Node_StateInfo.state->num;//获取节点状态数量
 
-	Node_BackStateInfo.current_node = NodeInit;
- 	Node_BackStateInfo.branch_num = branch;
+	Node_ElementBack.current_node = NodeInit;
+ 	Node_ElementBack.branch_num = branch;
 
 	for (i = 0; i < branch; i++)                                                  			 //做分支内循环，寻找对应的动作函数
 	{
@@ -32,26 +32,26 @@ void Node_Poll(void)            	//Node节点判断函数
 			Node_StateInfo.state->state[i].action();//执行本次动作
 			NodeInit = Node_StateInfo.state->state[i].next_node;//将下次执行的节点号读取出来
 
-			Node_BackStateInfo.next_node = NodeInit;
+			Node_ElementBack.next_node = NodeInit;
 			break;
 		}
 	}
 }
 
-int Node_BackNodeState(Node_StateSave_Type state)					//Node空函数
+int Node_StateBack(Node_Element_Type state)					//Node空函数
 {
 	int rebuf;
 	if (state == CURRENT_NODE)
 	{
-		rebuf = Node_BackStateInfo.current_node;
+		rebuf = Node_ElementBack.current_node;
 	}
 	else if (state == NEXT_NODE)
 	{
-		rebuf = Node_BackStateInfo.next_node;
+		rebuf = Node_ElementBack.next_node;
 	}
 	else if (state == BRANCH_NUM)
 	{
-		rebuf = Node_BackStateInfo.branch_num;
+		rebuf = Node_ElementBack.branch_num;
 	}
 	else
 	{

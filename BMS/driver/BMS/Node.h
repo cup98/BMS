@@ -11,12 +11,12 @@ typedef enum _Node_Num_Type     //列举节点数量名称
     NODE2,                      //放电故障判断节点
 } Node_Num_Type;
 
-typedef enum _Node_StateSave_Type     //列举节点数量名称
+typedef enum _Node_Element_Type     //列举节点数量名称
 {
     CURRENT_NODE,                      //判断故障节点
     NEXT_NODE,                    //预充完成判断节点
     BRANCH_NUM,                      //放电故障判断节点
-} Node_StateSave_Type;
+} Node_Element_Type;
 
 typedef struct _Node_StateType  //构建节点状态机结构体
 {
@@ -39,19 +39,19 @@ typedef struct _Node_StateInfoType
   const Node_StateCfgType* state;
 } Node_StateInfoType;
 
-typedef struct _Node_BackStateInfoType  //构建节点状态机结构体
+typedef struct _Node_ElementBackType  //构建节点状态机结构体
 {
     int current_node; //当前节点
     int next_node;    //下一节点
     int branch_num;
-} Node_BackStateInfoType;
+} Node_ElementBackType;
 
 extern void Node_Init(void);    //Node初始化函数
 extern void Node_NoAct(void);       //Node空函数
 extern void Node_Poll(void);    //Node节点判断函数
-extern int Node_BackNodeState(Node_StateSave_Type state);
+extern int Node_StateBack(Node_Element_Type state);
 extern Node_StateInfoType Node_StateInfo;
-extern Node_BackStateInfoType Node_BackStateInfo;
+extern Node_ElementBackType Node_ElementBack;
 
 
 #endif

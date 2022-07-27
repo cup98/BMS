@@ -4,8 +4,6 @@
 #include "hidef.h"
 #include "derivative.h"
 #include "Node.h"
-#include "Pre_Cfg.h"
-#include "PrechargeM.h"
 
 extern const Node_StateType Node_Pre_StateStart[];
 extern const Node_StateType Node_Pre_StateFinish[];
