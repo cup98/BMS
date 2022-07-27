@@ -100,7 +100,7 @@ void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1初始化以�
                                                             //CAN1发�
 int CAN1_SendMsg(CAN_MsgType *can_msg)
 {
-    unsigned char send_buf, sp ,rebuf;                      //设置发�缓冲区、发送数据位�
+    unsigned char send_buf ,sp ,rebuf;                      //设置发�缓冲区、发送数据位�
     if (can_msg->len > CAN_MSG_MAXLEN)                      //�查数据长�
     {
         rebuf = 0;
@@ -145,7 +145,7 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
             CAN1TXIDR1 &= 0xEF;
         }
     }
-    for (sp = 0 ; sp < can_msg->len ; sp++)                 //依次将数据写入寄存器
+    for (sp = 0 ;sp < can_msg->len ;sp++)                 //依次将数据写入寄存器
     {
         *((&CAN1TXDSR0) + sp) = can_msg->data[sp];
     }
@@ -195,7 +195,7 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1接收
         }
     }
     can_msg->len = CAN1RXDLR;                               //读出接收的数据长�
-    for (sp = 0; sp < can_msg->len; sp++)                   //依次读出接收的每�位数�
+    for (sp = 0 ;sp < can_msg->len ;sp++)                   //依次读出接收的每�位数�
     {
         can_msg->data[sp] = *((&CAN1RXDSR0) + sp);
     }
@@ -206,10 +206,10 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1接收
 
 void CAN_Delay10ms(unsigned int i)                          //延时
 {
-    unsigned int n,m;
-    for (n=0; n<250; n++)
+    unsigned int n ,m;
+    for (n=0 ;n<250 ;n++)
     {
-        for (m=0; m<(80*i); m++)
+        for (m=0 ;m<(80*i) ;m++)
         {
         }
     }

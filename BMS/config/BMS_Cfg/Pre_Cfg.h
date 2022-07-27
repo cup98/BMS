@@ -5,37 +5,37 @@
 #include "derivative.h"
 #include "Hv.h"
 
-typedef enum _Pre_State_Type     //列举节点数量名称
+typedef enum _Pre_State_Type        //构建预充配置名称
 {
-    PRE_CFG_FAULT,                      //判断故障节点
-    PRE_CFG_CLOCK,                      //预充完成判断节点
-    PRE_CFG_VOLTAGE,                      //放电故障判断节点
+    PRE_CFG_FAULT,                  //故障判断
+    PRE_CFG_CLOCK,                  //预充超时判断
+    PRE_CFG_VOLTAGE,                //预充电压配置
 } Pre_State_Type;
 
-typedef struct _Pre_CfgStateType  //构建节点状态机结构体
+typedef struct _Pre_CfgStateType    //构建预充配置存储结构体
 {
-    unsigned char fault; //当前节点
-    unsigned char clock;
-    unsigned char pre_voltage;
+    unsigned char fault;            //储存故障
+    unsigned char clock;            //储存时间
+    unsigned char pre_voltage;      //储存电压
 } Pre_CfgStateType;
 
-typedef struct _Pre_Cfg_IsFailType  //构建节点状态机结构体
+typedef struct _Pre_Cfg_TimeOutType  //构建预充超时截止时间结构体
 {
     int second;
-} Pre_Cfg_IsFailType;
+} Pre_Cfg_TimeOutType;
 
-typedef struct _Pre_Cfg_IsFinishType  //构建节点状态机结构体
+typedef struct _Pre_Cfg_VoltageStdType  //构建节点状态机结构体
 {
-    Hv_Voltage_Type object; //当前节点
+    Hv_Voltage_Type object;
     int percent;
-} Pre_Cfg_IsFinishType;
+} Pre_Cfg_VoltageStdType;
 
 extern Pre_CfgStateType Pre_CfgState;
-extern Pre_Cfg_IsFailType Pre_Cfg_MaxTime;
-extern Pre_Cfg_IsFinishType Pre_Cfg_VoltageStats;
-extern void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data);
-extern int Pre_Cfg_Fault(void);                         //配置错误函数:0无错,1有错
-extern int Pre_Cfg_Clock(void);                         //配置预充等待时间函数:单位秒，小于3秒
-extern int Per_Cfg_GetVoltage(Hv_Voltage_Type object);  //获取目标电压(目标BAT/V1)
+extern Pre_Cfg_TimeOutType Pre_Cfg_TimeOut;
+extern Pre_Cfg_VoltageStdType Pre_Cfg_VoltageStd;
+extern void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data); //将数据存入相应的配置结构体内（目标，数据）
+extern int Pre_Cfg_Fault(void);                                         //读取错误函数，返回：0无错，1有错
+extern int Pre_Cfg_Clock(void);                                         //读取预充等待时间函数，返回：单位秒，小于3秒
+extern int Per_Cfg_GetVoltage(Hv_Voltage_Type object);                  //获取目标电压(目标)，返回：电压值
 
 #endif

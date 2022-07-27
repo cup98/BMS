@@ -5,9 +5,10 @@
 #include "derivative.h"
 #include "Node.h"
 
-extern const Node_StateType Node_Pre_StateStart[];
-extern const Node_StateType Node_Pre_StateFinish[];
-extern const Node_StateType Node_Pre_StateFault[];
+extern const Node_StateType Node_Fault_State[];
+extern const Node_StateType Node_PreFinish_State[];
+extern const Node_StateType Node_Charge_State[];
 extern const Node_StateCfgType Node_StateCfg[];
+extern Node_ElementBackType Node_ElementBack;
 
 #endif

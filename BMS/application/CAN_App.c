@@ -43,7 +43,7 @@ CAN_MsgType CAN_PrechargeCfg =
 };
 
 
-CAN_MsgType CAN_NodeData =
+CAN_MsgType CAN_NodeState =
 {
     0x111,
     0,
@@ -81,25 +81,25 @@ void CAN_SendDemo(void)
     }
 }
 
-void CAN_Get_PreCfg(void)                                   //璇诲嚭鎺ュ彈鍒扮殑鏁版嵁鍐嶅彂閫佸嚭鏉
+void CAN_Get_PreCfg(void)                                           //读取CAN报文内数据字段的数据给Pre配置
 {
     if (CAN1_GetMsg(&CAN_PrechargeCfg) == 1)
     {
-        Pre_Cfg_WriteCfg(PRE_CFG_FAULT ,CAN_PrechargeCfg.data[0]);
-        Pre_Cfg_WriteCfg(PRE_CFG_CLOCK ,CAN_PrechargeCfg.data[1]);
-        Pre_Cfg_WriteCfg(PRE_CFG_VOLTAGE ,CAN_PrechargeCfg.data[2]);
-        if (CAN1_SendMsg(&CAN_PrechargeCfg) == 1)
+        Pre_Cfg_WriteCfg(PRE_CFG_FAULT ,CAN_PrechargeCfg.data[0]);  //data[0]字段赋值给Pre_Fault
+        Pre_Cfg_WriteCfg(PRE_CFG_CLOCK ,CAN_PrechargeCfg.data[1]);  //data[1]字段赋值给Pre_Clock
+        Pre_Cfg_WriteCfg(PRE_CFG_VOLTAGE ,CAN_PrechargeCfg.data[2]);//data[2]字段赋值给Pre_Voltage
+        if (CAN1_SendMsg(&CAN_PrechargeCfg) == 1)                   //将接收的数据发送回去
         {
         }
     }
 }
 
-void CAN_Send_NodeState(void)
+void CAN_Send_NodeState(void)                                       //将Node当前运行状态用CAN报文发送出来
 {
-    CAN_NodeData.data[0] = (unsigned char)Node_StateBack(NODE_CURRENT_STATE);
-    CAN_NodeData.data[1] = (unsigned char)Node_StateBack(NODE_NEXT_STATE);
-    CAN_NodeData.data[7] = (unsigned char)Node_StateBack(NODE_BRANCH_NUM);
-    if (CAN1_SendMsg(&CAN_NodeData) == 1)
+    CAN_NodeState.data[0] = (unsigned char)Node_StateBack(NODE_CURRENT_STATE);//读取当前节点状态赋值到data[0]字段
+    CAN_NodeState.data[1] = (unsigned char)Node_StateBack(NODE_NEXT_STATE);   //读取下一节点状态赋值到data[1]字段
+    CAN_NodeState.data[7] = (unsigned char)Node_StateBack(NODE_BRANCH_NUM);   //读取当前节点分支数赋值到data[2]字段
+    if (CAN1_SendMsg(&CAN_NodeState) == 1)                                    //将重构的报文通过CAN发出
     {
     }
 }
@@ -108,14 +108,14 @@ void CAN_Send_NodeState(void)
 
 void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 {
-    CAN_Get_PreCfg();
+    CAN_Get_PreCfg();                                               //在CAN接收中断来执行读取字段并赋值操作
 }
 
-void interrupt VectorNumber_Vpit0 PIT0(void)                //涓柇鏈嶅姟鍑芥暟
+void interrupt VectorNumber_Vpit0 PIT0(void)
 {
     PITTF_PTF0 = 1;
+    Node_Poll();                                                    //在PIT中断来执行节点程序和节点状态发送程序
     CAN_Send_NodeState();
-    Node_Poll();
 }
 
 #pragma CODE_SEG DEFAULT

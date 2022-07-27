@@ -1,16 +1,5 @@
 #include "RelayM.h"
-
-RelayM_CtrlType RelayM_Ctrl =                                   //初始化继电器状态
-{
-    0,
-    0,
-};
-
-RelayM_SwitchType RelayM_Switch =                                   //初始化开关状态
-{
-    0,
-    0,
-};
+#include "RelayM_Cfg.h"
 
 void RelayM_Init(void)                                      //继电器模块由初始化函数
 {

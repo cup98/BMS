@@ -34,10 +34,10 @@ void PrechargeM_Change(void)        //继电器切换函数
     PrechargeM_StopPre();           //断开预充
 }
 
-int PrechargeM_IsFail()         //超时判断函数
+int PrechargeM_IsFail()             //超时判断函数
 {                                   //判断自启动预充至此刻的时间是否超过3秒
     int rebuf;
-    if (Pre_Cfg_Clock() <= Pre_Cfg_MaxTime.second)
+    if (Pre_Cfg_Clock() <= Pre_Cfg_TimeOut.second)
     {
         rebuf = 0;
     }
@@ -48,11 +48,11 @@ int PrechargeM_IsFail()         //超时判断函数
     return rebuf;
 }
 
-int PrechargeM_IsFinish()       //预充完成判断函数
+int PrechargeM_IsFinish()           //预充完成判断函数
 {
     int rebuf;
-    if (Hv_Get(Pre_Cfg_VoltageStats.object) * 100 >=
-        Hv_Get(HV_BAT) * (Pre_Cfg_VoltageStats.percent))   //判断V1电压是否大于BAT电压的95%
+    if (Hv_Get(Pre_Cfg_VoltageStd.object) * 100 >=
+        Hv_Get(HV_BAT) * (Pre_Cfg_VoltageStd.percent))   //判断V1电压是否大于BAT电压的95%
     {
         rebuf = 1;
     }
