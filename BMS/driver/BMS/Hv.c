@@ -39,7 +39,7 @@ int Hv_Get(Hv_Voltage_Type object)      //获取电压函数
 
 Hv_SaveInfoType Hv_SaveInfo;*/
 
-Hv_DataType Hv_DemoData[HV_MAX_MODE_NUM] =
+Hv_DataType Hv_DemoData[HV_MAX_NUM] =
 {
     {HV_CHANNEL_0,75,104,90},
     {HV_CHANNEL_1,76,103,89},
@@ -101,7 +101,7 @@ Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)
 {
     Hv_AttributeType rebuf;
     int i = 0;
-    for (i = 0 ;i < HV_MAX_MODE_NUM ;i++)
+    for (i = 0 ;i < HV_MAX_NUM ;i++)
     {
         if (object == Hv_DemoData[i].channel)
         {
@@ -109,7 +109,7 @@ Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)
             {
                 rebuf = HV_DISCHARGE;
             }
-            else 
+            else
             {
                 rebuf = HV_CHARGE;
             }
@@ -123,7 +123,7 @@ uint32 Hv_GetAttribute(Hv_ChannelType object ,Hv_AttributeType attribute)
 {
     int i = 0;
     uint32 rebuf;
-    for (i = 0 ;i < HV_MAX_MODE_NUM ;i++)
+    for (i = 0 ;i < HV_MAX_NUM ;i++)
     {
         if (object == Hv_DemoData[i].channel)
         {

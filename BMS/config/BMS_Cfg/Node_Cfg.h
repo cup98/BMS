@@ -10,6 +10,5 @@ extern const Node_StateType Node_PreFinish_State[];
 extern const Node_StateType Node_Charge_State[];
 extern const Node_StateCfgType Node_StateCfg[];
 extern Node_ElementBackType Node_ElementBack;
-extern Node_State_InfoType Node_State_Info;
 
 #endif

@@ -116,7 +116,7 @@ void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 void interrupt VectorNumber_Vpit0 PIT0(void)
 {
     PITTF_PTF0 = 1;
-    Node_Poll(&Node_State_Info);                                                    //在PIT中断来执行节点程序和节点状态发送程序
+    Node_Poll();                                                    //在PIT中断来执行节点程序和节点状态发送程序
     CAN_Send_NodeState();
 }
 

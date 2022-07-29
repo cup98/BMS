@@ -48,7 +48,7 @@ typedef struct _Node_ElementBackType//构建输出节点信息结构体
 
 extern void Node_Init(void);        //Node初始化函数
 extern void Node_NoAct(void);       //Node空函数
-extern void Node_Poll(Node_State_InfoType *Node_Info);        //Node节点判断函数
+extern void Node_Poll(void);        //Node节点判断函数
 extern int Node_StateBack(Node_Element_Type state);//节点状态返回函数(节点状态)，返回节点状态对应数据
 
 
