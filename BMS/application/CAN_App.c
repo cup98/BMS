@@ -1,5 +1,6 @@
 #include "CAN_App.h"
 #include "Pre_Cfg.h"
+#include "Node_cfg.h"
 #include "Node.h"
 
 CAN_MsgType CAN_DemoMsg1 =
@@ -88,6 +89,7 @@ void CAN_Get_PreCfg(void)                                           //读取CAN�
         Pre_Cfg_WriteCfg(PRE_CFG_FAULT ,CAN_PrechargeCfg.data[0]);  //data[0]字段赋值给Pre_Fault
         Pre_Cfg_WriteCfg(PRE_CFG_CLOCK ,CAN_PrechargeCfg.data[1]);  //data[1]字段赋值给Pre_Clock
         Pre_Cfg_WriteCfg(PRE_CFG_VOLTAGE ,CAN_PrechargeCfg.data[2]);//data[2]字段赋值给Pre_Voltage
+        Pre_Cfg_WriteCfg(PRE_CFG_PERCENT ,CAN_PrechargeCfg.data[3]);//data[2]字段赋值给Pre_Voltage
         if (CAN1_SendMsg(&CAN_PrechargeCfg) == 1)                   //将接收的数据发送回去
         {
         }
@@ -114,7 +116,7 @@ void interrupt VectorNumber_Vcan1rx CAN_receive(void)
 void interrupt VectorNumber_Vpit0 PIT0(void)
 {
     PITTF_PTF0 = 1;
-    Node_Poll();                                                    //在PIT中断来执行节点程序和节点状态发送程序
+    Node_Poll(&Node_State_Info);                                                    //在PIT中断来执行节点程序和节点状态发送程序
     CAN_Send_NodeState();
 }
 

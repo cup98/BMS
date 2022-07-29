@@ -21,11 +21,11 @@ void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1åˆå§‹åŒ–ä»¥å
     CAN1BTR0_SJW = 0;                                       //è®¾ç½®åŒæ­¥
     if (can_cfg->sp == 1)                                   //²ÉÑù
     {
-        CAN0BTR1_SAMP = 0;
+        CAN1BTR1_SAMP = 0;
     }
     else
     {
-        CAN0BTR1_SAMP = 1;
+        CAN1BTR1_SAMP = 1;
     }
     switch (can_cfg->bps)
     {

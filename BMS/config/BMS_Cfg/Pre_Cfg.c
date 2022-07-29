@@ -9,7 +9,7 @@ Pre_Cfg_TimeOutType Pre_Cfg_TimeOut =
 
 Pre_Cfg_VoltageStdType Pre_Cfg_VoltageStd =
 {
-    HV_V1,
+    HV_CHANNEL_1,
     95,
 };
 
@@ -27,6 +27,10 @@ void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data) //将数据存入相应
     {
         Pre_CfgState.pre_voltage = data;
     }
+    else if (state == PRE_CFG_PERCENT)
+    {
+        Pre_CfgState.percent = data;
+    }
     else
     {
     }
@@ -42,27 +46,16 @@ int Pre_Cfg_Clock(void)                                         //配置预充等待时
     return Pre_CfgState.clock;
 }
 
-int Per_Cfg_GetVoltage(Hv_Voltage_Type object)                  //获取目标电压
+int Per_Cfg_GetVoltage(Hv_ChannelType object)                  //获取目标电压
 {
     int rebuf = 0;
-    if (object == HV_BAT)
+    if (object == HV_CHANNEL_0)
     {
         rebuf = Pre_CfgState.pre_voltage;
     }
-    else if (object == HV_V1)
-    {
-        rebuf = 100;
-    }
-    else if (object == HV_V2)
-    {
-        rebuf = 120;
-    }
-    else if (object == HV_V3)
-    {
-        rebuf = 140;
-    }
     else
     {
+        rebuf = Hv_Get(object ,HV_VOLTAGE);
     }
     return rebuf;
 }

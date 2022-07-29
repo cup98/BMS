@@ -4,6 +4,35 @@
 #include "hidef.h"
 #include "derivative.h"
 
+/*typedef enum _RelayM_FnType
+{
+    RELAY_1;
+    RELAY_2;
+    RELAY_3;
+    RELAY_4;
+} RelayM_FnType;
+
+typedef struct _RelayM_ControlType
+{
+    RELAY_1;
+    RELAY_2;
+    RELAY_3;
+    RELAY_4;
+} RelayM_ControlType;
+
+typedef struct _RelayM_ActureType
+{
+    RELAY_1;
+    RELAY_2;
+    RELAY_3;
+    RELAY_4;
+} RelayM_ActureType;*/
+
+
+
+
+
+
 typedef enum _RelayM_Object_Type        //构建继电器控制目标
 {
     RELAYM_MASTER,

@@ -37,8 +37,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     68
-  _Copy    *toCopyDownBeg 0xC0FB
+  _Range   pZeroOut       0x2100     137
+  _Copy    *toCopyDownBeg 0xC0FE
 } _startupData;
 
 *********************************************************************************************
@@ -48,11 +48,11 @@ Section Name                    Size  Type     From       To       Segment
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        66     R     0xC00F     0xC050   ROM_C000
 .rodata                          105     R     0xC051     0xC0B9   ROM_C000
-NON_BANKED                        65     R     0xC0BA     0xC0FA   ROM_C000
-.copy                             49     R     0xC0FB     0xC12B   ROM_C000
-.text                           1363     R   0xFE8000   0xFE8552   PAGE_FE
+NON_BANKED                        68     R     0xC0BA     0xC0FD   ROM_C000
+.copy                            110     R     0xC0FE     0xC16B   ROM_C000
+.text                           1503     R   0xFE8000   0xFE85DE   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
-.data                             45   R/W     0x2100     0x212C   RAM
+.data                            113   R/W     0x2100     0x2170   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -793,13 +793,13 @@ NON_BANKED                        65     R     0xC0BA     0xC0FA   ROM_C000
 .abs_section_3f2                   2   N/I      0x3F2      0x3F3   .absSeg737
 .abs_section_ffaa                  2     R     0xFFAA     0xFFAB   .absSeg738
 .abs_section_ff7a                  2     R     0xFF7A     0xFF7B   .absSeg739
-.bss                              14   R/W     0x212D     0x213A   RAM
-.common                            9   R/W     0x213B     0x2143   RAM
+.bss                              10   R/W     0x2171     0x217A   RAM
+.common                           14   R/W     0x217B     0x2188   RAM
 .vectSeg740_vect                   2     R     0xFFFE     0xFFFF   .vectSeg740
 
 Summary of section sizes per section type:
-READ_ONLY (R):         685 (dec:     1669)
-READ_WRITE (R/W):      144 (dec:      324)
+READ_ONLY (R):         751 (dec:     1873)
+READ_WRITE (R/W):      189 (dec:      393)
 NO_INIT (N/I):         383 (dec:      899)
 
 *********************************************************************************************
@@ -981,7 +981,7 @@ MODULE:                 -- MC9S12XEP100.c.o --
      _CAN0CTL0                                  140       1       1       0   .abs_section_140
      _CAN0CTL1                                  141       1       1       0   .abs_section_141
      _CAN0BTR0                                  142       1       1       0   .abs_section_142
-     _CAN0BTR1                                  143       1       1       2   .abs_section_143
+     _CAN0BTR1                                  143       1       1       0   .abs_section_143
      _CAN0RFLG                                  144       1       1       0   .abs_section_144
      _CAN0RIER                                  145       1       1       0   .abs_section_145
      _CAN0TFLG                                  146       1       1       0   .abs_section_146
@@ -1039,7 +1039,7 @@ MODULE:                 -- MC9S12XEP100.c.o --
      _CAN1CTL0                                  180       1       1       4   .abs_section_180
      _CAN1CTL1                                  181       1       1       3   .abs_section_181
      _CAN1BTR0                                  182       1       1       7   .abs_section_182
-     _CAN1BTR1                                  183       1       1       5   .abs_section_183
+     _CAN1BTR1                                  183       1       1       7   .abs_section_183
      _CAN1RFLG                                  184       1       1       1   .abs_section_184
      _CAN1RIER                                  185       1       1       1   .abs_section_185
      _CAN1TFLG                                  186       1       1       2   .abs_section_186
@@ -1574,52 +1574,56 @@ MODULE:                 -- rtshc12.c.o (ansixbf.lib) --
 MODULE:                 -- Hv.c.o --
 - PROCEDURES:
      Hv_Init                                 FE8062       1       1       2   .text       
-     Hv_Get                                  FE8063      2D      45       4   .text       
+     Hv_InterruptON                          FE8063       1       1       2   .text       
+     Hv_InterruptOFF                         FE8064       1       1       2   .text       
+     Hv_RangeOut                             FE8065      31      49       2   .text       
+     Hv_GetAttribute                         FE8096      56      86       4   .text       
+     Hv_Get                                  FE80EC      2C      44       4   .text       
 - VARIABLES:
+     Hv_DemoData                               2100      48      72       4   .data       
 MODULE:                 -- Node.c.o --
 - PROCEDURES:
-     Node_Init                               FE8090       1       1       2   .text       
-     Node_NoAct                              FE8091       1       1       6   .text       
-     Node_Poll                               FE8092      6F     111       2   .text       
-     Node_StateBack                          FE8101      21      33       6   .text       
+     Node_Init                               FE8118       1       1       2   .text       
+     Node_NoAct                              FE8119       1       1       6   .text       
+     Node_Poll                               FE811A      7B     123       2   .text       
+     Node_StateBack                          FE8195      21      33       6   .text       
 - VARIABLES:
-     node_init.1                               212D       2       2       4   .bss        
-     node_state_info.2                         212F       4       4       6   .bss        
+     node_init.1                               2171       2       2       4   .bss        
 MODULE:                 -- PrechargeM.c.o --
 - PROCEDURES:
-     PrechargeM_Init                         FE8122       1       1       2   .text       
-     PrechargeM_StartPre                     FE8123       A      10       2   .text       
-     PrechargeM_StopPre                      FE812D       B      11       6   .text       
-     PrechargeM_StartMaster                  FE8138       A      10       2   .text       
-     PrechargeM_StopMaster                   FE8142       9       9       2   .text       
-     PrechargeM_Change                       FE814B       9       9       2   .text       
-     PrechargeM_IsFail                       FE8154      18      24       2   .text       
-     PrechargeM_IsFinish                     FE816C      30      48       4   .text       
+     PrechargeM_Init                         FE81B6       1       1       2   .text       
+     PrechargeM_StartPre                     FE81B7       A      10       2   .text       
+     PrechargeM_StopPre                      FE81C1       B      11       6   .text       
+     PrechargeM_StartMaster                  FE81CC       A      10       2   .text       
+     PrechargeM_StopMaster                   FE81D6       9       9       2   .text       
+     PrechargeM_Change                       FE81DF       9       9       2   .text       
+     PrechargeM_IsFail                       FE81E8      18      24       2   .text       
+     PrechargeM_IsFinish                     FE8200      3B      59       4   .text       
 - VARIABLES:
 MODULE:                 -- RelayM.c.o --
 - PROCEDURES:
-     RelayM_Init                             FE819C       1       1       2   .text       
-     RelayM_Control                          FE819D      16      22       8   .text       
+     RelayM_Init                             FE823B       1       1       2   .text       
+     RelayM_Control                          FE823C      16      22       8   .text       
 - VARIABLES:
 MODULE:                 -- CAN.c.o --
 - PROCEDURES:
-     CAN_Init                                FE81B3       8       8       2   .text       
-     CAN1_Init                               FE81BB      E9     233       3   .text       
-     CAN1_SendMsg                            FE82A4      C9     201       6   .text       
-     CAN1_GetMsg                             FE836D      CE     206       4   .text       
+     CAN_Init                                FE8252       8       8       2   .text       
+     CAN1_Init                               FE825A      E9     233       3   .text       
+     CAN1_SendMsg                            FE8343      C9     201       6   .text       
+     CAN1_GetMsg                             FE840C      CE     206       4   .text       
 - VARIABLES:
 MODULE:                 -- ECT.c.o --
 - PROCEDURES:
-     ECT_Init                                FE843B      24      36       2   .text       
+     ECT_Init                                FE84DA      24      36       2   .text       
 - VARIABLES:
 MODULE:                 -- PIT.c.o --
 - PROCEDURES:
-     PIT_Init                                FE845F       5       5       2   .text       
-     PIT0_Init                               FE8464      1F      31       2   .text       
+     PIT_Init                                FE84FE       5       5       2   .text       
+     PIT0_Init                               FE8503      1F      31       2   .text       
 - VARIABLES:
 MODULE:                 -- PLL.c.o --
 - PROCEDURES:
-     PLL_Init                                FE8483      1D      29       2   .text       
+     PLL_Init                                FE8522      1D      29       2   .text       
 - VARIABLES:
 MODULE:                 -- Node_Cfg.c.o --
 - PROCEDURES:
@@ -1628,37 +1632,36 @@ MODULE:                 -- Node_Cfg.c.o --
      Node_PreFinish_State                      C069      30      48       1   .rodata     
      Node_Charge_State                         C099      18      24       1   .rodata     
      Node_StateCfg                             C0B1       9       9       1   .rodata     
-     Node_ElementBack                          213B       6       6       6   .common     
+     Node_ElementBack                          217B       6       6       6   .common     
+     Node_State_Info                           2181       4       4       1   .common     
 MODULE:                 -- Pre_Cfg.c.o --
 - PROCEDURES:
-     Pre_Cfg_WriteCfg                        FE84A0      24      36       6   .text       
-     Pre_Cfg_Fault                           FE84C4       5       5      10   .text       
-     Pre_Cfg_Clock                           FE84C9       5       5       2   .text       
-     Per_Cfg_GetVoltage                      FE84CE      2B      43       2   .text       
+     Pre_Cfg_WriteCfg                        FE853F      30      48       8   .text       
+     Pre_Cfg_Fault                           FE856F       5       5      10   .text       
+     Pre_Cfg_Clock                           FE8574       5       5       2   .text       
 - VARIABLES:
-     Pre_Cfg_TimeOut                           2100       2       2       1   .data       
-     Pre_Cfg_VoltageStd                        2102       4       4       2   .data       
-     Pre_CfgState                              2141       3       3       6   .common     
+     Pre_Cfg_TimeOut                           2148       2       2       1   .data       
+     Pre_CfgState                              2185       4       4       8   .common     
 MODULE:                 -- CAN_Cfg.c.o --
 - PROCEDURES:
 - VARIABLES:
-     CAN_HwCfg                                 2106       3       3       1   .data       
+     CAN_HwCfg                                 214A       3       3       1   .data       
 MODULE:                 -- CAN_App.c.o --
 - PROCEDURES:
-     CAN_Get_PreCfg                          FE84F9      35      53       2   .text       
-     CAN_Send_NodeState                      FE852E      25      37       2   .text       
+     CAN_Get_PreCfg                          FE8579      41      65       2   .text       
+     CAN_Send_NodeState                      FE85BA      25      37       2   .text       
      CAN_receive                               C0E9       5       5       1   NON_BANKED  
-     PIT0                                      C0EE       D      13       1   NON_BANKED  
+     PIT0                                      C0EE      10      16       1   NON_BANKED  
 - VARIABLES:
-     CAN_PrechargeCfg                          2109      12      18       5   .data       
-     CAN_NodeState                             211B      12      18       4   .data       
+     CAN_PrechargeCfg                          214D      12      18       6   .data       
+     CAN_NodeState                             215F      12      18       4   .data       
      _Vector_42                                FFAA       2       2       0   .abs_section_ffaa
      _Vector_66                                FF7A       2       2       0   .abs_section_ff7a
 MODULE:                 -- RelayM_Cfg.c.o --
 - PROCEDURES:
 - VARIABLES:
-     RelayM_Ctrl                               2133       4       4       1   .bss        
-     RelayM_Switch                             2137       4       4       1   .bss        
+     RelayM_Ctrl                               2173       4       4       1   .bss        
+     RelayM_Switch                             2177       4       4       1   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
@@ -1668,35 +1671,36 @@ MODULE STATISTIC
   main.c.o                                     0     57      0
   Start12.c.o                                  0     56      0
   rtshc12.c.o (ansixbf.lib)                    0     47      0
-  Hv.c.o                                       0     46      0
-  Node.c.o                                     6    146      0
-  PrechargeM.c.o                               0    122      0
+  Hv.c.o                                      72    182      0
+  Node.c.o                                     2    158      0
+  PrechargeM.c.o                               0    133      0
   RelayM.c.o                                   0     23      0
   CAN.c.o                                      0    648      0
   ECT.c.o                                      0     36      0
   PIT.c.o                                      0     36      0
   PLL.c.o                                      0     29      0
-  Node_Cfg.c.o                                 6      0    105
-  Pre_Cfg.c.o                                  9     89      0
+  Node_Cfg.c.o                                10      0    105
+  Pre_Cfg.c.o                                  6     58      0
   CAN_Cfg.c.o                                  3      0      0
-  CAN_App.c.o                                 36    108      4
+  CAN_App.c.o                                 36    123      4
   RelayM_Cfg.c.o                               8      0      0
-  other                                      256     68     49
+  other                                      256     68    110
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Init Hv_Init Hv_Get Node_Init Node_NoAct Node_Poll Node_StateBack 
-  PrechargeM_Init PrechargeM_StartPre PrechargeM_StopPre PrechargeM_StartMaster 
+  main Init Hv_Init Hv_InterruptON Hv_InterruptOFF Hv_RangeOut Hv_GetAttribute 
+  Hv_Get Node_Init Node_NoAct Node_Poll Node_StateBack PrechargeM_Init 
+  PrechargeM_StartPre PrechargeM_StopPre PrechargeM_StartMaster 
   PrechargeM_StopMaster PrechargeM_Change PrechargeM_IsFail PrechargeM_IsFinish 
   RelayM_Init RelayM_Control CAN_Init CAN1_Init CAN1_SendMsg CAN1_GetMsg 
   ECT_Init PIT_Init PIT0_Init PLL_Init Pre_Cfg_WriteCfg Pre_Cfg_Fault 
-  Pre_Cfg_Clock Per_Cfg_GetVoltage CAN_Get_PreCfg CAN_Send_NodeState 
+  Pre_Cfg_Clock CAN_Get_PreCfg CAN_Send_NodeState 
 SECTION: ".data"
-  Pre_Cfg_TimeOut Pre_Cfg_VoltageStd CAN_HwCfg CAN_PrechargeCfg CAN_NodeState 
+  Hv_DemoData Pre_Cfg_TimeOut CAN_HwCfg CAN_PrechargeCfg CAN_NodeState 
 SECTION: ".bss"
-  node_init.1 node_state_info.2 RelayM_Ctrl RelayM_Switch 
+  node_init.1 RelayM_Ctrl RelayM_Switch 
 SECTION: ".init"
   _Startup 
 SECTION: ".rodata"
@@ -3180,7 +3184,7 @@ SECTION: ".abs_section_3ee"
 SECTION: ".abs_section_3f2"
   _TIM_PACNT 
 SECTION: ".common"
-  Node_ElementBack Pre_CfgState 
+  Node_ElementBack Node_State_Info Pre_CfgState 
 SECTION: ".abs_section_ffaa"
   _Vector_42 
 SECTION: ".abs_section_ff7a"
@@ -3415,7 +3419,7 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN0CTL0                                  140       1       1       0   .abs_section_140
      _CAN0CTL1                                  141       1       1       0   .abs_section_141
      _CAN0BTR0                                  142       1       1       0   .abs_section_142
-     _CAN0BTR1                                  143       1       1       2   .abs_section_143
+     _CAN0BTR1                                  143       1       1       0   .abs_section_143
      _CAN0RFLG                                  144       1       1       0   .abs_section_144
      _CAN0RIER                                  145       1       1       0   .abs_section_145
      _CAN0TFLG                                  146       1       1       0   .abs_section_146
@@ -3475,7 +3479,7 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN1CTL0                                  180       1       1       4   .abs_section_180
      _CAN1CTL1                                  181       1       1       3   .abs_section_181
      _CAN1BTR0                                  182       1       1       7   .abs_section_182
-     _CAN1BTR1                                  183       1       1       5   .abs_section_183
+     _CAN1BTR1                                  183       1       1       7   .abs_section_183
      _CAN1RFLG                                  184       1       1       1   .abs_section_184
      _CAN1RIER                                  185       1       1       1   .abs_section_185
      _CAN1TFLG                                  186       1       1       2   .abs_section_186
@@ -3928,17 +3932,17 @@ OBJECT LIST SORTED BY ADDRESS
      _TIM_PACNT                                 3F2       2       2       0   .abs_section_3f2
      _TIM_OCPD                                  3FC       1       1       0   .abs_section_3fc
      _TIM_PTPSR                                 3FE       1       1       0   .abs_section_3fe
-     Pre_Cfg_TimeOut                           2100       2       2       1   .data       
-     Pre_Cfg_VoltageStd                        2102       4       4       2   .data       
-     CAN_HwCfg                                 2106       3       3       1   .data       
-     CAN_PrechargeCfg                          2109      12      18       5   .data       
-     CAN_NodeState                             211B      12      18       4   .data       
-     node_init.1                               212D       2       2       4   .bss        
-     node_state_info.2                         212F       4       4       6   .bss        
-     RelayM_Ctrl                               2133       4       4       1   .bss        
-     RelayM_Switch                             2137       4       4       1   .bss        
-     Node_ElementBack                          213B       6       6       6   .common     
-     Pre_CfgState                              2141       3       3       6   .common     
+     Hv_DemoData                               2100      48      72       4   .data       
+     Pre_Cfg_TimeOut                           2148       2       2       1   .data       
+     CAN_HwCfg                                 214A       3       3       1   .data       
+     CAN_PrechargeCfg                          214D      12      18       6   .data       
+     CAN_NodeState                             215F      12      18       4   .data       
+     node_init.1                               2171       2       2       4   .bss        
+     RelayM_Ctrl                               2173       4       4       1   .bss        
+     RelayM_Switch                             2177       4       4       1   .bss        
+     Node_ElementBack                          217B       6       6       6   .common     
+     Node_State_Info                           2181       4       4       1   .common     
+     Pre_CfgState                              2185       4       4       8   .common     
      _Startup                                  C000       F      15       0   .init       
      Node_Fault_State                          C051      18      24       1   .rodata     
      Node_PreFinish_State                      C069      30      48       1   .rodata     
@@ -3948,41 +3952,44 @@ OBJECT LIST SORTED BY ADDRESS
      _LSHRU                                    C0C7       E      14       4   NON_BANKED  
      _CASE_CHECKED_BYTE                        C0D5      14      20       1   NON_BANKED  
      CAN_receive                               C0E9       5       5       1   NON_BANKED  
-     PIT0                                      C0EE       D      13       1   NON_BANKED  
+     PIT0                                      C0EE      10      16       1   NON_BANKED  
      _Vector_66                                FF7A       2       2       0   .abs_section_ff7a
      _Vector_42                                FFAA       2       2       0   .abs_section_ffaa
      main                                    FE8000      39      57       2   .text       
      Init                                    FE8039      29      41       2   .text       
      Hv_Init                                 FE8062       1       1       2   .text       
-     Hv_Get                                  FE8063      2D      45       4   .text       
-     Node_Init                               FE8090       1       1       2   .text       
-     Node_NoAct                              FE8091       1       1       6   .text       
-     Node_Poll                               FE8092      6F     111       2   .text       
-     Node_StateBack                          FE8101      21      33       6   .text       
-     PrechargeM_Init                         FE8122       1       1       2   .text       
-     PrechargeM_StartPre                     FE8123       A      10       2   .text       
-     PrechargeM_StopPre                      FE812D       B      11       6   .text       
-     PrechargeM_StartMaster                  FE8138       A      10       2   .text       
-     PrechargeM_StopMaster                   FE8142       9       9       2   .text       
-     PrechargeM_Change                       FE814B       9       9       2   .text       
-     PrechargeM_IsFail                       FE8154      18      24       2   .text       
-     PrechargeM_IsFinish                     FE816C      30      48       4   .text       
-     RelayM_Init                             FE819C       1       1       2   .text       
-     RelayM_Control                          FE819D      16      22       8   .text       
-     CAN_Init                                FE81B3       8       8       2   .text       
-     CAN1_Init                               FE81BB      E9     233       3   .text       
-     CAN1_SendMsg                            FE82A4      C9     201       6   .text       
-     CAN1_GetMsg                             FE836D      CE     206       4   .text       
-     ECT_Init                                FE843B      24      36       2   .text       
-     PIT_Init                                FE845F       5       5       2   .text       
-     PIT0_Init                               FE8464      1F      31       2   .text       
-     PLL_Init                                FE8483      1D      29       2   .text       
-     Pre_Cfg_WriteCfg                        FE84A0      24      36       6   .text       
-     Pre_Cfg_Fault                           FE84C4       5       5      10   .text       
-     Pre_Cfg_Clock                           FE84C9       5       5       2   .text       
-     Per_Cfg_GetVoltage                      FE84CE      2B      43       2   .text       
-     CAN_Get_PreCfg                          FE84F9      35      53       2   .text       
-     CAN_Send_NodeState                      FE852E      25      37       2   .text       
+     Hv_InterruptON                          FE8063       1       1       2   .text       
+     Hv_InterruptOFF                         FE8064       1       1       2   .text       
+     Hv_RangeOut                             FE8065      31      49       2   .text       
+     Hv_GetAttribute                         FE8096      56      86       4   .text       
+     Hv_Get                                  FE80EC      2C      44       4   .text       
+     Node_Init                               FE8118       1       1       2   .text       
+     Node_NoAct                              FE8119       1       1       6   .text       
+     Node_Poll                               FE811A      7B     123       2   .text       
+     Node_StateBack                          FE8195      21      33       6   .text       
+     PrechargeM_Init                         FE81B6       1       1       2   .text       
+     PrechargeM_StartPre                     FE81B7       A      10       2   .text       
+     PrechargeM_StopPre                      FE81C1       B      11       6   .text       
+     PrechargeM_StartMaster                  FE81CC       A      10       2   .text       
+     PrechargeM_StopMaster                   FE81D6       9       9       2   .text       
+     PrechargeM_Change                       FE81DF       9       9       2   .text       
+     PrechargeM_IsFail                       FE81E8      18      24       2   .text       
+     PrechargeM_IsFinish                     FE8200      3B      59       4   .text       
+     RelayM_Init                             FE823B       1       1       2   .text       
+     RelayM_Control                          FE823C      16      22       8   .text       
+     CAN_Init                                FE8252       8       8       2   .text       
+     CAN1_Init                               FE825A      E9     233       3   .text       
+     CAN1_SendMsg                            FE8343      C9     201       6   .text       
+     CAN1_GetMsg                             FE840C      CE     206       4   .text       
+     ECT_Init                                FE84DA      24      36       2   .text       
+     PIT_Init                                FE84FE       5       5       2   .text       
+     PIT0_Init                               FE8503      1F      31       2   .text       
+     PLL_Init                                FE8522      1D      29       2   .text       
+     Pre_Cfg_WriteCfg                        FE853F      30      48       8   .text       
+     Pre_Cfg_Fault                           FE856F       5       5      10   .text       
+     Pre_Cfg_Clock                           FE8574       5       5       2   .text       
+     CAN_Get_PreCfg                          FE8579      41      65       2   .text       
+     CAN_Send_NodeState                      FE85BA      25      37       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3995,70 +4002,80 @@ rtshc12.c.o (ansixbf.lib):
   _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_SEARCH 
   _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL _FPCMP _PADD 
   _PSUB _PINC _PDEC 
+Hv.c.o:
+  Hv_BatteryStats 
 RelayM.c.o:
   RelayM_Change 
 CAN.c.o:
   CAN_Delay10ms 
+Pre_Cfg.c.o:
+  Per_Cfg_GetVoltage 
 CAN_App.c.o:
   CAN_SendDemo 
 NOT USED VARIABLES
 rtshc12.c.o (ansixbf.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
+Pre_Cfg.c.o:
+  Pre_Cfg_VoltageStd 
 CAN_App.c.o:
   CAN_DemoMsg1 CAN_DemoMsg2 CAN_DemoMsg3 CAN_Time.1 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC0FB ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xC0FE ---- SIZE       4 ---
 Filling bytes inserted
- 002B2101
-------- ROM-ADDRESS: 0xC0FF ---- RAM-ADDRESS: 0x2101 ---- SIZE       1 ---
+ 003D2103
+------- ROM-ADDRESS: 0xC102 ---- RAM-ADDRESS: 0x2103 ---- SIZE      61 ---
+Name of initialized Object : Hv_DemoData:3
+ 4B0068005A 0001004C00 6700590002
+ 004D006600 580003004E 0065005700
+ 04004F0064 0056000500 5000630055
+ 0006005100 6200540007 0052006100
+ 53
+------- ROM-ADDRESS: 0xC13F ---- SIZE       4 ---
+Filling bytes inserted
+ 00272149
+------- ROM-ADDRESS: 0xC143 ---- RAM-ADDRESS: 0x2149 ---- SIZE       1 ---
 Name of initialized Object : Pre_Cfg_TimeOut:1
  03
-------- ROM-ADDRESS: 0xC100 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC144 ---- SIZE       1 ---
 Filling bytes inserted
  00
-------- ROM-ADDRESS: 0xC101 ---- RAM-ADDRESS: 0x2103 ---- SIZE       3 ---
-Name of initialized Object : Pre_Cfg_VoltageStd:1
- 01005F
-------- ROM-ADDRESS: 0xC104 ---- SIZE       1 ---
-Filling bytes inserted
- 00
-------- ROM-ADDRESS: 0xC105 ---- RAM-ADDRESS: 0x2107 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC145 ---- RAM-ADDRESS: 0x214B ---- SIZE       2 ---
 Name of initialized Object : CAN_HwCfg:1
  0301
-------- ROM-ADDRESS: 0xC107 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC147 ---- SIZE       2 ---
 Filling bytes inserted
  0000
-------- ROM-ADDRESS: 0xC109 ---- RAM-ADDRESS: 0x210B ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC149 ---- RAM-ADDRESS: 0x214F ---- SIZE       2 ---
 Name of initialized Object : CAN_PrechargeCfg:2
  05FF
-------- ROM-ADDRESS: 0xC10B ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xC14B ---- SIZE       4 ---
 Filling bytes inserted
  00000000
-------- ROM-ADDRESS: 0xC10F ---- RAM-ADDRESS: 0x2111 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC14F ---- RAM-ADDRESS: 0x2155 ---- SIZE       1 ---
 Name of initialized Object : CAN_PrechargeCfg:8
  01
-------- ROM-ADDRESS: 0xC110 ---- SIZE       7 ---
+------- ROM-ADDRESS: 0xC150 ---- SIZE       7 ---
 Filling bytes inserted
  0000000000 0000
-------- ROM-ADDRESS: 0xC117 ---- RAM-ADDRESS: 0x2119 ---- SIZE       1 ---
+------- ROM-ADDRESS: 0xC157 ---- RAM-ADDRESS: 0x215D ---- SIZE       1 ---
 Name of initialized Object : CAN_PrechargeCfg:16
  08
-------- ROM-ADDRESS: 0xC118 ---- SIZE       3 ---
+------- ROM-ADDRESS: 0xC158 ---- SIZE       3 ---
 Filling bytes inserted
  000000
-------- ROM-ADDRESS: 0xC11B ---- RAM-ADDRESS: 0x211D ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC15B ---- RAM-ADDRESS: 0x2161 ---- SIZE       2 ---
 Name of initialized Object : CAN_NodeState:2
  0111
-------- ROM-ADDRESS: 0xC11D ---- SIZE       4 ---
+------- ROM-ADDRESS: 0xC15D ---- SIZE       4 ---
 Filling bytes inserted
  00000000
-------- ROM-ADDRESS: 0xC121 ---- RAM-ADDRESS: 0x2123 ---- SIZE       9 ---
+------- ROM-ADDRESS: 0xC161 ---- RAM-ADDRESS: 0x2167 ---- SIZE       9 ---
 Name of initialized Object : CAN_NodeState:8
  FFFFFFFFFF FFFFFF08
-------- ROM-ADDRESS: 0xC12A ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC16A ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -4074,15 +4091,16 @@ Node_Charge_State         USES Pre_Cfg_Fault PrechargeM_StopMaster Node_NoAct
 Node_StateCfg             USES Node_Fault_State Node_PreFinish_State 
                                 Node_Charge_State 
 CAN_receive               USES CAN_Get_PreCfg 
-PIT0                      USES _PITTF Node_Poll CAN_Send_NodeState 
+PIT0                      USES _PITTF Node_State_Info Node_Poll 
+                                CAN_Send_NodeState 
 _Vector_66                USES PIT0 
 _Vector_42                USES CAN_receive 
 main                      USES _PORTCD _DDRCD PLL_Init ECT_Init CAN_Init 
                                 PIT_Init Hv_Init Node_Init PrechargeM_Init RelayM_Init 
 Init                      USES _startupData 
-Hv_Get                    USES Per_Cfg_GetVoltage 
-Node_Poll                 USES node_init.1 node_state_info.2 Node_StateCfg 
-                                Node_ElementBack 
+Hv_GetAttribute           USES Hv_DemoData Hv_InterruptOFF Hv_InterruptON 
+Hv_Get                    USES Hv_GetAttribute Hv_RangeOut 
+Node_Poll                 USES node_init.1 Node_StateCfg Node_ElementBack 
 Node_StateBack            USES Node_ElementBack 
 PrechargeM_StartPre       USES RelayM_Control 
 PrechargeM_StopPre        USES RelayM_Control 
@@ -4090,13 +4108,13 @@ PrechargeM_StartMaster    USES RelayM_Control
 PrechargeM_StopMaster     USES RelayM_Control 
 PrechargeM_Change         USES PrechargeM_StartMaster PrechargeM_StopPre 
 PrechargeM_IsFail         USES Pre_Cfg_Clock Pre_Cfg_TimeOut 
-PrechargeM_IsFinish       USES Pre_Cfg_VoltageStd Hv_Get 
+PrechargeM_IsFinish       USES Pre_CfgState Hv_Get 
 RelayM_Control            USES RelayM_Ctrl RelayM_Switch 
 CAN_Init                  USES CAN_HwCfg CAN1_Init 
-CAN1_Init                 USES _CAN1CTL0 _CAN1CTL1 _CAN1BTR0 _CAN0BTR1 
-                                _CASE_CHECKED_BYTE _CAN1BTR1 CAN1_Init _CAN1IDMR0 _CAN1IDMR1 
-                                _CAN1IDMR2 _CAN1IDMR3 _CAN1IDMR4 _CAN1IDMR5 _CAN1IDMR6 
-                                _CAN1IDMR7 _CAN1RIER 
+CAN1_Init                 USES _CAN1CTL0 _CAN1CTL1 _CAN1BTR0 _CAN1BTR1 
+                                _CASE_CHECKED_BYTE CAN1_Init _CAN1IDMR0 _CAN1IDMR1 _CAN1IDMR2 
+                                _CAN1IDMR3 _CAN1IDMR4 _CAN1IDMR5 _CAN1IDMR6 _CAN1IDMR7 
+                                _CAN1RIER 
 CAN1_SendMsg              USES _CAN1TFLG _CAN1TBSEL _CAN1TXIDR0 CAN1_SendMsg 
                                 _LSHRU _CAN1TXIDR1 _CAN1TXIDR2 _CAN1TXIDR3 
                                 _CAN1TXDSR0 _CAN1TXDLR _CAN1TXTBPR 
@@ -4112,7 +4130,6 @@ PLL_Init                  USES _CLKSEL _PLLCTL _SYNR _REFDV _POSTDIV _CRGFLG
 Pre_Cfg_WriteCfg          USES Pre_CfgState 
 Pre_Cfg_Fault             USES Pre_CfgState 
 Pre_Cfg_Clock             USES Pre_CfgState 
-Per_Cfg_GetVoltage        USES Pre_CfgState 
 CAN_Get_PreCfg            USES CAN_PrechargeCfg CAN1_GetMsg Pre_Cfg_WriteCfg 
                                 CAN1_SendMsg 
 CAN_Send_NodeState        USES Node_StateBack CAN_NodeState CAN1_SendMsg 
@@ -4202,7 +4219,13 @@ DEPENDENCY TREE
     |     |  |  | 
     |     |  |  +- Hv_Get              
     |     |  |     | 
-    |     |  |     +- Per_Cfg_GetVoltage  
+    |     |  |     +- Hv_GetAttribute     
+    |     |  |     |  | 
+    |     |  |     |  +- Hv_InterruptOFF     
+    |     |  |     |  |    
+    |     |  |     |  +- Hv_InterruptON      
+    |     |  |     |       
+    |     |  |     +- Hv_RangeOut         
     |     |  |          
     |     |  +- Node_NoAct           (see above)
     |     |  |  
@@ -4236,6 +4259,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 9
-Total size of all blocks to be downloaded: 1669
+Number of blocks to be downloaded: 8
+Total size of all blocks to be downloaded: 1873
 

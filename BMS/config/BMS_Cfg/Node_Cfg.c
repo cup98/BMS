@@ -31,4 +31,5 @@ const Node_StateCfgType Node_StateCfg[] =       //节点状态转换表
 };
 
 Node_ElementBackType Node_ElementBack;
+Node_State_InfoType Node_State_Info;
 

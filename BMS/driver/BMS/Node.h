@@ -33,11 +33,11 @@ typedef struct _Node_StateCfgType   //节点状态配置
     const Node_StateType* state;
 } Node_StateCfgType;
 
-typedef struct _node_state_infoType  //节点状态信息
+typedef struct _Node_State_InfoType  //节点状态信息
 {
     Node_Num_Type node;
     const Node_StateCfgType* state;
-} node_state_infoType;
+} Node_State_InfoType;
 
 typedef struct _Node_ElementBackType//构建输出节点信息结构体
 {
@@ -48,7 +48,8 @@ typedef struct _Node_ElementBackType//构建输出节点信息结构体
 
 extern void Node_Init(void);        //Node初始化函数
 extern void Node_NoAct(void);       //Node空函数
-extern void Node_Poll(void);        //Node节点判断函数
+extern void Node_Poll(Node_State_InfoType *Node_Info);        //Node节点判断函数
 extern int Node_StateBack(Node_Element_Type state);//节点状态返回函数(节点状态)，返回节点状态对应数据
+
 
 #endif

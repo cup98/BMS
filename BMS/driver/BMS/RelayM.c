@@ -28,3 +28,5 @@ void RelayM_Change(RelayM_Object_Type object ,int state)    //ÇÐ»»¿ª¹Øº¯Êý(¿ØÖÆÄ
         RelayM_Switch.Precharge = state;
     }
 }
+
+//void RelayM_Control()
