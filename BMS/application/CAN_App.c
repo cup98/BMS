@@ -1,6 +1,6 @@
 #include "CAN_App.h"
-#include "Pre_Cfg.h"
-#include "Node_cfg.h"
+#include "Pre_LCfg.h"
+#include "Node_LCfg.h"
 #include "Node.h"
 
 CAN_MsgType CAN_DemoMsg1 =
@@ -98,9 +98,9 @@ void CAN_Get_PreCfg(void)                                           //读取CAN�
 
 void CAN_Send_NodeState(void)                                       //将Node当前运行状态用CAN报文发送出来
 {
-    CAN_NodeState.data[0] = (unsigned char)Node_StateBack(NODE_CURRENT_STATE);//读取当前节点状态赋值到data[0]字段
-    CAN_NodeState.data[1] = (unsigned char)Node_StateBack(NODE_NEXT_STATE);   //读取下一节点状态赋值到data[1]字段
-    CAN_NodeState.data[7] = (unsigned char)Node_StateBack(NODE_BRANCH_NUM);   //读取当前节点分支数赋值到data[2]字段
+    CAN_NodeState.data[0] = (unsigned char)Node_StateBack(NODE_Element_CURRENT_STATE);//读取当前节点状态赋值到data[0]字段
+    CAN_NodeState.data[1] = (unsigned char)Node_StateBack(NODE_Element_NEXT_STATE);   //读取下一节点状态赋值到data[1]字段
+    CAN_NodeState.data[7] = (unsigned char)Node_StateBack(NODE_Element_CONDITION_NUM);   //读取当前节点分支数赋值到data[2]字段
     if (CAN1_SendMsg(&CAN_NodeState) == 1)                                    //将重构的报文通过CAN发出
     {
     }

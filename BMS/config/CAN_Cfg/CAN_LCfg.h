@@ -1,5 +1,5 @@
-#ifndef __CAN_CFG_H
-#define __CAN_CFG_H
+#ifndef __CAN_LCFG_H
+#define __CAN_LCFG_H
 
 #include "hidef.h"
 #include "derivative.h"

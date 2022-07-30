@@ -1,4 +1,4 @@
-#include "CAN_Cfg.h"
+#include "CAN_LCfg.h"
 
 CAN_ConfigType CAN_HwCfg =          //è®¾ç½®æ³¢ç‰¹çŽ‡
 {

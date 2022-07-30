@@ -1,65 +1,16 @@
 #include "Hv.h"
-#include "Pre_Cfg.h"
-
-/*
-
-int Hv_Get(Hv_Voltage_Type object)      //获取电压函数
-{
-    int rebuf = 0;
-    if(object == HV_BAT)                   //选中Bat
-    {
-        rebuf = Per_Cfg_GetVoltage(HV_BAT);//返回BAT电压
-    }
-    else if (object == HV_V1)                              //选中V1
-    {
-        rebuf = Per_Cfg_GetVoltage(HV_V1); //返回V1电压
-    }
-    else if (object == HV_V2)                              //选中V2
-    {
-        rebuf = Per_Cfg_GetVoltage(HV_V2); //返回V1电压
-    }
-    else if (object == HV_V3)                              //选中V3
-    {
-        rebuf = Per_Cfg_GetVoltage(HV_V3); //返回V1电压
-    }
-    else
-    {
-    }
-    return rebuf;
-}*/
-
-//uint8 ErrorFlag = 1;
-
-/*typedef struct _Hv_SaveInfoType
-{
-    Hv_ChannelType channel;
-    Hv_AttributeType attribute;
-    uint32 data;
-} Hv_SaveInfoType;
-
-Hv_SaveInfoType Hv_SaveInfo;*/
-
-Hv_DataType Hv_DemoData[HV_MAX_NUM] =
-{
-    {HV_CHANNEL_0,75,104,90},
-    {HV_CHANNEL_1,76,103,89},
-    {HV_CHANNEL_2,77,102,88},
-    {HV_CHANNEL_3,78,101,87},
-    {HV_CHANNEL_4,79,100,86},
-    {HV_CHANNEL_5,80, 99,85},
-    {HV_CHANNEL_6,81, 98,84},
-    {HV_CHANNEL_7,82, 97,83},
-};
+#include "Pre_LCfg.h"
+#include "Hv_LCfg.h"
 
 void Hv_Init(void)                      //高压管理模块由初始化函数
 {
 }
 
-void Hv_InterruptON()
+void Hv_InterruptON(void)
 {
 }
 
-void Hv_InterruptOFF()
+void Hv_InterruptOFF(void)
 {
 }
 

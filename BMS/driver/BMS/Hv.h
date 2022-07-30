@@ -4,7 +4,7 @@
 #include "hidef.h"
 #include "derivative.h"
 
-#define HV_MAX_MODE_NUM 9
+#define HV_MAX_NUM 9
 
 #define HV_VOLTAGE_MIN  (10U)
 #define HV_CURRENT_MIN  (10U)
@@ -56,24 +56,3 @@ extern uint32 Hv_Get(Hv_ChannelType object ,Hv_AttributeType attribute);  //获�
 extern Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object);
 
 #endif
-
-/*#ifndef __HV_H
-#define __HV_H
-
-#include "hidef.h"
-#include "derivative.h"
-
-typedef enum _Hv_Voltage_Type               //获取电压目标
-{
-    HV_BAT,
-    HV_V1,
-    HV_V2,
-    HV_V3,
-} Hv_Voltage_Type;
-
-
-
-extern void Hv_Init(void);                  //高压管理模块由初始化函数
-extern int Hv_Get(Hv_Voltage_Type object);  //获取电压函数
-
-#endif*/

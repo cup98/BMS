@@ -1,5 +1,5 @@
-#ifndef __PRE_CFG_H
-#define __PRE_CFG_H
+#ifndef __PRE_LCFG_H
+#define __PRE_LCFG_H
 
 #include "hidef.h"
 #include "derivative.h"

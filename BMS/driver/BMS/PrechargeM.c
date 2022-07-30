@@ -1,5 +1,5 @@
 #include "PrechargeM.h"
-#include "Pre_Cfg.h"
+#include "Pre_LCfg.h"
 #include "RelayM.h"
 #include "Hv.h"
 
@@ -9,23 +9,23 @@ void PrechargeM_Init(void)          //预充初始化函数
 
 void PrechargeM_StartPre(void)      //闭合预充开关
 {
-    RelayM_Control(RELAYM_PRECHANG ,1);
+    RelayM_Control(0 ,RELAYM_CTRL_STATUS ,1);
     //记录时间占位
 }
 
 void PrechargeM_StopPre(void)       //断开预充开关
 {
-    RelayM_Control(RELAYM_PRECHANG ,0);
+    RelayM_Control(0 ,RELAYM_CTRL_STATUS ,0);
 }
 
 void PrechargeM_StartMaster(void)   //闭合总正函数
 {
-    RelayM_Control(RELAYM_MASTER ,1);
+    RelayM_Control(1 ,RELAYM_CTRL_STATUS ,1);
 }
 
 void PrechargeM_StopMaster(void)    //断开总正函数
 {
-    RelayM_Control(RELAYM_MASTER ,0);
+    RelayM_Control(1 ,RELAYM_CTRL_STATUS ,0);
 }
 
 void PrechargeM_Change(void)        //继电器切换函数

@@ -1,5 +1,5 @@
 #include "CAN.h"
-#include "CAN_Cfg.h"
+#include "CAN_LCfg.h"
 
 void CAN_Init(void)                                         //CAN初始�
 {
