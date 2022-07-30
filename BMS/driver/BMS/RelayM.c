@@ -63,6 +63,7 @@ void RelayM_SetRes(uint8 channel ,uint32 value)
 RelayM_FaultStatusType RelayM_GetFault(uint8 channel)
 {
     RelayM_FaultStatusType rebuf;
+    RelayM_InterruptOFF();
     if (RelayM_CtrlData[channel].ctrl_status == *RelayM_ActureData[channel].acture_status)
     {
         rebuf = (RelayM_FaultStatusType)RELAYM_NORMAL;
@@ -78,6 +79,7 @@ RelayM_FaultStatusType RelayM_GetFault(uint8 channel)
     else
     {
     }
+    RelayM_InterruptON();
     return rebuf;
 }
 
