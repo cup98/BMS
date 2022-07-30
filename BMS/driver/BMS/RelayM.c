@@ -83,63 +83,69 @@ RelayM_FaultStatusType RelayM_GetFault(uint8 channel)
 
 void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value)
 {
-    RelayM_InterruptOFF();
-    switch (attribute)
+    if (channel < RELAYM_MAX_NUM)
     {
-        case RELAYM_CTRL_STATUS:
+        RelayM_InterruptOFF();
+        switch (attribute)
         {
-            RelayM_SetContorl(channel ,value);
-        } break;
+            case RELAYM_CTRL_STATUS:
+            {
+                RelayM_SetContorl(channel ,value);
+            } break;
 
-        case RELAYM_CTRL_ON_TIME:
-        {
-            RelayM_SetOnTime(channel ,value);
-        } break;
+            case RELAYM_CTRL_ON_TIME:
+            {
+                RelayM_SetOnTime(channel ,value);
+            } break;
 
-        case RELAYM_CTRL_OFF_TIME:
-        {
-            RelayM_SetOffTime(channel ,value);
-        } break;
+            case RELAYM_CTRL_OFF_TIME:
+            {
+                RelayM_SetOffTime(channel ,value);
+            } break;
 
-        case RELAYM_CTRL_RES_VALUE:
-        {
-            RelayM_SetRes(channel ,value);
-        } break;
+            case RELAYM_CTRL_RES_VALUE:
+            {
+                RelayM_SetRes(channel ,value);
+            } break;
+        }
+        RelayM_InterruptON();
     }
-    RelayM_InterruptON();
 }
 
 uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)
 {
-    uint32 rebuf;
-    RelayM_InterruptOFF();
-    switch (attribute)
+    uint32 rebuf ;
+    if (channel < RELAYM_MAX_NUM)
     {
-        case RELAYM_ACTURE_CONTROL:
+        RelayM_InterruptOFF();
+        switch (attribute)
         {
-            rebuf = RelayM_GetControl(channel);
-        } break;
+            case RELAYM_ACTURE_CONTROL:
+            {
+                rebuf = RelayM_GetControl(channel);
+            } break;
 
-        case RELAYM_ACTURE_STATUS:
-        {
-            rebuf = RelayM_GetActure(channel);
-        } break;
+            case RELAYM_ACTURE_STATUS:
+            {
+                rebuf = RelayM_GetActure(channel);
+            } break;
 
-        case RELAYM_ACTURE_ON_TIME:
-        {
-            rebuf = RelayM_GetOnTime(channel);
-        } break;
+            case RELAYM_ACTURE_ON_TIME:
+            {
+                rebuf = RelayM_GetOnTime(channel);
+            } break;
 
-        case RELAYM_ACTURE_OFF_TIME:
-        {
-            rebuf = RelayM_GetOffTime(channel);
-        } break;
+            case RELAYM_ACTURE_OFF_TIME:
+            {
+                rebuf = RelayM_GetOffTime(channel);
+            } break;
 
-        case RELAYM_ACTURE_RES_VALUE:
-        {
-            rebuf = RelayM_GetRes(channel);
-        } break;
+            case RELAYM_ACTURE_RES_VALUE:
+            {
+                rebuf = RelayM_GetRes(channel);
+            } break;
+        }
+        RelayM_InterruptON();
     }
-    RelayM_InterruptON();
     return rebuf;
 }

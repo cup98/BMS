@@ -1,4 +1,5 @@
 #include "Hv.h"
+#include "Hv_LCfg.h"
 
 Hv_DataType Hv_DemoData[HV_MAX_NUM] =
 {

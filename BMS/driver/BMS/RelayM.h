@@ -4,9 +4,6 @@
 #include "hidef.h"
 #include "derivative.h"
 
-#define RELAYM_MAX_NUM     8
-#define RELAYM_RES_SUPPORT TRUE
-
 typedef unsigned char      uint8;
 typedef unsigned short int uint16;
 typedef unsigned int       uint32;
@@ -31,17 +28,17 @@ typedef enum _RelayM_AttributeType
     RELAYM_CTRL_RES_VALUE,
 } RelayM_AttributeType;
 
-typedef enum _RelayM_ChannelType
+typedef enum _RelayM_SupportFnType
 {
-    RelayM_Channel_0,
-    RelayM_Channel_1,
-    RelayM_Channel_2,
-    RelayM_Channel_3,
-    RelayM_Channel_4,
-    RelayM_Channel_5,
-    RelayM_Channel_6,
-    RelayM_Channel_7,
-} RelayM_ChannelType;
+    RELAYM_CONTROL_SUPPORT,
+    RELAYM_CONTROL_REFUSE,
+    RELAYM_ON_TIME_SUPPORT,
+    RELAYM_ON_TIME_REFUSE,
+    RELAYM_OFF_TIME_SUPPORT,
+    RELAYM_OFF_TIME_REFUSE,
+    RELAYM_RES_VALUE_SUPPORT,
+    RELAYM_RES_VALUE_REFUSE,
+} RelayM_SupportFnType;
 
 typedef struct _RelayM_ControlType/*控制状态，需要设置的状态*/
 {

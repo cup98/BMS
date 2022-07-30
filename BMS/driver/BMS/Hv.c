@@ -54,17 +54,22 @@ Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)
     int i = 0;
     for (i = 0 ;i < HV_MAX_NUM ;i++)
     {
-        if (object == Hv_DemoData[i].channel)
+        if (i < HV_MAX_NUM)
         {
-            if (Hv_DemoData[i].current > 0)
+            if (object == Hv_DemoData[i].channel)
             {
-                rebuf = HV_DISCHARGE;
+                 Hv_InterruptOFF();
+                if (Hv_DemoData[i].current > 0)
+                {
+                    rebuf = HV_DISCHARGE;
+                }
+                else
+                {
+                    rebuf = HV_CHARGE;
+                }
+                Hv_InterruptON();
+                break;
             }
-            else
-            {
-                rebuf = HV_CHARGE;
-            }
-            break;
         }
     }
     return rebuf;
@@ -76,26 +81,27 @@ uint32 Hv_GetAttribute(Hv_ChannelType object ,Hv_AttributeType attribute)
     uint32 rebuf;
     for (i = 0 ;i < HV_MAX_NUM ;i++)
     {
-        if (object == Hv_DemoData[i].channel)
+        if (i < HV_MAX_NUM)
         {
-            Hv_InterruptOFF();
-            if (attribute == HV_VOLTAGE)
+            if (object == Hv_DemoData[i].channel)
             {
-                rebuf = Hv_DemoData[i].voltage;
+                if (attribute == HV_VOLTAGE)
+                {
+                    rebuf = Hv_DemoData[i].voltage;
+                }
+                else if (attribute == HV_CURRENT)
+                {
+                    rebuf = Hv_DemoData[i].current;
+                }
+                else if (attribute == HV_TEMP)
+                {
+                    rebuf = Hv_DemoData[i].temp;
+                }
+                else
+                {
+                }
+                break;
             }
-            else if (attribute == HV_CURRENT)
-            {
-                rebuf = Hv_DemoData[i].current;
-            }
-            else if (attribute == HV_TEMP)
-            {
-                rebuf = Hv_DemoData[i].temp;
-            }
-            else
-            {
-            }
-            Hv_InterruptON();
-            break;
         }
     }
     return rebuf;
@@ -107,7 +113,9 @@ uint32 Hv_Get(Hv_ChannelType object ,Hv_AttributeType attribute)
     rebuf = Hv_GetAttribute(object ,attribute);
     if (Hv_RangeOut(rebuf ,attribute) == FALSE)
     {
+        Hv_InterruptOFF();
         rebuf = Hv_GetAttribute(object ,attribute);
+        Hv_InterruptON();
     }
     return rebuf;
 }

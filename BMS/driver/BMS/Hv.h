@@ -4,15 +4,6 @@
 #include "hidef.h"
 #include "derivative.h"
 
-#define HV_MAX_NUM 9
-
-#define HV_VOLTAGE_MIN  (10U)
-#define HV_CURRENT_MIN  (10U)
-#define HV_TEMP_MIN     (10U)
-#define HV_VOLTAGE_MAX (100U)
-#define HV_CURRENT_MAX  (100U)
-#define HV_TEMP_MAX      (100U)
-
 typedef unsigned char      uint8;
 typedef unsigned short int uint16;
 typedef unsigned int       uint32;
