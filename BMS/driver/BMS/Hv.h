@@ -8,7 +8,7 @@ typedef unsigned char      uint8;
 typedef unsigned short int uint16;
 typedef unsigned int       uint32;
 
-typedef enum _Hv_ChannelType
+typedef enum _Hv_ChannelType            //通道
 {
     HV_CHANNEL_0,
     HV_CHANNEL_1,
@@ -21,7 +21,7 @@ typedef enum _Hv_ChannelType
     HV_CHANNEL_8,
 } Hv_ChannelType;
 
-typedef enum _Hv_AttributeType
+typedef enum _Hv_AttributeType          //属性类型
 {
     HV_VOLTAGE,
     HV_CURRENT,
@@ -30,7 +30,7 @@ typedef enum _Hv_AttributeType
     HV_DISCHARGE,
 } Hv_AttributeType;
 
-typedef struct _Hv_DataType
+typedef struct _Hv_DataType             //高压数据类型
 {
     Hv_ChannelType channel;
     uint32 voltage;

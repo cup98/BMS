@@ -6,15 +6,15 @@ void Hv_Init(void)                      //高压管理模块由初始化函数
 {
 }
 
-void Hv_InterruptON(void)
+void Hv_InterruptON(void)               //中断开
 {
 }
 
-void Hv_InterruptOFF(void)
+void Hv_InterruptOFF(void)              //中断关
 {
 }
 
-int Hv_RangeOut(uint32 data ,Hv_AttributeType attribute)
+int Hv_RangeOut(uint32 data ,Hv_AttributeType attribute)    //检测数据是否在预设的测量区间，输入数据数值和数据属性
 {
     int rebuf;
     uint32 max ,min;
@@ -48,7 +48,7 @@ int Hv_RangeOut(uint32 data ,Hv_AttributeType attribute)
     return rebuf;
 }
 
-Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)
+Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)     //返回目标的充放电状态
 {
     Hv_AttributeType rebuf;
     int i = 0;
@@ -75,19 +75,20 @@ Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)
     return rebuf;
 }
 
-uint32 Hv_GetAttribute(Hv_ChannelType object ,Hv_AttributeType attribute)
+uint32 Hv_GetAttribute(Hv_ChannelType object ,Hv_AttributeType attribute)   //获取目标属性的数据
 {
     int i = 0;
     uint32 rebuf;
-    for (i = 0 ;i < HV_MAX_NUM ;i++)
+    for (i = 0 ;i < HV_MAX_NUM ;i++)                                        //寻找目标通道
     {
         if (i < HV_MAX_NUM)
         {
+            Hv_InterruptOFF();
             if (object == Hv_DemoData[i].channel)
             {
-                if (attribute == HV_VOLTAGE)
+                if (attribute == HV_VOLTAGE)                                //判断属性
                 {
-                    rebuf = Hv_DemoData[i].voltage;
+                    rebuf = Hv_DemoData[i].voltage;                         //返回数据
                 }
                 else if (attribute == HV_CURRENT)
                 {
@@ -102,20 +103,19 @@ uint32 Hv_GetAttribute(Hv_ChannelType object ,Hv_AttributeType attribute)
                 }
                 break;
             }
+            Hv_InterruptON();
         }
     }
     return rebuf;
 }
 
-uint32 Hv_Get(Hv_ChannelType object ,Hv_AttributeType attribute)
+uint32 Hv_Get(Hv_ChannelType object ,Hv_AttributeType attribute)        //获取目标属性数据
 {
     uint32 rebuf;
     rebuf = Hv_GetAttribute(object ,attribute);
-    if (Hv_RangeOut(rebuf ,attribute) == FALSE)
+    if (Hv_RangeOut(rebuf ,attribute) == FALSE)                         //检测数据是否在有效区间，否在重新获取数据
     {
-        Hv_InterruptOFF();
         rebuf = Hv_GetAttribute(object ,attribute);
-        Hv_InterruptON();
     }
     return rebuf;
 }

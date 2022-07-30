@@ -1,7 +1,7 @@
 #include "Hv.h"
 #include "Hv_LCfg.h"
 
-Hv_DataType Hv_DemoData[HV_MAX_NUM] =
+Hv_DataType Hv_DemoData[HV_MAX_NUM] =       //高压演示数据
 {
     {HV_CHANNEL_0,75,104,90},
     {HV_CHANNEL_1,76,103,89},

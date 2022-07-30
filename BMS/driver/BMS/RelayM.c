@@ -1,70 +1,70 @@
 #include "RelayM.h"
 #include "RelayM_LCfg.h"
 
-void RelayM_Init(void)                                      //继电器模块由初始化函数
+void RelayM_Init(void)                                   //继电器模块由初始化函数
 {
 
 }
 
-void RelayM_InterruptON(void)
+void RelayM_InterruptON(void)                           //开中断
 {
 
 }
 
-void RelayM_InterruptOFF(void)
+void RelayM_InterruptOFF(void)                          //关中断
 {
 
 }
-void RelayM_SetContorl(uint8 channel ,uint32 value)
+void RelayM_SetContorl(uint8 channel ,uint32 value)     //设置继电器状态
 {
     RelayM_CtrlData[channel].ctrl_status = value;
 }
 
-uint32 RelayM_GetControl(uint8 channel)
+uint32 RelayM_GetControl(uint8 channel)                 //获取继电器状态
 {
     return RelayM_CtrlData[channel].ctrl_status;
 }
 
-uint32 RelayM_GetActure(uint8 channel)
+uint32 RelayM_GetActure(uint8 channel)                  //获取继电器当前状态
 {
     return *RelayM_ActureData[channel].acture_status;
 }
 
-uint32 RelayM_GetOnTime(uint8 channel)
+uint32 RelayM_GetOnTime(uint8 channel)                  //获取继电器闭合时间
 {
     return *RelayM_ActureData[channel].on_time;
 }
 
-void RelayM_SetOnTime(uint8 channel ,uint32 value)
+void RelayM_SetOnTime(uint8 channel ,uint32 value)      //设置继电器闭合时间
 {
     RelayM_CtrlData[channel].on_time = value;
 }
 
-uint32 RelayM_GetOffTime(uint8 channel)
+uint32 RelayM_GetOffTime(uint8 channel)                 //获取继电器断开时间
 {
     return *RelayM_ActureData[channel].off_time;
 }
 
-void RelayM_SetOffTime(uint8 channel ,uint32 value)
+void RelayM_SetOffTime(uint8 channel ,uint32 value)     //设置继电器断开时间
 {
     RelayM_CtrlData[channel].off_time = value;
 }
 
-uint32 RelayM_GetRes(uint8 channel)
+uint32 RelayM_GetRes(uint8 channel)                     //获取继电器内阻值
 {
     return *RelayM_ActureData[channel].res_value;
 }
 
-void RelayM_SetRes(uint8 channel ,uint32 value)
+void RelayM_SetRes(uint8 channel ,uint32 value)         //设置继电器内阻值
 {
     RelayM_CtrlData[channel].res_value = value;
 }
 
-RelayM_FaultStatusType RelayM_GetFault(uint8 channel)
+RelayM_FaultStatusType RelayM_GetFault(uint8 channel)   //继电器故障检测
 {
     RelayM_FaultStatusType rebuf;
     RelayM_InterruptOFF();
-    if (RelayM_CtrlData[channel].ctrl_status == *RelayM_ActureData[channel].acture_status)
+    if (RelayM_CtrlData[channel].ctrl_status == *RelayM_ActureData[channel].acture_status)//判断继电器控制状态和当前状态是否一致
     {
         rebuf = (RelayM_FaultStatusType)RELAYM_NORMAL;
     }
@@ -83,12 +83,12 @@ RelayM_FaultStatusType RelayM_GetFault(uint8 channel)
     return rebuf;
 }
 
-void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value)
+void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value) //控制继电器(目标通道,属性,值）
 {
-    if (channel < RELAYM_MAX_NUM)
+    if (channel < RELAYM_MAX_NUM)                                                //数组溢出检测
     {
         RelayM_InterruptOFF();
-        switch (attribute)
+        switch (attribute)                                                       //判断属性
         {
             case RELAYM_CTRL_STATUS:
             {
@@ -114,7 +114,7 @@ void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value)
     }
 }
 
-uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)
+uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)             //继电器当前状态获取(通道，属性)
 {
     uint32 rebuf ;
     if (channel < RELAYM_MAX_NUM)

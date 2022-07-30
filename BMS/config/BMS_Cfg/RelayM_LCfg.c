@@ -1,6 +1,6 @@
 #include "RelayM_LCfg.h"
 
-RelayM_ControlType RelayM_CtrlData[RELAYM_MAX_NUM] =
+RelayM_ControlType RelayM_CtrlData[RELAYM_MAX_NUM] =    //继电器控制数据存放
 {
     {0 ,0 ,0 ,0},
     {0 ,0 ,0 ,0},
@@ -12,10 +12,10 @@ RelayM_ControlType RelayM_CtrlData[RELAYM_MAX_NUM] =
     {0 ,0 ,0 ,0},
 };
 
-RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM] =
+RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM] =   //继电器当前状态存放
 {
     {
-        &(RelayM_CtrlData[0].ctrl_status),
+        &(RelayM_CtrlData[0].ctrl_status),              //演示时指向继电器控制数据结构体
         &(RelayM_CtrlData[0].on_time),
         &(RelayM_CtrlData[0].off_time),
         &(RelayM_CtrlData[0].res_value)

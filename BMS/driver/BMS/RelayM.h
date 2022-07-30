@@ -8,14 +8,14 @@ typedef unsigned char      uint8;
 typedef unsigned short int uint16;
 typedef unsigned int       uint32;
 
-typedef enum _RelayM_FaultStatusType
+typedef enum _RelayM_FaultStatusType    //继电器故障类型
 {
     RELAYM_NORMAL,
     RELAYM_ADHESION,
     RELAYM_OPEN_LOOP,
 } RelayM_FaultStatusType;
 
-typedef enum _RelayM_AttributeType
+typedef enum _RelayM_AttributeType  //继电器属性
 {
     RELAYM_ACTURE_CONTROL,
     RELAYM_ACTURE_STATUS,
@@ -28,7 +28,7 @@ typedef enum _RelayM_AttributeType
     RELAYM_CTRL_RES_VALUE,
 } RelayM_AttributeType;
 
-typedef enum _RelayM_SupportFnType
+typedef enum _RelayM_SupportFnType      //继电器功能
 {
     RELAYM_CONTROL_SUPPORT,
     RELAYM_CONTROL_REFUSE,
@@ -48,7 +48,7 @@ typedef struct _RelayM_ControlType/*控制状态，需要设置的状态*/
     uint32 res_value;/*继电器内阻设置*/
 } RelayM_ControlType;
 
-typedef struct _RelayM_ActureType
+typedef struct _RelayM_ActureType  //继电器当前状态数据
 {
     uint32 *acture_status;
     uint32 *on_time;

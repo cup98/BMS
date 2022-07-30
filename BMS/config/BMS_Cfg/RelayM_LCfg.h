@@ -3,12 +3,12 @@
 
 #include "RelayM.h"
 
-#define RELAYM_MAX_NUM  8
+#define RELAYM_MAX_NUM  8 					//继电器控制最大数量
 
-#define RELAYM_CONTROL_SUPPORT	 TRUE
-#define RELAYM_ON_TIME_SUPPORT   TRUE
-#define RELAYM_OFF_TIME_SUPPORT  TRUE
-#define RELAYM_RES_VALUE_SUPPORT TRUE
+#define RELAYM_CONTROL_SUPPORT	 TRUE		//继电器支持控制状态功能
+#define RELAYM_ON_TIME_SUPPORT   TRUE		//继电器支持设置闭合时间功能
+#define RELAYM_OFF_TIME_SUPPORT  TRUE		//继电器支持设置断开时间功能
+#define RELAYM_RES_VALUE_SUPPORT TRUE		//继电器支持设置内阻功能
 
 #define GPIO_0	((uint16)0x0001)
 #define GPIO_1	((uint16)0x0002)

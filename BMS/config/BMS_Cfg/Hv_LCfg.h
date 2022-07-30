@@ -5,8 +5,9 @@
 #include "derivative.h"
 #include "Hv.h"
 
-#define HV_MAX_NUM 9
+#define HV_MAX_NUM 9				//高压最大通道数
 
+//高压模块测量范围
 #define HV_VOLTAGE_MIN  (10U)
 #define HV_CURRENT_MIN  (10U)
 #define HV_TEMP_MIN     (10U)
