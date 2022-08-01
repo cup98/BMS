@@ -24,7 +24,7 @@ RelayM_ControlType RelayM_CtrlData[RELAYM_MAX_NUM] =    //继电器控制数据�
     {0 ,0 ,0 ,0}
 };
 
-RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM] =   //继电器当前状态存放
+/*RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM] =   //继电器当前状态存放
 {
     {
         &(RelayM_OriginDataDemo[0].ctrl_status),              //演示时指向继电器控制数据结构体
@@ -74,6 +74,6 @@ RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM] =   //继电器当前状态�
         &(RelayM_OriginDataDemo[7].off_time),
         &(RelayM_OriginDataDemo[7].res_value)
     }
-};
+};*/
 
 

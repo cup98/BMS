@@ -5,10 +5,10 @@
 
 #define RELAYM_MAX_NUM  8                   //继电器控制最大数量
 
-#define RELAYM_CONTROL_SUPPORT   TRUE       //继电器支持控制状态功能
-#define RELAYM_ON_TIME_SUPPORT   TRUE       //继电器支持设置闭合时间功能
-#define RELAYM_OFF_TIME_SUPPORT  TRUE       //继电器支持设置断开时间功能
-#define RELAYM_RES_VALUE_SUPPORT TRUE       //继电器支持设置内阻功能
+#define RELAYM_ON_TIME_SET_SUPPORT   TRUE       //继电器支持设置闭合时间功能
+#define RELAYM_OFF_TIME_SET_SUPPORT  TRUE       //继电器支持设置断开时间功能
+#define RELAYM_RES_VALUE_SET_SUPPORT TRUE       //继电器支持设置内阻功能
+
 
 #define RELAYM_IO_(X)           (*(uint32 *)(&(RelayM_OriginDataDemo[X].ctrl_status)))
 #define RELAYM_ON_TIME_(X)      (*(uint32 *)(&(RelayM_OriginDataDemo[X].on_time)))
@@ -46,6 +46,6 @@
 
 extern RelayM_ControlType RelayM_OriginDataDemo[RELAYM_MAX_NUM];      //继电器演示实际控制数据
 extern RelayM_ControlType RelayM_CtrlData[RELAYM_MAX_NUM];      //继电器控制数据
-extern RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM];           //继电器当前数据
+//extern RelayM_ActureType RelayM_ActureData[RELAYM_MAX_NUM];           //继电器当前数据
 
 #endif

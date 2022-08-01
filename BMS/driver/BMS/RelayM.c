@@ -87,32 +87,33 @@ RelayM_FaultStatusType RelayM_GetFault(uint8 channel)   //继电器故障检测
 
 void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value) //控制继电器(目标通道,属性,值）
 {
-    if (channel < RELAYM_MAX_NUM)                                                //数组溢出检测
+    switch (attribute)                                                       //判断属性
     {
-        RelayM_InterruptOFF();
-        switch (attribute)                                                       //判断属性
+        case RELAYM_CTRL_STATUS:
         {
-            case RELAYM_CTRL_STATUS:
-            {
-                RelayM_SetContorl(channel ,value);
-            } break;
+            RelayM_SetContorl(channel ,value);
+        } break;
 
-            case RELAYM_CTRL_ON_TIME:
-            {
+        case RELAYM_CTRL_ON_TIME:
+        {
+            #if (RELAYM_ON_TIME_SET_SUPPORT == TRUE)
                 RelayM_SetOnTime(channel ,value);
-            } break;
+            #endif
+        } break;
 
-            case RELAYM_CTRL_OFF_TIME:
-            {
+        case RELAYM_CTRL_OFF_TIME:
+        {
+            #if (RELAYM_OFF_TIME_SET_SUPPORT == TRUE)
                 RelayM_SetOffTime(channel ,value);
-            } break;
+            #endif
+        } break;
 
-            case RELAYM_CTRL_RES_VALUE:
-            {
+        case RELAYM_CTRL_RES_VALUE:
+        {
+            #if (RELAYM_RES_VALUE_SET_SUPPORT == TRUE)
                 RelayM_SetRes(channel ,value);
-            } break;
-        }
-        RelayM_InterruptON();
+            #endif
+        } break;
     }
 }
 
