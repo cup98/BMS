@@ -17,6 +17,7 @@ void RelayM_InterruptOFF(void)                          //关中断
 }
 void RelayM_SetContorl(uint8 channel ,uint32 value)     //设置继电器状态
 {
+    RELAYM_IO_(channel) = value;
     RelayM_CtrlData[channel].ctrl_status = value;
 }
 
@@ -27,59 +28,60 @@ uint32 RelayM_GetControl(uint8 channel)                 //获取继电器状态
 
 uint32 RelayM_GetActure(uint8 channel)                  //获取继电器当前状态
 {
-    return *RelayM_ActureData[channel].acture_status;
+    return RELAYM_IO_(channel);
 }
 
 uint32 RelayM_GetOnTime(uint8 channel)                  //获取继电器闭合时间
 {
-    return *RelayM_ActureData[channel].on_time;
+    return RELAYM_ON_TIME_(channel);
 }
 
 void RelayM_SetOnTime(uint8 channel ,uint32 value)      //设置继电器闭合时间
 {
+    RELAYM_ON_TIME_(channel) = value;
     RelayM_CtrlData[channel].on_time = value;
 }
 
 uint32 RelayM_GetOffTime(uint8 channel)                 //获取继电器断开时间
 {
-    return *RelayM_ActureData[channel].off_time;
+    return RELAYM_OFF_TIME_(channel);
 }
 
 void RelayM_SetOffTime(uint8 channel ,uint32 value)     //设置继电器断开时间
 {
+    RELAYM_OFF_TIME_(channel) = value;
     RelayM_CtrlData[channel].off_time = value;
 }
 
 uint32 RelayM_GetRes(uint8 channel)                     //获取继电器内阻值
 {
-    return *RelayM_ActureData[channel].res_value;
+    return RELAYM_RES_VALUE_(channel);
 }
 
 void RelayM_SetRes(uint8 channel ,uint32 value)         //设置继电器内阻值
 {
+    RELAYM_RES_VALUE_(channel) = value;
     RelayM_CtrlData[channel].res_value = value;
 }
 
 RelayM_FaultStatusType RelayM_GetFault(uint8 channel)   //继电器故障检测
 {
     RelayM_FaultStatusType rebuf;
-    RelayM_InterruptOFF();
-    if (RelayM_CtrlData[channel].ctrl_status == *RelayM_ActureData[channel].acture_status)//判断继电器控制状态和当前状态是否一致
+    if ((RelayM_CtrlData[channel].ctrl_status) == (RELAYM_IO_(channel)))//判断继电器控制状态和当前状态是否一致
     {
         rebuf = (RelayM_FaultStatusType)RELAYM_NORMAL;
     }
-    else if ((RelayM_CtrlData[channel].ctrl_status == 1) && (*RelayM_ActureData[channel].acture_status == 0))
+    else if ((RelayM_CtrlData[channel].ctrl_status == 1) && (RELAYM_IO_(channel)))
     {
         rebuf = (RelayM_FaultStatusType)RELAYM_ADHESION;
     }
-    else if ((RelayM_CtrlData[channel].ctrl_status == 0) && (*RelayM_ActureData[channel].acture_status == 1))
+    else if ((RelayM_CtrlData[channel].ctrl_status == 0) && (RELAYM_IO_(channel)))
     {
         rebuf = (RelayM_FaultStatusType)RELAYM_OPEN_LOOP;
     }
     else
     {
     }
-    RelayM_InterruptON();
     return rebuf;
 }
 
@@ -119,7 +121,6 @@ uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)             
     uint32 rebuf ;
     if (channel < RELAYM_MAX_NUM)
     {
-        RelayM_InterruptOFF();
         switch (attribute)
         {
             case RELAYM_ACTURE_CONTROL:
@@ -147,7 +148,6 @@ uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)             
                 rebuf = RelayM_GetRes(channel);
             } break;
         }
-        RelayM_InterruptON();
     }
     return rebuf;
 }

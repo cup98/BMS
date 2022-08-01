@@ -52,7 +52,7 @@ int PrechargeM_IsFinish()           //预充完成判断函数
 {
     int rebuf;
     if (Hv_Get(Pre_CfgState.pre_voltage ,HV_VOLTAGE) * 100 >=
-        Hv_Get(HV_CHANNEL_0 ,HV_VOLTAGE) * (Pre_CfgState.percent))   //判断V1电压是否大于BAT电压的95%
+        Hv_Get(0 ,HV_VOLTAGE) * (Pre_CfgState.percent))   //判断V1电压是否大于BAT电压的95%
     {
         rebuf = 1;
     }

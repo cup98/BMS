@@ -8,14 +8,14 @@ typedef unsigned char      uint8;
 typedef unsigned short int uint16;
 typedef unsigned int       uint32;
 
-typedef enum _RelayM_FaultStatusType    //继电器故障类型
+typedef enum _RelayM_FaultStatusType//继电器故障类型
 {
     RELAYM_NORMAL,
     RELAYM_ADHESION,
     RELAYM_OPEN_LOOP,
 } RelayM_FaultStatusType;
 
-typedef enum _RelayM_AttributeType  //继电器属性
+typedef enum _RelayM_AttributeType //继电器属性
 {
     RELAYM_ACTURE_CONTROL,
     RELAYM_ACTURE_STATUS,
@@ -28,7 +28,7 @@ typedef enum _RelayM_AttributeType  //继电器属性
     RELAYM_CTRL_RES_VALUE,
 } RelayM_AttributeType;
 
-typedef enum _RelayM_SupportFnType      //继电器功能
+typedef enum _RelayM_SupportFnType //继电器功能
 {
     RELAYM_CONTROL_SUPPORT,
     RELAYM_CONTROL_REFUSE,
@@ -40,12 +40,12 @@ typedef enum _RelayM_SupportFnType      //继电器功能
     RELAYM_RES_VALUE_REFUSE,
 } RelayM_SupportFnType;
 
-typedef struct _RelayM_ControlType/*控制状态，需要设置的状态*/
+typedef struct _RelayM_ControlType //控制状态
 {
-    uint32 ctrl_status;/*继电器控制状态*/
-    uint32 on_time;/*继电器控制闭合时间*/
-    uint32 off_time;/*继电器控制断开时间*/
-    uint32 res_value;/*继电器内阻设置*/
+    uint32 ctrl_status;            //继电器控制状态
+    uint32 on_time;                //继电器控制闭合时间
+    uint32 off_time;               //继电器控制断开时间
+    uint32 res_value;              //继电器内阻设置
 } RelayM_ControlType;
 
 typedef struct _RelayM_ActureType  //继电器当前状态数据
@@ -56,15 +56,15 @@ typedef struct _RelayM_ActureType  //继电器当前状态数据
     uint32 *res_value;
 } RelayM_ActureType;
 
-/*typedef struct _RelayM_InfoType
+typedef struct _RelayM_InfoType
 {
     uint8 channel;
     RelayM_ActureType *acture_data;
-    RelayM_CtrlDataType *Control_data;
+    RelayM_ControlType *Control_data;
     RelayM_FaultStatusType fault;
 } RelayM_InfoType;
 
-RelayM_InfoType RelayM_Info[RELAYM_MAX_NUM] =
+/*RelayM_InfoType RelayM_Info[RELAYM_MAX_NUM] =
 {
     {0 ,&RelayM_Acture[0] ,&RelayM_CtrlData[0] ,RELAYM_NORMAL};
     {1 ,&RelayM_Acture[1] ,&RelayM_CtrlData[1] ,RELAYM_NORMAL};
@@ -74,7 +74,7 @@ RelayM_InfoType RelayM_Info[RELAYM_MAX_NUM] =
     {5 ,&RelayM_Acture[5] ,&RelayM_CtrlData[5] ,RELAYM_NORMAL};
     {6 ,&RelayM_Acture[6] ,&RelayM_CtrlData[6] ,RELAYM_NORMAL};
     {7 ,&RelayM_Acture[7] ,&RelayM_CtrlData[7] ,RELAYM_NORMAL};
-}; */
+};*/
 
 extern void RelayM_Init(void);                                      //继电器驱动由初始化函数
 extern void RelayM_InterruptON(void);                               //继电器驱动开中断

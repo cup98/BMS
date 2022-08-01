@@ -28,7 +28,7 @@ typedef struct _Pre_Cfg_TimeOutType  //构建预充超时截止时间结构体
 
 typedef struct _Pre_Cfg_VoltageStdType  //构建节点状态机结构体
 {
-    Hv_ChannelType object;
+    uint8 channel;
     int percent;
 } Pre_Cfg_VoltageStdType;
 
@@ -38,6 +38,6 @@ extern Pre_Cfg_VoltageStdType Pre_Cfg_VoltageStd;
 extern void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data); //将数据存入相应的配置结构体内（目标，数据）
 extern int Pre_Cfg_Fault(void);                                         //读取错误函数，返回：0无错，1有错
 extern int Pre_Cfg_Clock(void);                                         //读取预充等待时间函数，返回：单位秒，小于3秒
-extern int Per_Cfg_GetVoltage(Hv_ChannelType object);                  //获取目标电压(目标)，返回：电压值
+extern int Per_Cfg_GetVoltage(uint8 channel);                  //获取目标电压(目标)，返回：电压值
 
 #endif

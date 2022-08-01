@@ -1,6 +1,6 @@
 #include "Hv.h"
-#include "Pre_LCfg.h"
 #include "Hv_LCfg.h"
+#include "Pre_LCfg.h"
 
 void Hv_Init(void)                      //高压管理模块由初始化函数
 {
@@ -48,74 +48,48 @@ int Hv_RangeOut(uint32 data ,Hv_AttributeType attribute)    //检测数据是否在预设
     return rebuf;
 }
 
-Hv_AttributeType Hv_BatteryStats(Hv_ChannelType object)     //返回目标的充放电状态
+Hv_AttributeType Hv_BatteryStats(uint8 channel)     //返回目标的充放电状态
 {
     Hv_AttributeType rebuf;
-    int i = 0;
-    for (i = 0 ;i < HV_MAX_NUM ;i++)
+    if (HV_CURRENT_(channel) > 0)
     {
-        if (i < HV_MAX_NUM)
-        {
-            if (object == Hv_DemoData[i].channel)
-            {
-                 Hv_InterruptOFF();
-                if (Hv_DemoData[i].current > 0)
-                {
-                    rebuf = HV_DISCHARGE;
-                }
-                else
-                {
-                    rebuf = HV_CHARGE;
-                }
-                Hv_InterruptON();
-                break;
-            }
-        }
+        rebuf = HV_DISCHARGE;
+    }
+    else
+    {
+        rebuf = HV_CHARGE;
     }
     return rebuf;
 }
 
-uint32 Hv_GetAttribute(Hv_ChannelType object ,Hv_AttributeType attribute)   //获取目标属性的数据
+uint32 Hv_GetAttribute(uint8 channel ,Hv_AttributeType attribute)   //获取目标属性的数据
 {
-    int i = 0;
     uint32 rebuf;
-    for (i = 0 ;i < HV_MAX_NUM ;i++)                                        //寻找目标通道
+    if (attribute == HV_VOLTAGE)                                //判断属性
     {
-        if (i < HV_MAX_NUM)
-        {
-            Hv_InterruptOFF();
-            if (object == Hv_DemoData[i].channel)
-            {
-                if (attribute == HV_VOLTAGE)                                //判断属性
-                {
-                    rebuf = Hv_DemoData[i].voltage;                         //返回数据
-                }
-                else if (attribute == HV_CURRENT)
-                {
-                    rebuf = Hv_DemoData[i].current;
-                }
-                else if (attribute == HV_TEMP)
-                {
-                    rebuf = Hv_DemoData[i].temp;
-                }
-                else
-                {
-                }
-                break;
-            }
-            Hv_InterruptON();
-        }
+        rebuf = HV_VOLTAGE_(channel);                         //返回数据
+    }
+    else if (attribute == HV_CURRENT)
+    {
+        rebuf = HV_CURRENT_(channel);
+    }
+    else if (attribute == HV_TEMP)
+    {
+        rebuf = HV_TEMP_(channel);
+    }
+    else
+    {
     }
     return rebuf;
 }
 
-uint32 Hv_Get(Hv_ChannelType object ,Hv_AttributeType attribute)        //获取目标属性数据
+uint32 Hv_Get(uint8 channel ,Hv_AttributeType attribute)        //获取目标属性数据
 {
     uint32 rebuf;
-    rebuf = Hv_GetAttribute(object ,attribute);
+    rebuf = Hv_GetAttribute(channel ,attribute);
     if (Hv_RangeOut(rebuf ,attribute) == FALSE)                         //检测数据是否在有效区间，否在重新获取数据
     {
-        rebuf = Hv_GetAttribute(object ,attribute);
+        rebuf = Hv_GetAttribute(channel ,attribute);
     }
     return rebuf;
 }
