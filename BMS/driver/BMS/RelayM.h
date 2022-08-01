@@ -76,20 +76,20 @@ RelayM_InfoType RelayM_Info[RELAYM_MAX_NUM] =
     {7 ,&RelayM_Acture[7] ,&RelayM_CtrlData[7] ,RELAYM_NORMAL};
 }; */
 
-extern void RelayM_Init(void);                                      //继电器模块由初始化函数
-extern void RelayM_InterruptON(void);
-extern void RelayM_InterruptOFF(void);
-extern void RelayM_SetContorl(uint8 channel ,uint32 value);
-extern uint32 RelayM_GetControl(uint8 channel);
-extern uint32 RelayM_GetActure(uint8 channel);
-extern uint32 RelayM_GetOnTime(uint8 channel);
-extern void RelayM_SetOnTime(uint8 channel ,uint32 value);
-extern uint32 RelayM_GetOffTime(uint8 channel);
-extern void RelayM_SetOffTime(uint8 channel ,uint32 value);
-extern uint32 RelayM_GetRes(uint8 channel);
-extern void RelayM_SetRes(uint8 channel ,uint32 value);
-extern RelayM_FaultStatusType RelayM_GetFault(uint8 channel);
+extern void RelayM_Init(void);                                      //继电器驱动由初始化函数
+extern void RelayM_InterruptON(void);                               //继电器驱动开中断
+extern void RelayM_InterruptOFF(void);                              //继电器驱动关中断
+extern void RelayM_SetContorl(uint8 channel ,uint32 value);         //设置继电器状态
+extern uint32 RelayM_GetControl(uint8 channel);                     //获取继电器状态
+extern uint32 RelayM_GetActure(uint8 channel);                      //获取继电器当前状态
+extern uint32 RelayM_GetOnTime(uint8 channel);                      //获取继电器闭合时间
+extern void RelayM_SetOnTime(uint8 channel ,uint32 value);          //设置继电器闭合时间
+extern uint32 RelayM_GetOffTime(uint8 channel);                     //获取继电器断开时间
+extern void RelayM_SetOffTime(uint8 channel ,uint32 value);         //设置继电器断开时间
+extern uint32 RelayM_GetRes(uint8 channel);                         //获取继电器内阻值
+extern void RelayM_SetRes(uint8 channel ,uint32 value);             //设置继电器内阻值
+extern RelayM_FaultStatusType RelayM_GetFault(uint8 channel);       //继电器故障检测
 extern void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value);   //控制继电器开关函数,控制继电器开关函数(控制目标,状态)
-extern uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute);
+extern uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute);                //继电器当前状态获取(通道，属性)
 
 #endif
