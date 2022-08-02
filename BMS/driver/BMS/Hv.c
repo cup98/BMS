@@ -65,20 +65,22 @@ Hv_AttributeType Hv_BatteryStats(uint8 channel)     //返回目标的充放电状态
 uint32 Hv_GetAttribute(uint8 channel ,Hv_AttributeType attribute)   //获取目标属性的数据
 {
     uint32 rebuf;
-    if (attribute == HV_VOLTAGE)                                //判断属性
+    switch (attribute)
     {
-        rebuf = HV_VOLTAGE_(channel);                         //返回数据
-    }
-    else if (attribute == HV_CURRENT)
-    {
-        rebuf = HV_CURRENT_(channel);
-    }
-    else if (attribute == HV_TEMP)
-    {
-        rebuf = HV_TEMP_(channel);
-    }
-    else
-    {
+        case HV_VOLTAGE:
+        {
+            rebuf = HV_VOLTAGE_(channel);
+        } break;
+
+        case HV_CURRENT:
+        {
+            rebuf = HV_VOLTAGE_(channel);
+        } break;
+
+        case HV_TEMP:
+        {
+            rebuf = HV_VOLTAGE_(channel);
+        } break;
     }
     return rebuf;
 }

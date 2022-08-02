@@ -2,6 +2,7 @@
 #include "Pre_LCfg.h"
 #include "Node_LCfg.h"
 #include "Node.h"
+#include "RelayM_LCfg.h"
 
 CAN_MsgType CAN_DemoMsg1 =
 {
@@ -100,6 +101,8 @@ void CAN_Send_NodeState(void)                                       //将Node当
 {
     CAN_NodeState.data[0] = (unsigned char)Node_StateBack(NODE_Element_CURRENT_STATE);//读取当前节点状态赋值到data[0]字段
     CAN_NodeState.data[1] = (unsigned char)Node_StateBack(NODE_Element_NEXT_STATE);   //读取下一节点状态赋值到data[1]字段
+    CAN_NodeState.data[2] = (unsigned char)RelayM_CtrlData[0].ctrl_status;//读取当前节点状态赋值到data[0]字段
+    CAN_NodeState.data[3] = (unsigned char)RelayM_CtrlData[1].ctrl_status;;   //读取下一节点状态赋值到data[1]字段
     CAN_NodeState.data[7] = (unsigned char)Node_StateBack(NODE_Element_CONDITION_NUM);   //读取当前节点分支数赋值到data[2]字段
     if (CAN1_SendMsg(&CAN_NodeState) == 1)                                    //将重构的报文通过CAN发出
     {

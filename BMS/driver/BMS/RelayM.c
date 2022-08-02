@@ -85,7 +85,30 @@ RelayM_FaultStatusType RelayM_GetFault(uint8 channel)   //继电器故障检测
     return rebuf;
 }
 
-void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value) //控制继电器(目标通道,属性,值）
+
+void (*RelayM_Set[])(uint8 ,uint32) = {RelayM_SetContorl ,
+                                       RelayM_SetOnTime ,
+                                       RelayM_SetOffTime ,
+                                       RelayM_SetRes};
+
+void RelayM_Control(uint8 channel ,RelayM_CtrlAttributeType attribute ,uint32 value) //控制继电器(目标通道,属性,值）
+{
+    RelayM_Set[attribute](channel ,value);
+}
+
+
+uint32 (*RelayM_Get[])(uint8) = {RelayM_GetControl ,
+                                 RelayM_GetActure ,
+                                 RelayM_GetOnTime ,
+                                 RelayM_GetOffTime ,
+                                 RelayM_GetRes};
+
+uint32 RelayM_Acture(uint8 channel ,RelayM_ActureAttributeType attribute) //继电器当前状态获取(通道，属性)
+{
+    return RelayM_Get[attribute](channel);
+}
+
+/*void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value) //控制继电器(目标通道,属性,值）
 {
     switch (attribute)                                                       //判断属性
     {
@@ -151,4 +174,4 @@ uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)             
         }
     }
     return rebuf;
-}
+}*/

@@ -15,18 +15,22 @@ typedef enum _RelayM_FaultStatusType//继电器故障类型
     RELAYM_OPEN_LOOP,
 } RelayM_FaultStatusType;
 
-typedef enum _RelayM_AttributeType //继电器属性
+typedef enum _RelayM_ActureAttributeType //继电器属性
 {
     RELAYM_ACTURE_CONTROL,
     RELAYM_ACTURE_STATUS,
     RELAYM_ACTURE_ON_TIME,
     RELAYM_ACTURE_OFF_TIME,
-    RELAYM_ACTURE_RES_VALUE,
+    RELAYM_ACTURE_RES_VALUE
+} RelayM_ActureAttributeType;
+
+typedef enum _RelayM_CtrlAttributeType //继电器属性
+{
     RELAYM_CTRL_STATUS,
     RELAYM_CTRL_ON_TIME,
     RELAYM_CTRL_OFF_TIME,
-    RELAYM_CTRL_RES_VALUE,
-} RelayM_AttributeType;
+    RELAYM_CTRL_RES_VALUE
+} RelayM_CtrlAttributeType;
 
 typedef enum _RelayM_SupportFnType //继电器功能
 {
@@ -89,7 +93,10 @@ extern void RelayM_SetOffTime(uint8 channel ,uint32 value);         //设置继�
 extern uint32 RelayM_GetRes(uint8 channel);                         //获取继电器内阻值
 extern void RelayM_SetRes(uint8 channel ,uint32 value);             //设置继电器内阻值
 extern RelayM_FaultStatusType RelayM_GetFault(uint8 channel);       //继电器故障检测
-extern void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value);   //控制继电器开关函数,控制继电器开关函数(控制目标,状态)
-extern uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute);                //继电器当前状态获取(通道，属性)
+extern void RelayM_Control(uint8 channel ,RelayM_CtrlAttributeType attribute ,uint32 value);   //控制继电器开关函数,控制继电器开关函数(控制目标,状态)
+extern uint32 RelayM_Acture(uint8 channel ,RelayM_ActureAttributeType attribute);                //继电器当前状态获取(通道，属性)
+
+void (*RelayM_Set[])(uint8 ,uint32);
+uint32 (*RelayM_Get[])(uint8);
 
 #endif

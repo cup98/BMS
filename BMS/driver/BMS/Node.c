@@ -27,6 +27,7 @@ void Node_Poll(void)                                     //Node节点判断函数
     Node_Data.node = NodeInit;                      //获取当前节点号
     Node_Data.state = &(Node_StateCfg[NodeInit]);   //获取当前节点状态
     condition = Node_Data.state->num;                  //获取节点状态数量
+
     Node_ElementBack.current_node = NodeInit;            //输出当前节点号
     Node_ElementBack.condition_num = condition;                //输出当前节点分支数
     Node_InterruptON();
