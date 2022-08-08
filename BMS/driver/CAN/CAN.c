@@ -1,25 +1,25 @@
 #include "CAN.h"
 #include "CAN_LCfg.h"
 
-void CAN_Init(void)                                         //CAN初始�
+void CAN_Init(void)                                         //CANåˆå§‹åŒ
 {
     CAN1_Init(&CAN_HwCfg);
 }
 
-void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1初始化以及配置CLK
+void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1åˆå§‹åŒ–ä»¥åŠé…ç½®CLK
 {
-    int wait_time = 100;                                    //ϵͳ�ȴ�ʱ��
+    int wait_time = 100;                                    //ÏµÍ³µÈ´ýÊ±¼ä
     int wait_1 = 0 ,wait_2 = 0 ,wait_3 = 0;
-    if (CAN1CTL0_INITRQ == 0)                               //查询是否进入初始化状�
+    if (CAN1CTL0_INITRQ == 0)                               //æŸ¥è¯¢æ˜¯å¦è¿›å…¥åˆå§‹åŒ–çŠ¶æ€
     {
-        CAN1CTL0_INITRQ = 1;                                //进入初始化状�
+        CAN1CTL0_INITRQ = 1;                                //è¿›å…¥åˆå§‹åŒ–çŠ¶æ€
     }
-    while (CAN1CTL1_INITAK == 0 && wait_1 < wait_time)      //等待进入初始化状�
+    while (CAN1CTL1_INITAK == 0 && wait_1 < wait_time)      //ç­‰å¾…è¿›å…¥åˆå§‹åŒ–çŠ¶æ€
     {
         wait_1++;
     }
-    CAN1BTR0_SJW = 0;                                       //设置同步
-    if (can_cfg->sp == 1)                                   //����
+    CAN1BTR0_SJW = 0;                                       //è®¾ç½®åŒæ­¥
+    if (can_cfg->sp == 1)                                   //²ÉÑù
     {
         CAN1BTR1_SAMP = 0;
     }
@@ -77,7 +77,7 @@ void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1初始化以�
             CAN1BTR1 |= 0x1C;
         } break;
     }
-    CAN1IDMR0 = 0xFF;                                       //关闭滤波�
+    CAN1IDMR0 = 0xFF;                                       //å…³é—­æ»¤æ³¢å™
     CAN1IDMR1 = 0xFF;
     CAN1IDMR2 = 0xFF;
     CAN1IDMR3 = 0xFF;
@@ -85,27 +85,28 @@ void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1初始化以�
     CAN1IDMR5 = 0xFF;
     CAN1IDMR6 = 0xFF;
     CAN1IDMR7 = 0xFF;
-    CAN1CTL1  = 0xC0;                                       //使能MSCAN模块,设置为一般运行模式�使用�线时钟�
-    CAN1CTL0  = 0x00;                                       //返回�般模式运�
-    while (CAN1CTL1_INITAK && wait_2 < wait_time)           //等待回到�般运行模�
+    CAN1CTL1  = 0xC0;                                       //ä½¿èƒ½MSCANæ¨¡å—,è®¾ç½®ä¸ºä¸€èˆ¬è¿è¡Œæ¨¡å¼ãä½¿ç”¨æ»çº¿æ—¶é’Ÿæº
+    CAN1CTL0  = 0x00;                                       //è¿”å›žä¸èˆ¬æ¨¡å¼è¿è¡
+    while (CAN1CTL1_INITAK && wait_2 < wait_time)           //ç­‰å¾…å›žåˆ°ä¸èˆ¬è¿è¡Œæ¨¡å¼
     {
         wait_2++;
     }
-    while ((CAN1CTL0_SYNCH == 0) && wait_3 < wait_time)         //等待总线时钟同步
+    while ((CAN1CTL0_SYNCH == 0) && wait_3 < wait_time)         //ç­‰å¾…æ€»çº¿æ—¶é’ŸåŒæ­¥
     {
         wait_3++;
     }
-    CAN1RIER_RXFIE = 1;                                     //禁止接收中断
+    CAN1RIER_RXFIE = 1;                                     //ç¦æ­¢æŽ¥æ”¶ä¸­æ–­
 }
-                                                            //CAN1发�
+                                                            //CAN1å‘é
 int CAN1_SendMsg(CAN_MsgType *can_msg)
 {
-    unsigned char send_buf ,sp ,rebuf;                      //设置发�缓冲区、发送数据位�
-    if (can_msg->len > CAN_MSG_MAXLEN)                      //�查数据长�
+    unsigned char send_buf = 0 ,sp = 0 ,rebuf = 0;                      //è®¾ç½®å‘éç¼“å†²åŒºã€å‘é€æ•°æ®ä½æ•
+
+    if (can_msg->len > CAN_MSG_MAXLEN)                      //æ£æŸ¥æ•°æ®é•¿åº
     {
         rebuf = 0;
     }
-    if (CAN1CTL0_SYNCH == 0)                                //�查�线时钟
+    if (!(CAN1CTL0_SYNCH))                                //æ£æŸ¥æ»çº¿æ—¶é’Ÿ
     {
         rebuf = 0;
     }
@@ -113,7 +114,8 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
     {
         CAN1TBSEL = CAN1TFLG;
         send_buf  = CAN1TBSEL;
-    } while (!(send_buf));                                  //寻找空闲的缓冲器                                                      //��չ֡ID����
+    } while (!send_buf);                                  //å¯»æ‰¾ç©ºé—²çš„ç¼“å†²å™¨                                                      //À©Õ¹Ö¡ID·¢ËÍ
+
     if (can_msg->IDE)
     {
         CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 21);
@@ -122,21 +124,13 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
         CAN1TXIDR1 |= (unsigned char)(can_msg->ID >> 15) & 0x07;
         CAN1TXIDR2 =  (unsigned char)(can_msg->ID >> 7);
         CAN1TXIDR3 =  (unsigned char)(can_msg->ID << 1);
-        if (can_msg->RTR)                                   //判断IDE�0标准�,1远程�
-        {
-            CAN1TXIDR3 |= 0x01;
-        }
-        else
-        {
-            CAN1TXIDR3 &= 0xFE;
-        }
+        CAN1TXIDR3_RTR = (unsigned char)can_msg->RTR;
     }
     else
-    {                                                       //��׼֡ID����
+    {                                                       //±ê×¼Ö¡ID·¢ËÍ
         CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 3);
         CAN1TXIDR1 =  (unsigned char)(can_msg->ID << 5);
-        CAN1TXIDR1 &= 0xF7;
-        if (can_msg->RTR)                                   //判断IDE�0标准�,1远程�
+        if (can_msg->RTR)                                   //åˆ¤æ–­IDEï¼0æ ‡å‡†å¸,1è¿œç¨‹å¸
         {
             CAN1TXIDR1 |= 0x10;
         }
@@ -145,66 +139,64 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
             CAN1TXIDR1 &= 0xEF;
         }
     }
-    for (sp = 0 ;sp < can_msg->len ;sp++)                 //依次将数据写入寄存器
+    for (sp = 0 ;sp < can_msg->len ;sp++)                 //ä¾æ¬¡å°†æ•°æ®å†™å…¥å¯„å­˜å™¨
     {
-        *((&CAN1TXDSR0) + sp) = can_msg->data[sp];
+        *((&CAN1TXDSR0) + sp) = (unsigned char)can_msg->data[sp];
     }
-    CAN1TXDLR  = can_msg->len;                              //写入数据长度
-    CAN1TXTBPR = can_msg->prty;                             //写入优先�
-    CAN1TFLG   = send_buf;                                  //清TXx标志(缓冲器准备发�)
+    CAN1TXDLR  = can_msg->len;                              //å†™å…¥æ•°æ®é•¿åº¦
+    CAN1TXTBPR = can_msg->prty;                             //å†™å…¥ä¼˜å…ˆçº
+    CAN1TFLG   = send_buf;                                  //æ¸…TXxæ ‡å¿—(ç¼“å†²å™¨å‡†å¤‡å‘é€)
     rebuf = 1;
     return rebuf;
 }
 
-int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1接收
+int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1æŽ¥æ”¶
 {
-    unsigned char sp ,rebuf;                                //设置接收数据位数
-    if (!(CAN1RFLG_RXF))                                    //�测接收标�
+    unsigned char sp = 0 ,rebuf = 1;                                //è®¾ç½®æŽ¥æ”¶æ•°æ®ä½æ•°
+    if (!CAN1RFLG_RXF)                                    //æ£æµ‹æŽ¥æ”¶æ ‡å¿
     {
         rebuf = 0;
     }
-    if ((CAN1RXIDR1 & 0x08) == 0x08)                        //判断是否为标准帧
+    can_msg->IDE = CAN1RXIDR1_IDE;
+    if (can_msg->IDE)                        //åˆ¤æ–­æ˜¯å¦ä¸ºæ ‡å‡†å¸§
     {
+        can_msg->RTR = (CAN1RXIDR3 & 0x01);
         can_msg->ID = ((unsigned long)(CAN1RXIDR0 & 0xff)) << 21;
         can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0xe0)) << 13);
         can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0x07)) << 15);
         can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR2 & 0xff)) << 7);
         can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR3 & 0xfe)) >> 1);
-        can_msg->IDE = 1;
-        if (CAN1RXIDR3 & 0x01)                              //判断是否为远程帧
-        {
-            can_msg->RTR = 1;
-        }
-        else
-        {
-            can_msg->RTR = 0;
-        }
     }
     else
     {
-        can_msg->ID  = (unsigned long)(CAN1RXIDR0 << 3) |   //读出接收帧ID�8�
-                       (unsigned long)(CAN1RXIDR1 >> 5) ;   //并且与上读出接收帧ID�3�
-        can_msg->IDE = 0;
-        if (CAN1RXIDR1 & 0x10)                              //判断是否为远程帧
-        {
-            can_msg->RTR = 1;
-        }
-        else
-        {
-            can_msg->RTR = 0;
-        }
+        can_msg->RTR = ((CAN1RXIDR1 >> 4) & 0x01);
+        can_msg->ID  = (unsigned long)(CAN1RXIDR0 << 3) |   //è¯»å‡ºæŽ¥æ”¶å¸§IDå‰8ä½
+                       (unsigned long)(CAN1RXIDR1 >> 5) ;   //å¹¶ä¸”ä¸Žä¸Šè¯»å‡ºæŽ¥æ”¶å¸§IDå3ä½
     }
-    can_msg->len = CAN1RXDLR;                               //读出接收的数据长�
-    for (sp = 0 ;sp < can_msg->len ;sp++)                   //依次读出接收的每�位数�
+    can_msg->len = CAN1RXDLR_DLC;                               //è¯»å‡ºæŽ¥æ”¶çš„æ•°æ®é•¿åº
+    for (sp = 0 ;sp < can_msg->len ;sp++)                   //ä¾æ¬¡è¯»å‡ºæŽ¥æ”¶çš„æ¯ä¸ä½æ•°æ
     {
         can_msg->data[sp] = *((&CAN1RXDSR0) + sp);
     }
-    CAN1RFLG |= 1;                                          //清RXF标志�(缓冲器准备接�)
+    CAN1RFLG = 0x01;                                          //æ¸…RXFæ ‡å¿—ä½(ç¼“å†²å™¨å‡†å¤‡æŽ¥æ”)
     rebuf = 1;
     return rebuf;
 }
 
-void CAN_Delay10ms(unsigned int i)                          //延时
+/*int CAN1_GetChoiceMsg(CAN_MsgType *can_msg ,unsigned long id ,int ide)
+{
+    int rebuf = 0;
+    if (CAN1_GetMsg(&can_msg) == 1)
+    {
+        if ((can_msg->ID == id) && (can_msg->IDE == ide))
+        {
+            rebuf = 1;
+        }
+    }
+    return rebuf;
+}*/
+
+void CAN_Delay10ms(unsigned int i)                          //å»¶æ—¶
 {
     unsigned int n ,m;
     for (n=0 ;n<250 ;n++)

@@ -11,7 +11,7 @@ typedef struct _CAN_MsgType             //构造CAN通信报文结构
     unsigned long ID;                   //仲裁帧id
     int IDE;                            //IDE:0标准帧,1扩展帧
     int RTR;                            //RTR:0数据帧,1远程帧
-    unsigned char data[CAN_MSG_MAXLEN]; //数据位
+    unsigned int data[CAN_MSG_MAXLEN]; //数据位
     unsigned char len;                  //数据长度
     unsigned char prty;
 } CAN_MsgType;
@@ -39,6 +39,7 @@ extern void CAN1_Init(CAN_ConfigType *can_cfg); //CAN1初始化(CAN模式配置�
 extern int CAN1_SendMsg(CAN_MsgType *can_msg);  //CAN发送报文函数(CAN报文数据结构体)
 extern int CAN1_GetMsg(CAN_MsgType *can_msg);   //CAN接受报文函数(CAN报文数据结构体)
 extern void CAN_Delay10ms(unsigned int i);
+//extern int CAN1_GetChoiceMsg(CAN_MsgType *can_msg ,unsigned long id ,int ide);//接收指定类型的报文
 
 
 #endif

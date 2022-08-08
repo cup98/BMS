@@ -74,12 +74,12 @@ uint32 Hv_GetAttribute(uint8 channel ,Hv_AttributeType attribute)   //获取目标属
 
         case HV_CURRENT:
         {
-            rebuf = HV_VOLTAGE_(channel);
+            rebuf = HV_CURRENT_(channel);
         } break;
 
         case HV_TEMP:
         {
-            rebuf = HV_VOLTAGE_(channel);
+            rebuf = HV_TEMP_(channel);
         } break;
     }
     return rebuf;

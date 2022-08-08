@@ -13,7 +13,7 @@ Pre_Cfg_VoltageStdType Pre_Cfg_VoltageStd =
     95,
 };
 
-void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned char data) //将数据存入相应的配置结构体内
+void Pre_Cfg_WriteCfg(Pre_State_Type state ,unsigned int data) //将数据存入相应的配置结构体内
 {
     if (state == PRE_CFG_FAULT)
     {

@@ -33,19 +33,16 @@ void Node_Poll(void)                                     //Node节点判断函数
     Node_InterruptON();
     for (i = 0; i < condition; i++)                         //做分支内循环，寻找对应的动作函数
     {
-        if (i < condition)                                  //数组越界保护
+        if (Node_Data.state->state[i].condition() ==       //判断当前节点是否与进入节点相同
+            Node_Data.state->state[i].accord)            //判断条件与进入分支条件是否相同
         {
-            if (Node_Data.state->state[i].condition()       //判断当前节点是否与进入节点相同
-                == Node_Data.state->state[i].accord)            //判断条件与进入分支条件是否相同
-            {
-                Node_Data.state->state[i].action();                //执行本次动作
+            Node_Data.state->state[i].action();                //执行本次动作
 
-                Node_InterruptOFF();
-                NodeInit = Node_Data.state->state[i].next_node;    //输出下次节点号
-                Node_ElementBack.next_node = NodeInit;
-                Node_InterruptON();
-                break;
-            }
+            Node_InterruptOFF();
+            NodeInit = Node_Data.state->state[i].next_node;    //输出下次节点号
+            Node_ElementBack.next_node = NodeInit;
+            Node_InterruptON();
+            break;
         }
     }
 }
