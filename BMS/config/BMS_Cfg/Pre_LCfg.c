@@ -1,4 +1,5 @@
 #include "Pre_LCfg.h"
+#include "HV.h"
 
 Pre_CfgStateType Pre_CfgState;
 

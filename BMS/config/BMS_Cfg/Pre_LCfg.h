@@ -1,9 +1,7 @@
 #ifndef __PRE_LCFG_H
 #define __PRE_LCFG_H
 
-#include "hidef.h"
-#include "derivative.h"
-#include "Hv.h"
+#include "STD.h"
 
 typedef enum _Pre_State_Type        //ππΩ®‘§≥‰≈‰÷√√˚≥∆
 {

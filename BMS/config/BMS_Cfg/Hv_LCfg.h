@@ -1,9 +1,8 @@
 #ifndef __HV_LCFG_H
 #define __HV_LCFG_H
 
-#include "hidef.h"
-#include "derivative.h"
 #include "Hv.h"
+#include "STD.h"
 
 #define HV_MAX_NUM 8				//高压最大通道数
 
@@ -18,6 +17,7 @@
 #define HV_CURRENT_(X)  (*(uint32 *)(&(Hv_DemoData[X].current)))
 #define HV_TEMP_(X)     (*(uint32 *)(&(Hv_DemoData[X].temp)))
 
+extern Hv_DataType Hv_DemoData[HV_MAX_NUM];
 /*
 #if (HV_MAX_NUM == 16)
     #define HV_IO_0   ((uint32)*(&(Hv_DemoData[0].voltage)))
@@ -47,7 +47,5 @@
     #define HV_IO_7   ((uint32)*(&(Hv_DemoData[7].voltage)))
 #endif
 */
-
-extern Hv_DataType Hv_DemoData[HV_MAX_NUM];
 
 #endif

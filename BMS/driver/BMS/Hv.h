@@ -3,10 +3,7 @@
 
 #include "hidef.h"
 #include "derivative.h"
-
-typedef unsigned char      uint8;
-typedef unsigned short int uint16;
-typedef unsigned int       uint32;
+#include "STD.h"
 
 typedef enum _Hv_AttributeType          //属性类型
 {

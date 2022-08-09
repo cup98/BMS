@@ -3,7 +3,6 @@
 
 #include "hidef.h"
 #include "derivative.h"
-#include "Hv.h"
 
 extern void PrechargeM_Init(void);			//初始化函数
 extern void PrechargeM_StartPre(void);		//启动预充函数,闭合预充开关
