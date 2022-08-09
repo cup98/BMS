@@ -32,18 +32,6 @@ typedef enum _RelayM_CtrlAttributeType //继电器属性
     RELAYM_CTRL_RES_VALUE
 } RelayM_CtrlAttributeType;
 
-typedef enum _RelayM_SupportFnType //继电器功能
-{
-    RELAYM_CONTROL_SUPPORT,
-    RELAYM_CONTROL_REFUSE,
-    RELAYM_ON_TIME_SUPPORT,
-    RELAYM_ON_TIME_REFUSE,
-    RELAYM_OFF_TIME_SUPPORT,
-    RELAYM_OFF_TIME_REFUSE,
-    RELAYM_RES_VALUE_SUPPORT,
-    RELAYM_RES_VALUE_REFUSE,
-} RelayM_SupportFnType;
-
 typedef struct _RelayM_ControlType //控制状态
 {
     uint32 ctrl_status;            //继电器控制状态
@@ -83,20 +71,19 @@ typedef struct _RelayM_InfoType
 extern void RelayM_Init(void);                                      //继电器驱动由初始化函数
 extern void RelayM_InterruptON(void);                               //继电器驱动开中断
 extern void RelayM_InterruptOFF(void);                              //继电器驱动关中断
-extern void RelayM_SetContorl(uint8 channel ,uint32 value);         //设置继电器状态
+extern uint8 RelayM_SetContorl(uint8 channel ,uint32 value);         //设置继电器状态
 extern uint32 RelayM_GetControl(uint8 channel);                     //获取继电器状态
 extern uint32 RelayM_GetActure(uint8 channel);                      //获取继电器当前状态
 extern uint32 RelayM_GetOnTime(uint8 channel);                      //获取继电器闭合时间
-extern void RelayM_SetOnTime(uint8 channel ,uint32 value);          //设置继电器闭合时间
+extern uint8 RelayM_SetOnTime(uint8 channel ,uint32 value);          //设置继电器闭合时间
 extern uint32 RelayM_GetOffTime(uint8 channel);                     //获取继电器断开时间
-extern void RelayM_SetOffTime(uint8 channel ,uint32 value);         //设置继电器断开时间
+extern uint8 RelayM_SetOffTime(uint8 channel ,uint32 value);         //设置继电器断开时间
 extern uint32 RelayM_GetRes(uint8 channel);                         //获取继电器内阻值
-extern void RelayM_SetRes(uint8 channel ,uint32 value);             //设置继电器内阻值
+extern uint8 RelayM_SetRes(uint8 channel ,uint32 value);             //设置继电器内阻值
 extern RelayM_FaultStatusType RelayM_GetFault(uint8 channel);       //继电器故障检测
-extern void RelayM_Control(uint8 channel ,RelayM_CtrlAttributeType attribute ,uint32 value);   //控制继电器开关函数,控制继电器开关函数(控制目标,状态)
+extern uint8 RelayM_Control(uint8 channel ,RelayM_CtrlAttributeType attribute ,uint32 value);   //控制继电器开关函数,控制继电器开关函数(控制目标,状态)
 extern uint32 RelayM_Acture(uint8 channel ,RelayM_ActureAttributeType attribute);                //继电器当前状态获取(通道，属性)
-
-void (*RelayM_Set[])(uint8 ,uint32);
+uint8 (*RelayM_Set[])(uint8 ,uint32);
 uint32 (*RelayM_Get[])(uint8);
 
 #endif

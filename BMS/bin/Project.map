@@ -51,7 +51,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata                          105     R     0xC051     0xC0B9   ROM_C000
 NON_BANKED                        65     R     0xC0BA     0xC0FA   ROM_C000
 .copy                             97     R     0xC0FB     0xC15B   ROM_C000
-.text                           1574     R   0xFE8000   0xFE8625   PAGE_FE
+.text                           1608     R   0xFE8000   0xFE8647   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .data                             91   R/W     0x2100     0x215A   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -799,7 +799,7 @@ NON_BANKED                        65     R     0xC0BA     0xC0FA   ROM_C000
 .vectSeg740_vect                   2     R     0xFFFE     0xFFFF   .vectSeg740
 
 Summary of section sizes per section type:
-READ_ONLY (R):         788 (dec:     1928)
+READ_ONLY (R):         7AA (dec:     1962)
 READ_WRITE (R/W):      209 (dec:      521)
 NO_INIT (N/I):         383 (dec:      899)
 
@@ -1575,66 +1575,66 @@ MODULE:                 -- rtshc12.c.o (ansixbf.lib) --
 MODULE:                 -- Hv.c.o --
 - PROCEDURES:
      Hv_Init                                 FE8062       1       1       2   .text       
-     Hv_RangeOut                             FE8063      31      49       2   .text       
-     Hv_GetAttribute                         FE8094      2D      45       4   .text       
-     Hv_Get                                  FE80C1      2D      45       4   .text       
+     Hv_RangeOut                             FE8063      37      55       2   .text       
+     Hv_GetAttribute                         FE809A      3A      58       4   .text       
+     Hv_Get                                  FE80D4      2D      45       4   .text       
 - VARIABLES:
 MODULE:                 -- Node.c.o --
 - PROCEDURES:
-     Node_Init                               FE80EE       1       1       2   .text       
-     Node_NoAct                              FE80EF       1       1       6   .text       
-     Node_InterruptON                        FE80F0       1       1       4   .text       
-     Node_InterruptOFF                       FE80F1       1       1       4   .text       
-     Node_Poll                               FE80F2      7F     127       2   .text       
-     Node_StateBack                          FE8171      21      33       6   .text       
+     Node_Init                               FE8101       1       1       2   .text       
+     Node_NoAct                              FE8102       1       1       6   .text       
+     Node_InterruptON                        FE8103       1       1       4   .text       
+     Node_InterruptOFF                       FE8104       1       1       4   .text       
+     Node_Poll                               FE8105      7F     127       2   .text       
+     Node_StateBack                          FE8184      21      33       6   .text       
 - VARIABLES:
      NodeInit.1                                215B       2       2       4   .bss        
      Node_Data.2                               215D       4       4       6   .bss        
 MODULE:                 -- PrechargeM.c.o --
 - PROCEDURES:
-     PrechargeM_Init                         FE8192       1       1       2   .text       
-     PrechargeM_StartPre                     FE8193       C      12       2   .text       
-     PrechargeM_StopPre                      FE819F       B      11       6   .text       
-     PrechargeM_StartMaster                  FE81AA       E      14       2   .text       
-     PrechargeM_StopMaster                   FE81B8       D      13       2   .text       
-     PrechargeM_Change                       FE81C5       9       9       2   .text       
-     PrechargeM_IsFail                       FE81CE      18      24       2   .text       
-     PrechargeM_IsFinish                     FE81E6      37      55       4   .text       
+     PrechargeM_Init                         FE81A5       1       1       2   .text       
+     PrechargeM_StartPre                     FE81A6       C      12       2   .text       
+     PrechargeM_StopPre                      FE81B2       B      11       6   .text       
+     PrechargeM_StartMaster                  FE81BD       E      14       2   .text       
+     PrechargeM_StopMaster                   FE81CB       D      13       2   .text       
+     PrechargeM_Change                       FE81D8       9       9       2   .text       
+     PrechargeM_IsFail                       FE81E1      18      24       2   .text       
+     PrechargeM_IsFinish                     FE81F9      37      55       4   .text       
 - VARIABLES:
 MODULE:                 -- RelayM.c.o --
 - PROCEDURES:
-     RelayM_Init                             FE821D       1       1       2   .text       
-     RelayM_SetContorl                       FE821E      15      21       2   .text       
-     RelayM_SetOnTime                        FE8233      15      21       2   .text       
-     RelayM_SetOffTime                       FE8248      15      21       2   .text       
-     RelayM_SetRes                           FE825D      15      21       2   .text       
-     RelayM_Control                          FE8272      15      21       8   .text       
+     RelayM_Init                             FE8230       1       1       2   .text       
+     RelayM_SetContorl                       FE8231      17      23       2   .text       
+     RelayM_SetOnTime                        FE8248      17      23       2   .text       
+     RelayM_SetOffTime                       FE825F      17      23       2   .text       
+     RelayM_SetRes                           FE8276      17      23       2   .text       
+     RelayM_Control                          FE828D      1C      28       8   .text       
 - VARIABLES:
      RelayM_Set                                2100       C      12       1   .data       
 MODULE:                 -- CAN.c.o --
 - PROCEDURES:
-     CAN_Init                                FE8287       8       8       2   .text       
-     CAN1_Init                               FE828F      E9     233       3   .text       
-     CAN1_SendMsg                            FE8378      C8     200       6   .text       
-     CAN1_GetMsg                             FE8440      D7     215       3   .text       
+     CAN_Init                                FE82A9       8       8       2   .text       
+     CAN1_Init                               FE82B1      E9     233       3   .text       
+     CAN1_SendMsg                            FE839A      C8     200       6   .text       
+     CAN1_GetMsg                             FE8462      D7     215       3   .text       
 - VARIABLES:
 MODULE:                 -- ECT.c.o --
 - PROCEDURES:
-     ECT_Init                                FE8517      24      36       2   .text       
+     ECT_Init                                FE8539      24      36       2   .text       
 - VARIABLES:
 MODULE:                 -- PIT.c.o --
 - PROCEDURES:
-     PIT_Init                                FE853B       5       5       2   .text       
-     PIT0_Init                               FE8540      1F      31       2   .text       
+     PIT_Init                                FE855D       5       5       2   .text       
+     PIT0_Init                               FE8562      1F      31       2   .text       
 - VARIABLES:
 MODULE:                 -- PLL.c.o --
 - PROCEDURES:
-     PLL_Init                                FE855F      1D      29       2   .text       
+     PLL_Init                                FE8581      1D      29       2   .text       
 - VARIABLES:
 MODULE:                 -- CAN_App.c.o --
 - PROCEDURES:
-     CAN_Get_PreCfg                          FE857C      41      65       2   .text       
-     CAN_Send_NodeState                      FE85BD      31      49       2   .text       
+     CAN_Get_PreCfg                          FE859E      41      65       2   .text       
+     CAN_Send_NodeState                      FE85DF      31      49       2   .text       
      CAN_receive                               C0E9       5       5       1   NON_BANKED  
      PIT0                                      C0EE       D      13       1   NON_BANKED  
 - VARIABLES:
@@ -1652,9 +1652,9 @@ MODULE:                 -- Node_LCfg.c.o --
      Node_ElementBack                          21FB       6       6       6   .common     
 MODULE:                 -- Pre_LCfg.c.o --
 - PROCEDURES:
-     Pre_Cfg_WriteCfg                        FE85EE      30      48       8   .text       
-     Pre_Cfg_Fault                           FE861E       4       4      10   .text       
-     Pre_Cfg_Clock                           FE8622       4       4       2   .text       
+     Pre_Cfg_WriteCfg                        FE8610      30      48       8   .text       
+     Pre_Cfg_Fault                           FE8640       4       4      10   .text       
+     Pre_Cfg_Clock                           FE8644       4       4       2   .text       
 - VARIABLES:
      Pre_Cfg_TimeOut                           2126       2       2       1   .data       
      Pre_CfgState                              2201       8       8       8   .common     
@@ -1680,10 +1680,10 @@ MODULE STATISTIC
   main.c.o                                     0     57      0
   Start12.c.o                                  0     56      0
   rtshc12.c.o (ansixbf.lib)                    0     47      0
-  Hv.c.o                                       0    140      0
+  Hv.c.o                                       0    159      0
   Node.c.o                                     6    164      0
   PrechargeM.c.o                               0    139      0
-  RelayM.c.o                                  12    106      0
+  RelayM.c.o                                  12    121      0
   CAN.c.o                                      0    656      0
   ECT.c.o                                      0     36      0
   PIT.c.o                                      0     36      0
@@ -3970,42 +3970,42 @@ OBJECT LIST SORTED BY ADDRESS
      main                                    FE8000      39      57       2   .text       
      Init                                    FE8039      29      41       2   .text       
      Hv_Init                                 FE8062       1       1       2   .text       
-     Hv_RangeOut                             FE8063      31      49       2   .text       
-     Hv_GetAttribute                         FE8094      2D      45       4   .text       
-     Hv_Get                                  FE80C1      2D      45       4   .text       
-     Node_Init                               FE80EE       1       1       2   .text       
-     Node_NoAct                              FE80EF       1       1       6   .text       
-     Node_InterruptON                        FE80F0       1       1       4   .text       
-     Node_InterruptOFF                       FE80F1       1       1       4   .text       
-     Node_Poll                               FE80F2      7F     127       2   .text       
-     Node_StateBack                          FE8171      21      33       6   .text       
-     PrechargeM_Init                         FE8192       1       1       2   .text       
-     PrechargeM_StartPre                     FE8193       C      12       2   .text       
-     PrechargeM_StopPre                      FE819F       B      11       6   .text       
-     PrechargeM_StartMaster                  FE81AA       E      14       2   .text       
-     PrechargeM_StopMaster                   FE81B8       D      13       2   .text       
-     PrechargeM_Change                       FE81C5       9       9       2   .text       
-     PrechargeM_IsFail                       FE81CE      18      24       2   .text       
-     PrechargeM_IsFinish                     FE81E6      37      55       4   .text       
-     RelayM_Init                             FE821D       1       1       2   .text       
-     RelayM_SetContorl                       FE821E      15      21       2   .text       
-     RelayM_SetOnTime                        FE8233      15      21       2   .text       
-     RelayM_SetOffTime                       FE8248      15      21       2   .text       
-     RelayM_SetRes                           FE825D      15      21       2   .text       
-     RelayM_Control                          FE8272      15      21       8   .text       
-     CAN_Init                                FE8287       8       8       2   .text       
-     CAN1_Init                               FE828F      E9     233       3   .text       
-     CAN1_SendMsg                            FE8378      C8     200       6   .text       
-     CAN1_GetMsg                             FE8440      D7     215       3   .text       
-     ECT_Init                                FE8517      24      36       2   .text       
-     PIT_Init                                FE853B       5       5       2   .text       
-     PIT0_Init                               FE8540      1F      31       2   .text       
-     PLL_Init                                FE855F      1D      29       2   .text       
-     CAN_Get_PreCfg                          FE857C      41      65       2   .text       
-     CAN_Send_NodeState                      FE85BD      31      49       2   .text       
-     Pre_Cfg_WriteCfg                        FE85EE      30      48       8   .text       
-     Pre_Cfg_Fault                           FE861E       4       4      10   .text       
-     Pre_Cfg_Clock                           FE8622       4       4       2   .text       
+     Hv_RangeOut                             FE8063      37      55       2   .text       
+     Hv_GetAttribute                         FE809A      3A      58       4   .text       
+     Hv_Get                                  FE80D4      2D      45       4   .text       
+     Node_Init                               FE8101       1       1       2   .text       
+     Node_NoAct                              FE8102       1       1       6   .text       
+     Node_InterruptON                        FE8103       1       1       4   .text       
+     Node_InterruptOFF                       FE8104       1       1       4   .text       
+     Node_Poll                               FE8105      7F     127       2   .text       
+     Node_StateBack                          FE8184      21      33       6   .text       
+     PrechargeM_Init                         FE81A5       1       1       2   .text       
+     PrechargeM_StartPre                     FE81A6       C      12       2   .text       
+     PrechargeM_StopPre                      FE81B2       B      11       6   .text       
+     PrechargeM_StartMaster                  FE81BD       E      14       2   .text       
+     PrechargeM_StopMaster                   FE81CB       D      13       2   .text       
+     PrechargeM_Change                       FE81D8       9       9       2   .text       
+     PrechargeM_IsFail                       FE81E1      18      24       2   .text       
+     PrechargeM_IsFinish                     FE81F9      37      55       4   .text       
+     RelayM_Init                             FE8230       1       1       2   .text       
+     RelayM_SetContorl                       FE8231      17      23       2   .text       
+     RelayM_SetOnTime                        FE8248      17      23       2   .text       
+     RelayM_SetOffTime                       FE825F      17      23       2   .text       
+     RelayM_SetRes                           FE8276      17      23       2   .text       
+     RelayM_Control                          FE828D      1C      28       8   .text       
+     CAN_Init                                FE82A9       8       8       2   .text       
+     CAN1_Init                               FE82B1      E9     233       3   .text       
+     CAN1_SendMsg                            FE839A      C8     200       6   .text       
+     CAN1_GetMsg                             FE8462      D7     215       3   .text       
+     ECT_Init                                FE8539      24      36       2   .text       
+     PIT_Init                                FE855D       5       5       2   .text       
+     PIT0_Init                               FE8562      1F      31       2   .text       
+     PLL_Init                                FE8581      1D      29       2   .text       
+     CAN_Get_PreCfg                          FE859E      41      65       2   .text       
+     CAN_Send_NodeState                      FE85DF      31      49       2   .text       
+     Pre_Cfg_WriteCfg                        FE8610      30      48       8   .text       
+     Pre_Cfg_Fault                           FE8640       4       4      10   .text       
+     Pre_Cfg_Clock                           FE8644       4       4       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -4054,7 +4054,7 @@ Filling bytes inserted
  005B2100
 ------- ROM-ADDRESS: 0xC0FF ---- RAM-ADDRESS: 0x2100 ---- SIZE      12 ---
 Name of initialized Object : RelayM_Set
- 821EFE8233 FE8248FE82 5DFE
+ 8231FE8248 FE825FFE82 76FE
 ------- ROM-ADDRESS: 0xC10B ---- SIZE       3 ---
 Filling bytes inserted
  000000
@@ -4293,5 +4293,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 9
-Total size of all blocks to be downloaded: 1928
+Total size of all blocks to be downloaded: 1962
 

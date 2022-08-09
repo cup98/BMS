@@ -9,7 +9,6 @@
 #define RELAYM_OFF_TIME_SET_SUPPORT  TRUE       //继电器支持设置断开时间功能
 #define RELAYM_RES_VALUE_SET_SUPPORT TRUE       //继电器支持设置内阻功能
 
-
 #define RELAYM_IO_(X)           (*(uint32 *)(&(RelayM_OriginDataDemo[X].ctrl_status)))
 #define RELAYM_ON_TIME_(X)      (*(uint32 *)(&(RelayM_OriginDataDemo[X].on_time)))
 #define RELAYM_OFF_TIME_(X)     (*(uint32 *)(&(RelayM_OriginDataDemo[X].off_time)))

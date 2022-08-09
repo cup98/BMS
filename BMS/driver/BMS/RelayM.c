@@ -1,101 +1,128 @@
 #include "RelayM.h"
 #include "RelayM_LCfg.h"
 
-void RelayM_Init(void)                                   //¼ÌµçÆ÷Ä£¿éÓÉ³õÊ¼»¯º¯Êı
+void RelayM_Init(void)                                   //ç»§ç”µå™¨æ¨¡å—ç”±åˆå§‹åŒ–å‡½æ•°
 {
 
 }
 
-void RelayM_InterruptON(void)                           //¿ªÖĞ¶Ï
+void RelayM_InterruptON(void)                           //å¼€ä¸­æ–­
 {
 
 }
 
-void RelayM_InterruptOFF(void)                          //¹ØÖĞ¶Ï
+void RelayM_InterruptOFF(void)                          //å…³ä¸­æ–­
 {
 
 }
-void RelayM_SetContorl(uint8 channel ,uint32 value)     //ÉèÖÃ¼ÌµçÆ÷×´Ì¬
+uint8 RelayM_SetContorl(uint8 channel ,uint32 value)     //è®¾ç½®ç»§ç”µå™¨çŠ¶æ€
 {
+    uint8 rebuf = 0;
+
     RELAYM_IO_(channel) = value;
     RelayM_CtrlData[channel].ctrl_status = value;
+    rebuf = 1;
+    return rebuf;
 }
 
-uint32 RelayM_GetControl(uint8 channel)                 //»ñÈ¡¼ÌµçÆ÷×´Ì¬
+uint32 RelayM_GetControl(uint8 channel)                 //è·å–ç»§ç”µå™¨çŠ¶æ€
 {
     return RelayM_CtrlData[channel].ctrl_status;
 }
 
-uint32 RelayM_GetActure(uint8 channel)                  //»ñÈ¡¼ÌµçÆ÷µ±Ç°×´Ì¬
+uint32 RelayM_GetActure(uint8 channel)                  //è·å–ç»§ç”µå™¨å½“å‰çŠ¶æ€
 {
     return RELAYM_IO_(channel);
 }
 
-uint32 RelayM_GetOnTime(uint8 channel)                  //»ñÈ¡¼ÌµçÆ÷±ÕºÏÊ±¼ä
+uint32 RelayM_GetOnTime(uint8 channel)                  //è·å–ç»§ç”µå™¨é—­åˆæ—¶é—´
 {
     return RELAYM_ON_TIME_(channel);
 }
 
-void RelayM_SetOnTime(uint8 channel ,uint32 value)      //ÉèÖÃ¼ÌµçÆ÷±ÕºÏÊ±¼ä
+uint8 RelayM_SetOnTime(uint8 channel ,uint32 value)      //è®¾ç½®ç»§ç”µå™¨é—­åˆæ—¶é—´
 {
+    uint8 rebuf = 0;
+
     RELAYM_ON_TIME_(channel) = value;
     RelayM_CtrlData[channel].on_time = value;
+    rebuf = 1;
+    return rebuf;
 }
 
-uint32 RelayM_GetOffTime(uint8 channel)                 //»ñÈ¡¼ÌµçÆ÷¶Ï¿ªÊ±¼ä
+uint32 RelayM_GetOffTime(uint8 channel)                 //è·å–ç»§ç”µå™¨æ–­å¼€æ—¶é—´
 {
     return RELAYM_OFF_TIME_(channel);
 }
 
-void RelayM_SetOffTime(uint8 channel ,uint32 value)     //ÉèÖÃ¼ÌµçÆ÷¶Ï¿ªÊ±¼ä
+uint8 RelayM_SetOffTime(uint8 channel ,uint32 value)     //è®¾ç½®ç»§ç”µå™¨æ–­å¼€æ—¶é—´
 {
+    uint8 rebuf = 0;
+
     RELAYM_OFF_TIME_(channel) = value;
     RelayM_CtrlData[channel].off_time = value;
+    rebuf = 1;
+    return rebuf;
 }
 
-uint32 RelayM_GetRes(uint8 channel)                     //»ñÈ¡¼ÌµçÆ÷ÄÚ×èÖµ
+uint32 RelayM_GetRes(uint8 channel)                     //è·å–ç»§ç”µå™¨å†…é˜»å€¼
 {
     return RELAYM_RES_VALUE_(channel);
 }
 
-void RelayM_SetRes(uint8 channel ,uint32 value)         //ÉèÖÃ¼ÌµçÆ÷ÄÚ×èÖµ
+uint8 RelayM_SetRes(uint8 channel ,uint32 value)         //è®¾ç½®ç»§ç”µå™¨å†…é˜»å€¼
 {
+    uint8 rebuf = 0;
+
     RELAYM_RES_VALUE_(channel) = value;
     RelayM_CtrlData[channel].res_value = value;
+    rebuf = 1;
+    return rebuf;
 }
 
-RelayM_FaultStatusType RelayM_GetFault(uint8 channel)   //¼ÌµçÆ÷¹ÊÕÏ¼ì²â
+RelayM_FaultStatusType RelayM_GetFault(uint8 channel)   //ç»§ç”µå™¨æ•…éšœæ£€æµ‹
 {
-    RelayM_FaultStatusType rebuf;
-    if ((RelayM_CtrlData[channel].ctrl_status) == (RELAYM_IO_(channel)))//ÅĞ¶Ï¼ÌµçÆ÷¿ØÖÆ×´Ì¬ºÍµ±Ç°×´Ì¬ÊÇ·ñÒ»ÖÂ
+    RelayM_FaultStatusType rebuf = 0;
+
+    if (channel < RELAYM_MAX_NUM)
     {
-        rebuf = (RelayM_FaultStatusType)RELAYM_NORMAL;
-    }
-    else if ((RelayM_CtrlData[channel].ctrl_status == 1) && (RELAYM_IO_(channel)))
-    {
-        rebuf = (RelayM_FaultStatusType)RELAYM_ADHESION;
-    }
-    else if ((RelayM_CtrlData[channel].ctrl_status == 0) && (RELAYM_IO_(channel)))
-    {
-        rebuf = (RelayM_FaultStatusType)RELAYM_OPEN_LOOP;
-    }
-    else
-    {
+        if ((RelayM_CtrlData[channel].ctrl_status) == (RELAYM_IO_(channel)))//åˆ¤æ–­ç»§ç”µå™¨æ§åˆ¶çŠ¶æ€å’Œå½“å‰çŠ¶æ€æ˜¯å¦ä¸€è‡´
+        {
+            rebuf = (RelayM_FaultStatusType)RELAYM_NORMAL;
+        }
+        else if ((RelayM_CtrlData[channel].ctrl_status == 1) && (RELAYM_IO_(channel)))
+        {
+            rebuf = (RelayM_FaultStatusType)RELAYM_ADHESION;
+        }
+        else if ((RelayM_CtrlData[channel].ctrl_status == 0) && (RELAYM_IO_(channel)))
+        {
+            rebuf = (RelayM_FaultStatusType)RELAYM_OPEN_LOOP;
+        }
+        else
+        {
+        }
     }
     return rebuf;
 }
 
+uint8 (*RelayM_Set[])(uint8 ,uint32) = {RelayM_SetContorl ,
+                                        RelayM_SetOnTime ,
+                                        RelayM_SetOffTime ,
+                                        RelayM_SetRes};
 
-void (*RelayM_Set[])(uint8 ,uint32) = {RelayM_SetContorl ,
-                                       RelayM_SetOnTime ,
-                                       RelayM_SetOffTime ,
-                                       RelayM_SetRes};
-
-void RelayM_Control(uint8 channel ,RelayM_CtrlAttributeType attribute ,uint32 value) //¿ØÖÆ¼ÌµçÆ÷(Ä¿±êÍ¨µÀ,ÊôĞÔ,Öµ£©
+uint8 RelayM_Control(uint8 channel ,RelayM_CtrlAttributeType attribute ,uint32 value) //æ§åˆ¶ç»§ç”µå™¨(ç›®æ ‡é€šé“,å±æ€§,å€¼ï¼‰
 {
-    RelayM_Set[attribute](channel ,value);
-}
+    uint8 rebuf = 0;
 
+    if (channel < RELAYM_MAX_NUM)
+    {
+        if (RelayM_Set[attribute](channel ,value))
+        {
+        }
+    }
+    rebuf = 1;
+    return rebuf;
+}
 
 uint32 (*RelayM_Get[])(uint8) = {RelayM_GetControl ,
                                  RelayM_GetActure ,
@@ -103,14 +130,21 @@ uint32 (*RelayM_Get[])(uint8) = {RelayM_GetControl ,
                                  RelayM_GetOffTime ,
                                  RelayM_GetRes};
 
-uint32 RelayM_Acture(uint8 channel ,RelayM_ActureAttributeType attribute) //¼ÌµçÆ÷µ±Ç°×´Ì¬»ñÈ¡(Í¨µÀ£¬ÊôĞÔ)
+uint32 RelayM_Acture(uint8 channel ,RelayM_ActureAttributeType attribute) //ç»§ç”µå™¨å½“å‰çŠ¶æ€è·å–(é€šé“ï¼Œå±æ€§)
 {
-    return RelayM_Get[attribute](channel);
+    uint8 rebuf = 0;
+
+    if (channel < RELAYM_MAX_NUM)
+    {
+        return RelayM_Get[attribute](channel);
+    }
+    rebuf = 1;
+    return rebuf;
 }
 
-/*void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value) //¿ØÖÆ¼ÌµçÆ÷(Ä¿±êÍ¨µÀ,ÊôĞÔ,Öµ£©
+/*void RelayM_Control(uint8 channel ,RelayM_AttributeType attribute ,uint32 value) //æ§åˆ¶ç»§ç”µå™¨(ç›®æ ‡é€šé“,å±æ€§,å€¼ï¼‰
 {
-    switch (attribute)                                                       //ÅĞ¶ÏÊôĞÔ
+    switch (attribute)                                                       //åˆ¤æ–­å±æ€§
     {
         case RELAYM_CTRL_STATUS:
         {
@@ -140,7 +174,7 @@ uint32 RelayM_Acture(uint8 channel ,RelayM_ActureAttributeType attribute) //¼Ìµç
     }
 }
 
-uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)             //¼ÌµçÆ÷µ±Ç°×´Ì¬»ñÈ¡(Í¨µÀ£¬ÊôĞÔ)
+uint32 RelayM_Acture(uint8 channel ,RelayM_AttributeType attribute)             //ç»§ç”µå™¨å½“å‰çŠ¶æ€è·å–(é€šé“ï¼Œå±æ€§)
 {
     uint32 rebuf ;
     if (channel < RELAYM_MAX_NUM)

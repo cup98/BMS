@@ -10,6 +10,7 @@ void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1åˆå§‹�
 {
     int wait_time = 100;                                    //ÏµÍ³µÈ´ýÊ±¼ä
     int wait_1 = 0 ,wait_2 = 0 ,wait_3 = 0;
+
     if (CAN1CTL0_INITRQ == 0)                               //æŸ¥è¯¢æ˜¯å¦è¿›å…¥åˆå§‹åŒ–çŠ¶æ€
     {
         CAN1CTL0_INITRQ = 1;                                //è¿›å…¥åˆå§‹åŒ–çŠ¶æ€
@@ -76,6 +77,10 @@ void CAN1_Init(CAN_ConfigType *can_cfg)                     //CAN1åˆå§‹�
             CAN1BTR0_BRP = 0x01;
             CAN1BTR1 |= 0x1C;
         } break;
+
+        default:
+        {
+        } break;
     }
     CAN1IDMR0 = 0xFF;                                       //å…³é—­æ»¤æ³¢å™
     CAN1IDMR1 = 0xFF;
@@ -106,7 +111,7 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
     {
         rebuf = 0;
     }
-    if (!(CAN1CTL0_SYNCH))                                //æ£æŸ¥æ»çº¿æ—¶é’Ÿ
+    if (!CAN1CTL0_SYNCH)                                //æ£æŸ¥æ»çº¿æ—¶é’Ÿ
     {
         rebuf = 0;
     }
@@ -153,6 +158,7 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
 int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1æŽ¥æ”¶
 {
     unsigned char sp = 0 ,rebuf = 1;                                //è®¾ç½®æŽ¥æ”¶æ•°æ®ä½æ•°
+
     if (!CAN1RFLG_RXF)                                    //æ£æµ‹æŽ¥æ”¶æ ‡å¿
     {
         rebuf = 0;
@@ -199,6 +205,7 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1æŽ¥æ”¶
 void CAN_Delay10ms(unsigned int i)                          //å»¶æ—¶
 {
     unsigned int n ,m;
+
     for (n=0 ;n<250 ;n++)
     {
         for (m=0 ;m<(80*i) ;m++)

@@ -2,7 +2,6 @@
 #include "Pre_LCfg.h"
 #include "PrechargeM.h"
 
-
 const Node_StateInfoType Node_Fault_State[] =         //判断故障节点
 {
     {NODE_0 ,Pre_Cfg_Fault ,1 ,Node_NoAct ,NODE_0 },

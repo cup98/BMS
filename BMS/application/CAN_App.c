@@ -49,6 +49,7 @@ CAN_MsgType CAN_NodeState =
 void CAN_SendDemo(void)
 {
     static uint8 CAN_Time = 0;
+
     CAN_Time++;
     if (CAN_Time == 1)
     {
