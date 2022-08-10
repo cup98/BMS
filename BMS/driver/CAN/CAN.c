@@ -107,7 +107,7 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
 {
     unsigned char send_buf = 0 ,sp = 0 ,rebuf = 0;                      //è®¾ç½®å‘éç¼“å†²åŒºã€å‘é€æ•°æ®ä½æ•
 
-    if ((can_msg->len > CAN_MSG_MAXLEN) && (!CAN1CTL0_SYNCH))                      //æ£æŸ¥æ•°æ®é•¿åº
+    if ((can_msg->len > CAN_MSG_MAXLEN) || (!CAN1CTL0_SYNCH))                      //æ£æŸ¥æ•°æ®é•¿åº
     {
         rebuf = 0;
     }
@@ -183,6 +183,18 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1æŽ¥æ”¶
     return rebuf;
 }
 
+void CAN_Delay10ms(unsigned int i)                          //å»¶æ—¶
+{
+    unsigned int n ,m;
+
+    for (n=0 ;n<250 ;n++)
+    {
+        for (m=0 ;m<(80*i) ;m++)
+        {
+        }
+    }
+}
+
 /*int CAN1_GetChoiceMsg(CAN_MsgType *can_msg ,unsigned long id ,int ide)
 {
     int rebuf = 0;
@@ -196,16 +208,6 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1æŽ¥æ”¶
     return rebuf;
 }*/
 
-void CAN_Delay10ms(unsigned int i)                          //å»¶æ—¶
-{
-    unsigned int n ,m;
 
-    for (n=0 ;n<250 ;n++)
-    {
-        for (m=0 ;m<(80*i) ;m++)
-        {
-        }
-    }
-}
 
 
