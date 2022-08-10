@@ -107,51 +107,42 @@ int CAN1_SendMsg(CAN_MsgType *can_msg)
 {
     unsigned char send_buf = 0 ,sp = 0 ,rebuf = 0;                      //è®¾ç½®å‘éç¼“å†²åŒºã€å‘é€æ•°æ®ä½æ•
 
-    if (can_msg->len > CAN_MSG_MAXLEN)                      //æ£æŸ¥æ•°æ®é•¿åº
+    if ((can_msg->len > CAN_MSG_MAXLEN) && (!CAN1CTL0_SYNCH))                      //æ£æŸ¥æ•°æ®é•¿åº
     {
         rebuf = 0;
-    }
-    if (!CAN1CTL0_SYNCH)                                //æ£æŸ¥æ»çº¿æ—¶é’Ÿ
-    {
-        rebuf = 0;
-    }
-    do
-    {
-        CAN1TBSEL = CAN1TFLG;
-        send_buf  = CAN1TBSEL;
-    } while (!send_buf);                                  //å¯»æ‰¾ç©ºé—²çš„ç¼“å†²å™¨                                                      //À©Õ¹Ö¡ID·¢ËÍ
-
-    if (can_msg->IDE)
-    {
-        CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 21);
-        CAN1TXIDR1 =  (unsigned char)(can_msg->ID >> 13) & 0xE0;
-        CAN1TXIDR1 |= 0x18;
-        CAN1TXIDR1 |= (unsigned char)(can_msg->ID >> 15) & 0x07;
-        CAN1TXIDR2 =  (unsigned char)(can_msg->ID >> 7);
-        CAN1TXIDR3 =  (unsigned char)(can_msg->ID << 1);
-        CAN1TXIDR3_RTR = (unsigned char)can_msg->RTR;
     }
     else
-    {                                                       //±ê×¼Ö¡ID·¢ËÍ
-        CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 3);
-        CAN1TXIDR1 =  (unsigned char)(can_msg->ID << 5);
-        if (can_msg->RTR)                                   //åˆ¤æ–­IDEï¼0æ ‡å‡†å¸,1è¿œç¨‹å¸
+    {
+        do
         {
-            CAN1TXIDR1 |= 0x10;
+            CAN1TBSEL = CAN1TFLG;
+            send_buf  = CAN1TBSEL;
+        } while (!send_buf);                                  //å¯»æ‰¾ç©ºé—²çš„ç¼“å†²å™¨                                                      //À©Õ¹Ö¡ID·¢ËÍ
+        if (can_msg->IDE)
+        {
+            CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 21);
+            CAN1TXIDR1 =  (unsigned char)(can_msg->ID >> 13) & 0xE0;
+            CAN1TXIDR1 |= 0x18;
+            CAN1TXIDR1 |= (unsigned char)(can_msg->ID >> 15) & 0x07;
+            CAN1TXIDR2 =  (unsigned char)(can_msg->ID >> 7);
+            CAN1TXIDR3 =  (unsigned char)(can_msg->ID << 1);
+            CAN1TXIDR3_RTR = (unsigned char)can_msg->RTR;
         }
         else
-        {
-            CAN1TXIDR1 &= 0xEF;
+        {                                                       //±ê×¼Ö¡ID·¢ËÍ
+            CAN1TXIDR0 =  (unsigned char)(can_msg->ID >> 3);
+            CAN1TXIDR1 =  (unsigned char)(can_msg->ID << 5);
+            CAN1TXIDR1_SRR = (unsigned char)can_msg->RTR;
         }
+        for (sp = 0 ;sp < can_msg->len ;sp++)                 //ä¾æ¬¡å°†æ•°æ®å†™å…¥å¯„å­˜å™¨
+        {
+            *((&CAN1TXDSR0) + sp) = (unsigned char)can_msg->data[sp];
+        }
+        CAN1TXDLR  = can_msg->len;                              //å†™å…¥æ•°æ®é•¿åº¦
+        CAN1TXTBPR = can_msg->prty;                             //å†™å…¥ä¼˜å…ˆçº
+        CAN1TFLG   = send_buf;                                  //æ¸…TXxæ ‡å¿—(ç¼“å†²å™¨å‡†å¤‡å‘é€)
+        rebuf = 1;
     }
-    for (sp = 0 ;sp < can_msg->len ;sp++)                 //ä¾æ¬¡å°†æ•°æ®å†™å…¥å¯„å­˜å™¨
-    {
-        *((&CAN1TXDSR0) + sp) = (unsigned char)can_msg->data[sp];
-    }
-    CAN1TXDLR  = can_msg->len;                              //å†™å…¥æ•°æ®é•¿åº¦
-    CAN1TXTBPR = can_msg->prty;                             //å†™å…¥ä¼˜å…ˆçº
-    CAN1TFLG   = send_buf;                                  //æ¸…TXxæ ‡å¿—(ç¼“å†²å™¨å‡†å¤‡å‘é€)
-    rebuf = 1;
     return rebuf;
 }
 
@@ -163,29 +154,32 @@ int CAN1_GetMsg(CAN_MsgType *can_msg)                       //CAN1æŽ¥æ”¶
     {
         rebuf = 0;
     }
-    can_msg->IDE = CAN1RXIDR1_IDE;
-    if (can_msg->IDE)                        //åˆ¤æ–­æ˜¯å¦ä¸ºæ ‡å‡†å¸§
-    {
-        can_msg->RTR = (CAN1RXIDR3 & 0x01);
-        can_msg->ID = ((unsigned long)(CAN1RXIDR0 & 0xff)) << 21;
-        can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0xe0)) << 13);
-        can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0x07)) << 15);
-        can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR2 & 0xff)) << 7);
-        can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR3 & 0xfe)) >> 1);
-    }
     else
     {
-        can_msg->RTR = ((CAN1RXIDR1 >> 4) & 0x01);
-        can_msg->ID  = (unsigned long)(CAN1RXIDR0 << 3) |   //è¯»å‡ºæŽ¥æ”¶å¸§IDå‰8ä½
-                       (unsigned long)(CAN1RXIDR1 >> 5) ;   //å¹¶ä¸”ä¸Žä¸Šè¯»å‡ºæŽ¥æ”¶å¸§IDå3ä½
+        can_msg->IDE = CAN1RXIDR1_IDE;
+        if (can_msg->IDE)                        //åˆ¤æ–­æ˜¯å¦ä¸ºæ ‡å‡†å¸§
+        {
+            can_msg->RTR = (CAN1RXIDR3 & 0x01);
+            can_msg->ID = ((unsigned long)(CAN1RXIDR0 & 0xFF)) << 21;
+            can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0xE0)) << 13);
+            can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR1 & 0x07)) << 15);
+            can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR2 & 0xFF)) << 7);
+            can_msg->ID = can_msg->ID | (((unsigned long)(CAN1RXIDR3 & 0xFE)) >> 1);
+        }
+        else
+        {
+            can_msg->RTR = ((CAN1RXIDR1 >> 4) & 0x01);
+            can_msg->ID  = (unsigned long)(CAN1RXIDR0 << 3) |   //è¯»å‡ºæŽ¥æ”¶å¸§IDå‰8ä½
+                           (unsigned long)(CAN1RXIDR1 >> 5) ;   //å¹¶ä¸”ä¸Žä¸Šè¯»å‡ºæŽ¥æ”¶å¸§IDå3ä½
+        }
+        can_msg->len = CAN1RXDLR_DLC;                               //è¯»å‡ºæŽ¥æ”¶çš„æ•°æ®é•¿åº
+        for (sp = 0 ;sp < can_msg->len ;sp++)                   //ä¾æ¬¡è¯»å‡ºæŽ¥æ”¶çš„æ¯ä¸ä½æ•°æ
+        {
+            can_msg->data[sp] = *((&CAN1RXDSR0) + sp);
+        }
+        CAN1RFLG = 0x01;                                          //æ¸…RXFæ ‡å¿—ä½(ç¼“å†²å™¨å‡†å¤‡æŽ¥æ”)
+        rebuf = 1;
     }
-    can_msg->len = CAN1RXDLR_DLC;                               //è¯»å‡ºæŽ¥æ”¶çš„æ•°æ®é•¿åº
-    for (sp = 0 ;sp < can_msg->len ;sp++)                   //ä¾æ¬¡è¯»å‡ºæŽ¥æ”¶çš„æ¯ä¸ä½æ•°æ
-    {
-        can_msg->data[sp] = *((&CAN1RXDSR0) + sp);
-    }
-    CAN1RFLG = 0x01;                                          //æ¸…RXFæ ‡å¿—ä½(ç¼“å†²å™¨å‡†å¤‡æŽ¥æ”)
-    rebuf = 1;
     return rebuf;
 }
 
